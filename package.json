@@ -19,7 +19,6 @@
     "three": "0.171.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^6.1.1",
     "lil-gui": "0.19.2",
     "vite": "5.4.11"
   }

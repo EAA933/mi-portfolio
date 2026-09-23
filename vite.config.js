@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 
 // Configuración con soporte nativo de JSX vía esbuild
 export default defineConfig({
+  base: "./", // necesario para GitHub Pages (subruta /mi-portfolio/)
   esbuild: {
     jsx: "automatic",
   },
