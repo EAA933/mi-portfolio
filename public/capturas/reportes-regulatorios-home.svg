@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+  <rect width="1280" height="800" fill="#0b0d12"/>
+  <!-- Top bar -->
+  <rect x="0" y="0" width="1280" height="64" fill="#12151d"/>
+  <circle cx="36" cy="32" r="10" fill="#c9b6ff"/>
+  <text x="60" y="39" fill="#eef1f7" font-size="18" font-weight="700">Generador de Reportes Regulatorios</text>
+  <rect x="1096" y="18" width="152" height="36" rx="18" fill="#c9b6ff"/>
+  <text x="1172" y="41" fill="#0b0d12" font-size="14" font-weight="700" text-anchor="middle">Exportar ▾</text>
+  <!-- Paso / dropzone -->
+  <rect x="32" y="96" width="360" height="672" rx="16" fill="#12151d"/>
+  <text x="56" y="132" fill="#8a8fa8" font-size="12">ARCHIVOS DE ORIGEN</text>
+  <g>
+    <rect x="56" y="150" width="312" height="56" rx="10" fill="#1b2029"/><text x="76" y="184" fill="#e8eaf2" font-size="14">📄 FF_SEG.xlsx</text><text x="352" y="184" fill="#22c98a" font-size="12" text-anchor="end">✔</text>
+    <rect x="56" y="216" width="312" height="56" rx="10" fill="#1b2029"/><text x="76" y="250" fill="#e8eaf2" font-size="14">📄 Mapeo_Ramo.xlsx</text><text x="352" y="250" fill="#22c98a" font-size="12" text-anchor="end">✔</text>
+    <rect x="56" y="282" width="312" height="56" rx="10" fill="#1b2029"/><text x="76" y="316" fill="#e8eaf2" font-size="14">📄 Categorias.xlsx</text><text x="352" y="316" fill="#22c98a" font-size="12" text-anchor="end">✔</text>
+    <rect x="56" y="360" width="312" height="120" rx="12" fill="none" stroke="#33384a" stroke-width="2" stroke-dasharray="6 6"/>
+    <text x="212" y="416" fill="#6b7186" font-size="14" text-anchor="middle">Arrastra más Excel aquí</text>
+    <text x="212" y="440" fill="#4b5064" font-size="12" text-anchor="middle">.xlsx · .xls</text>
+  </g>
+  <rect x="56" y="700" width="312" height="48" rx="24" fill="#c9b6ff"/>
+  <text x="212" y="730" fill="#0b0d12" font-size="15" font-weight="700" text-anchor="middle">Generar reporte →</text>
+  <!-- Vista previa del reporte -->
+  <rect x="416" y="96" width="832" height="672" rx="16" fill="#151922"/>
+  <text x="448" y="140" fill="#eef1f7" font-size="22" font-weight="700">Reporte de Riesgo Operacional</text>
+  <text x="448" y="166" fill="#8a8fa8" font-size="13">Periodo 2026-Q1 · generado automáticamente</text>
+  <line x1="448" y1="186" x2="1216" y2="186" stroke="#22303f"/>
+  <!-- Encabezados tabla -->
+  <text x="448" y="222" fill="#8a8fa8" font-size="12">RAMO</text>
+  <text x="760" y="222" fill="#8a8fa8" font-size="12">CATEGORÍA</text>
+  <text x="1040" y="222" fill="#8a8fa8" font-size="12">MONTO</text>
+  <g font-size="14" fill="#e8eaf2">
+    <!-- filas -->
+    <g>
+      <rect x="440" y="238" width="776" height="1" fill="#22303f"/>
+      <text x="448" y="266">Vida</text><text x="760" y="266" fill="#c9b6ff">Fraude interno</text><text x="1216" y="266" text-anchor="end">$ 128,400</text>
+      <rect x="440" y="284" width="776" height="1" fill="#22303f"/>
+      <text x="448" y="312">Autos</text><text x="760" y="312" fill="#c9b6ff">Fallas de proceso</text><text x="1216" y="312" text-anchor="end">$ 96,750</text>
+      <rect x="440" y="330" width="776" height="1" fill="#22303f"/>
+      <text x="448" y="358">Daños</text><text x="760" y="358" fill="#c9b6ff">Sistemas</text><text x="1216" y="358" text-anchor="end">$ 74,010</text>
+      <rect x="440" y="376" width="776" height="1" fill="#22303f"/>
+      <text x="448" y="404">Gastos médicos</text><text x="760" y="404" fill="#c9b6ff">Prácticas laborales</text><text x="1216" y="404" text-anchor="end">$ 52,300</text>
+      <rect x="440" y="422" width="776" height="1" fill="#22303f"/>
+      <text x="448" y="450">Salud</text><text x="760" y="450" fill="#c9b6ff">Clientes y productos</text><text x="1216" y="450" text-anchor="end">$ 41,880</text>
+      <rect x="440" y="468" width="776" height="1" fill="#22303f"/>
+    </g>
+  </g>
+  <!-- Total -->
+  <rect x="440" y="500" width="776" height="60" rx="10" fill="#1b1730"/>
+  <text x="464" y="537" fill="#c9b6ff" font-size="15" font-weight="700">TOTAL EXPOSICIÓN</text>
+  <text x="1196" y="537" fill="#eef1f7" font-size="20" font-weight="700" text-anchor="end">$ 393,340</text>
+  <!-- Estado -->
+  <rect x="440" y="588" width="330" height="44" rx="22" fill="#0f2a1f"/>
+  <circle cx="470" cy="610" r="7" fill="#22c98a"/>
+  <text x="490" y="616" fill="#7ff0c0" font-size="14">Listo para el regulador (AMIS)</text>
+  <text x="448" y="690" fill="#6b7186" font-size="13">De días de trabajo manual a minutos, sin errores de transcripción.</text>
+</svg>

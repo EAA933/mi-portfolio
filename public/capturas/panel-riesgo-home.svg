@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+  <rect width="1280" height="800" fill="#0b0d12"/>
+  <!-- Top bar -->
+  <rect x="0" y="0" width="1280" height="64" fill="#12151d"/>
+  <circle cx="36" cy="32" r="10" fill="#8fd0ff"/>
+  <text x="60" y="39" fill="#eef1f7" font-size="18" font-weight="700">Panel de Riesgo</text>
+  <text x="1244" y="39" fill="#8a8fa8" font-size="13" text-anchor="end">Actualizado hace 2 min</text>
+  <!-- KPI cards -->
+  <g>
+    <rect x="32" y="96" width="288" height="120" rx="16" fill="#151922"/>
+    <text x="56" y="132" fill="#8a8fa8" font-size="13">RIESGO GLOBAL</text>
+    <text x="56" y="176" fill="#eef1f7" font-size="40" font-weight="700">Medio</text>
+    <rect x="56" y="190" width="180" height="6" rx="3" fill="#22303f"/><rect x="56" y="190" width="108" height="6" rx="3" fill="#f5a623"/>
+
+    <rect x="336" y="96" width="288" height="120" rx="16" fill="#151922"/>
+    <text x="360" y="132" fill="#8a8fa8" font-size="13">INDICADORES EN ALERTA</text>
+    <text x="360" y="182" fill="#ff4f6a" font-size="44" font-weight="700">3</text>
+
+    <rect x="640" y="96" width="288" height="120" rx="16" fill="#151922"/>
+    <text x="664" y="132" fill="#8a8fa8" font-size="13">CONTROLES OK</text>
+    <text x="664" y="182" fill="#22c98a" font-size="44" font-weight="700">18</text>
+
+    <rect x="944" y="96" width="304" height="120" rx="16" fill="#151922"/>
+    <text x="968" y="132" fill="#8a8fa8" font-size="13">EXPOSICIÓN</text>
+    <text x="968" y="182" fill="#eef1f7" font-size="40" font-weight="700">$4.2M</text>
+  </g>
+  <!-- Line chart -->
+  <rect x="32" y="240" width="760" height="360" rx="16" fill="#151922"/>
+  <text x="56" y="276" fill="#eef1f7" font-size="16" font-weight="600">Tendencia de riesgo (90 días)</text>
+  <g stroke="#22303f" stroke-width="1">
+    <line x1="56" y1="330" x2="768" y2="330"/><line x1="56" y1="410" x2="768" y2="410"/><line x1="56" y1="490" x2="768" y2="490"/><line x1="56" y1="560" x2="768" y2="560"/>
+  </g>
+  <polyline fill="none" stroke="#8fd0ff" stroke-width="3" points="56,520 150,470 244,500 338,410 432,440 526,360 620,380 714,320 768,340"/>
+  <polygon fill="#8fd0ff" opacity="0.12" points="56,520 150,470 244,500 338,410 432,440 526,360 620,380 714,320 768,340 768,560 56,560"/>
+  <!-- Bars -->
+  <rect x="816" y="240" width="432" height="360" rx="16" fill="#151922"/>
+  <text x="840" y="276" fill="#eef1f7" font-size="16" font-weight="600">Riesgo por categoría</text>
+  <g>
+    <rect x="840" y="320" width="380" height="28" rx="6" fill="#22303f"/><rect x="840" y="320" width="300" height="28" rx="6" fill="#ff4f6a"/><text x="848" y="339" fill="#0b0d12" font-size="13" font-weight="700">Operacional</text>
+    <rect x="840" y="368" width="380" height="28" rx="6" fill="#22303f"/><rect x="840" y="368" width="230" height="28" rx="6" fill="#f5a623"/><text x="848" y="387" fill="#0b0d12" font-size="13" font-weight="700">Crédito</text>
+    <rect x="840" y="416" width="380" height="28" rx="6" fill="#22303f"/><rect x="840" y="416" width="150" height="28" rx="6" fill="#8fd0ff"/><text x="848" y="435" fill="#0b0d12" font-size="13" font-weight="700">Mercado</text>
+    <rect x="840" y="464" width="380" height="28" rx="6" fill="#22303f"/><rect x="840" y="464" width="95" height="28" rx="6" fill="#22c98a"/><text x="848" y="483" fill="#0b0d12" font-size="13" font-weight="700">Liquidez</text>
+  </g>
+  <!-- Tabla -->
+  <rect x="32" y="624" width="1216" height="148" rx="16" fill="#151922"/>
+  <text x="56" y="660" fill="#8a8fa8" font-size="12">INDICADOR</text><text x="560" y="660" fill="#8a8fa8" font-size="12">ESTADO</text><text x="900" y="660" fill="#8a8fa8" font-size="12">TENDENCIA</text>
+  <g font-size="14" fill="#e8eaf2">
+    <line x1="56" y1="676" x2="1224" y2="676" stroke="#22303f"/>
+    <text x="56" y="704">Concentración por contraparte</text><circle cx="566" cy="699" r="6" fill="#ff4f6a"/><text x="586" y="704" fill="#ff4f6a">Alerta</text><text x="900" y="704" fill="#22c98a">▲ mejora</text>
+    <line x1="56" y1="720" x2="1224" y2="720" stroke="#22303f"/>
+    <text x="56" y="748">Cobertura de capital</text><circle cx="566" cy="743" r="6" fill="#22c98a"/><text x="586" y="748" fill="#22c98a">OK</text><text x="900" y="748" fill="#8a8fa8">— estable</text>
+  </g>
+</svg>
