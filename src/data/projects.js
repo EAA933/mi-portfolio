@@ -70,8 +70,8 @@ export const projects = [
     },
 
     capturas: [
-      "/captures/cosecha-home.png",  // desktop → marco Mac
-      "/captures/cosecha-movil.png"  // móvil → marco iPhone
+      import.meta.env.BASE_URL + "captures/cosecha-home.png",  // desktop → marco Mac
+      import.meta.env.BASE_URL + "captures/cosecha-movil.png"  // móvil → marco iPhone
     ],
     video: null,
 

@@ -52,7 +52,7 @@ export function crearGrid(projects, site) {
             <a class="btn btn-primario" href="mailto:${site.contacto.email}">Hablemos</a>
             <a class="btn btn-secundario" href="${site.contacto.linkedin}" target="_blank" rel="noopener">LinkedIn ↗</a>
             <a class="btn btn-secundario" href="${site.contacto.github}" target="_blank" rel="noopener">GitHub ↗</a>
-            <a class="btn btn-secundario" href="/cv.pdf" download>Descargar CV</a>
+            <a class="btn btn-secundario" href="${import.meta.env.BASE_URL}cv.pdf" download>Descargar CV</a>
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 const MOTOR = 0x9fd4ff;
 
 // Ajustes del modelo (afínalos si hace falta):
-const MODELO_URL = "/models/nave.glb";
+const MODELO_URL = import.meta.env.BASE_URL + "models/nave.glb";
 const MODELO_TAM = 5.0;                 // dimensión máxima deseada (unidades)
 const MODELO_ROT = { x: 0, y: Math.PI / 2, z: 0 }; // orientación que te gustó
 
