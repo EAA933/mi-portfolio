@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Eduardo Aranda — Portafolio</title>
+  <meta name="description" content="Desarrollador de producto y web. Un viaje por mis proyectos: sitios, herramientas y automatizaciones nacidas de problemas reales." />
+  <meta name="author" content="Eduardo Aranda Arteaga" />
+  <meta name="theme-color" content="#000000" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Eduardo Aranda — Portafolio" />
+  <meta property="og:description" content="Un viaje espacial por mis proyectos. Cada planeta es un proyecto real." />
+  <meta property="og:image" content="/og.jpg" /> <!-- TODO: generar 1200x630 en Fase 5 -->
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23d8a94b'/></svg>" />
+</head>
+<body>
+  <!-- Preloader: negro con el nombre y una línea de progreso real. -->
+  <div id="preloader">
+    <div class="pl-nombre">Eduardo Aranda</div>
+    <div class="pl-barra"><span class="pl-fill"></span></div>
+  </div>
+
+  <!-- Capa 3D decorativa. Invisible para lectores de pantalla. -->
+  <canvas id="lienzo" aria-hidden="true"></canvas>
+
+  <!-- Navegación (siempre visible) -->
+  <header id="nav">
+    <a class="marca" href="#top">Eduardo Aranda</a>
+    <nav class="enlaces" aria-label="Principal">
+      <a href="#proyectos">Proyectos</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div id="switch-vista" role="group" aria-label="Modo de vista">
+      <button data-vista="3d" class="activo">Misión 3D</button>
+      <button data-vista="rapida">Vista rápida</button>
+    </div>
+  </header>
+
+  <!-- Hero 3D: nombre sobre el espacio (se desvanece al navegar) -->
+  <div id="hero-3d" aria-hidden="true">
+    <p class="eyebrow">Desarrollador de producto y web</p>
+    <h1>Eduardo Aranda</h1>
+    <p class="lema">Construyo cosas que la gente usa.</p>
+    <span class="hint">Desliza para navegar ↓</span>
+  </div>
+
+  <!-- Etiquetas HTML proyectadas sobre los planetas en la galaxia. -->
+  <div id="etiquetas" aria-hidden="true"></div>
+
+  <!-- CTA final (aparece en la vista de galaxia). -->
+  <div id="cta-final" aria-hidden="true">
+    <div class="filtros">
+      <button data-filtro="todos" class="activo">Todos</button>
+      <button data-filtro="web">Web</button>
+      <button data-filtro="automatizacion">Automatización</button>
+    </div>
+    <h2>¿Construimos el siguiente planeta?</h2>
+    <div class="cta-links">
+      <a class="btn btn-primario" href="mailto:earandaa933@gmail.com">Hablemos</a>
+      <a class="btn btn-secundario" href="https://www.linkedin.com/in/eduardoaranda-risk/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn btn-secundario" href="https://github.com/EAA933" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+
+  <!-- Espaciador que da recorrido al scroll. Su altura la fija main.js. -->
+  <div id="escena-scroll" aria-hidden="true"></div>
+
+  <!-- ────────────────────────────────────────────────────────
+       CONTENIDO SEMÁNTICO COMPLETO (mejora progresiva)
+       Es la fuente de verdad para SEO y lectores de pantalla, y
+       la Vista rápida de emergencia si no hay WebGL. En modo 3D
+       se mantiene en el DOM pero se oculta visualmente.
+       ──────────────────────────────────────────────────────── -->
+  <main id="contenido">
+    <p class="eyebrow" id="top">Desarrollador de producto y web</p>
+    <h1>Eduardo Aranda</h1>
+    <p class="lema">Construyo cosas que la gente usa.</p>
+
+    <section id="proyectos">
+      <article id="cosecha-hidalguense">
+        <h2>Cosecha Hidalguense</h2>
+        <p class="tagline">Del campo de Hidalgo a tu mesa, en línea.</p>
+
+        <h3>Reto</h3>
+        <p>Los productores locales no tenían forma de vender más allá del tianguis: sin presencia en línea, dependían de intermediarios. Necesitaban un sitio profesional que ellos mismos pudieran actualizar, sin pagar hosting ni depender de un técnico para cada cambio.</p>
+
+        <h3>Solución</h3>
+        <p>Un sitio público con catálogo de productores y cajas de temporada, más un panel privado con login para administrarlo. Toda la plataforma vive en Cloudflare (Pages + Functions + D1), con costo de operación cero en el plan gratuito y carga rápida desde el borde de la red.</p>
+
+        <h3>Resultado</h3>
+        <p>Los productores publican y actualizan su catálogo por su cuenta, con una imagen de marca cuidada y a costo de operación nulo.</p>
+
+        <div class="stack" aria-label="Tecnologías">
+          <span>Cloudflare Pages</span><span>Functions</span><span>D1</span><span>SQL</span><span>JavaScript</span>
+        </div>
+        <p style="margin-top:20px"><a href="https://cosechahidalguense.com" target="_blank" rel="noopener">Ver sitio →</a></p>
+      </article>
+    </section>
+
+    <section id="sobre-mi">
+      <article>
+        <h2>Sobre mí</h2>
+        <p class="tagline">Desarrollador de producto y web, con enfoque en riesgo y automatización.</p>
+        <p>Casi todo lo que construyo nace de un problema real: comparar precios, sacar un reporte a tiempo, ordenar información compleja en una sola pantalla. Trabajo el frente y el fondo — Next.js, Node, bases de datos — y uso IA para la parte repetitiva.</p>
+      </article>
+    </section>
+
+    <footer id="contacto">
+      <p>Contacto:
+        <a href="mailto:earandaa933@gmail.com">earandaa933@gmail.com</a> ·
+        <a href="https://github.com/EAA933" target="_blank" rel="noopener">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/eduardoaranda-risk/" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+      <p style="margin-top:10px">© 2026 Eduardo Aranda Arteaga</p>
+    </footer>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
