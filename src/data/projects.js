@@ -384,6 +384,87 @@ export const projects = [
   },
 
   {
+    slug: "luna",
+    nombre: "LUNA",
+    categoria: "web",
+    tagline: "Tienda en línea de lentes de sol con catálogo, fichas de producto y carrito.",
+    descripcion:
+      "E-commerce de lentes de sol para México: landing editorial, catálogo " +
+      "con filtros, página por modelo y carrito persistente, hecho en Next.js.",
+    reto:
+      "Una marca de lentes necesitaba una tienda que se sintiera premium sin " +
+      "ser pesada: que se vea bien en móvil, cargue rápido y deje comparar " +
+      "modelos por forma, mica y material.",
+    solucion:
+      "Storefront en Next.js 14 (App Router) con páginas prerenderizadas, " +
+      "catálogo filtrable, fichas de producto con especificaciones y un " +
+      "carrito con Zustand que se guarda entre visitas. Modo claro y oscuro.",
+    resultado:
+      "Tienda publicada en Vercel con el recorrido completo: explorar, " +
+      "ver el modelo y agregarlo al carrito. El pago con Stripe está en " +
+      "integración (modo prueba).",
+    resultadoTag: "Publicada en Vercel",
+    metricas: [
+      { valor: 6, etiqueta: "Modelos en catálogo" },
+      { valor: "SSG", etiqueta: "Páginas prerenderizadas" },
+    ],
+
+    // Puntos de interés arquitectónicos para el Modo Inspección 360°
+    hotspots: [
+      {
+        id: "lu-catalogo",
+        titulo: "Catálogo con Filtros",
+        categoria: "Experiencia de Compra",
+        icono: "🕶️",
+        pos: [0.72, 0.56, 0.4],
+        descripcion: "Filtra por segmento, forma, color de mica, material y precio máximo, con búsqueda por nombre y segmento sincronizado con la URL.",
+        impacto: "Encuentra el modelo en segundos"
+      },
+      {
+        id: "lu-carrito",
+        titulo: "Carrito Persistente",
+        categoria: "Estado del Cliente",
+        icono: "🛒",
+        pos: [-0.78, 0.38, 0.5],
+        descripcion: "Store de Zustand con persistencia local y panel lateral: agregar, cambiar cantidades y quitar sin recargar la página.",
+        impacto: "El carrito sobrevive a la visita"
+      },
+      {
+        id: "lu-ssg",
+        titulo: "Páginas Prerenderizadas + SEO",
+        categoria: "Rendimiento",
+        icono: "⚡",
+        pos: [0.22, -0.8, 0.56],
+        descripcion: "Cada modelo se genera estáticamente con su propio título y descripción; incluye sitemap.xml y robots.txt.",
+        impacto: "Carga inmediata desde el CDN"
+      },
+      {
+        id: "lu-diseno",
+        titulo: "Diseño Editorial Claro/Oscuro",
+        categoria: "Marca",
+        icono: "🌓",
+        pos: [-0.4, -0.48, -0.78],
+        descripcion: "Tipografía serif (Fraunces) con Plus Jakarta Sans, tokens de color por tema y carrusel de más vendidos con movimiento reducido respetado.",
+        impacto: "Se siente premium en cualquier pantalla"
+      }
+    ],
+
+    eficiencia: null,
+
+    stack: ["Next.js", "TypeScript", "Tailwind", "Zustand", "Vercel"],
+    links: {
+      sitio: "https://luna-store-wheat.vercel.app",
+      codigo: "https://github.com/EAA933/Luna_Store",
+    },
+    capturas: [
+      import.meta.env.BASE_URL + "captures/luna-home.png",
+      import.meta.env.BASE_URL + "captures/luna-movil.png"
+    ],
+    video: null,
+    planeta: { tipo: "luna", acento: "#f4b860", tamaño: 0.98, velocidadRotacion: 0.01 }
+  },
+
+  {
     slug: "panel-riesgo",
     nombre: "Panel de Riesgo",
     categoria: "web",
