@@ -4,17 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Compatibilidad para entornos iframe / proxies con window.fetch -->
+  <script>
+    (function() {
+      try {
+        var _fetch = window.fetch ? window.fetch.bind(window) : undefined;
+        Object.defineProperty(window, 'fetch', {
+          get: function() { return _fetch; },
+          set: function(val) { _fetch = val; },
+          configurable: true,
+          enumerable: true
+        });
+      } catch (e1) {
+        try {
+          var _protoFetch = Window.prototype.fetch;
+          Object.defineProperty(Window.prototype, 'fetch', {
+            get: function() { return _protoFetch; },
+            set: function(val) { _protoFetch = val; },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e2) {}
+      }
+    })();
+  </script>
+
   <!-- SEO -->
-  <title>Eduardo Aranda — Portafolio</title>
-  <meta name="description" content="Desarrollador de producto y web. Un viaje por mis proyectos: sitios, herramientas y automatizaciones nacidas de problemas reales." />
+  <title>Eduardo Aranda — Full Stack &amp; Automatizaciones con IA</title>
+  <meta name="description" content="Full Stack Engineer. Desarrollo plataformas web de alto rendimiento (Three.js/Cloudflare) y flujos de automatización e IA que ahorran tiempo y costos a empresas." />
   <meta name="author" content="Eduardo Aranda Arteaga" />
   <meta name="theme-color" content="#000000" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Eduardo Aranda — Portafolio" />
-  <meta property="og:description" content="Un viaje espacial por mis proyectos. Cada planeta es un proyecto real." />
-  <meta property="og:image" content="/og.jpg" /> <!-- TODO: generar 1200x630 en Fase 5 -->
+  <meta property="og:title" content="Eduardo Aranda — Full Stack &amp; Automatizaciones con IA" />
+  <meta property="og:description" content="Desarrollo plataformas web de alto rendimiento y flujos de automatización con IA que multiplican resultados." />
+  <meta property="og:image" content="/og.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Eduardo Aranda — Full Stack &amp; Automatizaciones con IA" />
+  <meta name="twitter:description" content="Desarrollo plataformas web de alto rendimiento y flujos de automatización con IA que multiplican resultados." />
+  <meta name="twitter:image" content="/og.jpg" />
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23d8a94b'/></svg>" />
 </head>
@@ -44,10 +75,29 @@
 
   <!-- Hero 3D: nombre sobre el espacio (se desvanece al navegar) -->
   <div id="hero-3d" aria-hidden="true">
-    <p class="eyebrow">Desarrollador de producto y web</p>
+    <div class="hero-badge">⚡ Disponible para proyectos &amp; consultoría</div>
+    <p class="eyebrow">Full Stack &amp; Product Engineer</p>
     <h1>Eduardo Aranda</h1>
-    <p class="lema">Construyo cosas que la gente usa.</p>
-    <span class="hint">Desliza para navegar ↓</span>
+    <p class="lema">Transformo procesos manuales y costosos en plataformas web ultra-rápidas y automatizaciones con IA que multiplican resultados.</p>
+    <div class="hero-ctas">
+      <a href="#proyectos" class="btn btn-primario hero-btn-explorar">Explorar proyectos ↓</a>
+      <a href="mailto:earandaa933@gmail.com?subject=Propuesta%20de%20Proyecto%20-%20Eduardo%20Aranda" class="btn btn-secundario">¿Tienes un proyecto? Hablemos ↗</a>
+    </div>
+    <span class="hint">Desliza o usa flechas para navegar ↓</span>
+  </div>
+
+  <!-- Retícula táctica / Target Lock para planetas -->
+  <div id="target-lock" aria-hidden="true">
+    <div class="tl-bracket tl-tl"></div>
+    <div class="tl-bracket tl-tr"></div>
+    <div class="tl-bracket tl-bl"></div>
+    <div class="tl-bracket tl-br"></div>
+    <div class="tl-crosshair"></div>
+    <div class="tl-info">
+      <span class="tl-tag">OBJETIVO EN RANGO</span>
+      <span class="tl-nombre">PLANETA</span>
+      <span class="tl-accion">CLIC PARA ATERRIZAR</span>
+    </div>
   </div>
 
   <!-- Etiquetas HTML proyectadas sobre los planetas en la galaxia. -->
@@ -78,9 +128,9 @@
        se mantiene en el DOM pero se oculta visualmente.
        ──────────────────────────────────────────────────────── -->
   <main id="contenido">
-    <p class="eyebrow" id="top">Desarrollador de producto y web</p>
+    <p class="eyebrow" id="top">Full Stack &amp; Product Engineer</p>
     <h1>Eduardo Aranda</h1>
-    <p class="lema">Construyo cosas que la gente usa.</p>
+    <p class="lema">Transformo procesos manuales y costosos en plataformas web ultra-rápidas y automatizaciones con IA que multiplican resultados.</p>
 
     <section id="proyectos">
       <article id="cosecha-hidalguense">
@@ -100,6 +150,60 @@
           <span>Cloudflare Pages</span><span>Functions</span><span>D1</span><span>SQL</span><span>JavaScript</span>
         </div>
         <p style="margin-top:20px"><a href="https://cosechahidalguense.com" target="_blank" rel="noopener">Ver sitio →</a></p>
+      </article>
+
+      <article id="vyntra-flow">
+        <h2>Vyntra Flow</h2>
+        <p class="tagline">Ventas por WhatsApp en piloto automático.</p>
+
+        <h3>Reto</h3>
+        <p>Las PyMEs pierden ventas por no contestar a tiempo en WhatsApp: los mensajes llegan a toda hora y un humano no da abasto ni es rentable atender fuera de horario.</p>
+
+        <h3>Solución</h3>
+        <p>Un flujo automatizado con IA que atiende 24/7, comprende la intención del cliente, responde con el catálogo comercial adecuado y agenda o deriva a un humano solo cuando es necesario.</p>
+
+        <h3>Resultado</h3>
+        <p>Respuesta inmediata en menos de 1 minuto las 24 horas del día y seguimiento constante de prospectos calificados sin ampliar el equipo de ventas.</p>
+
+        <div class="stack" aria-label="Tecnologías">
+          <span>IA</span><span>WhatsApp API</span><span>Node.js</span><span>Automatización</span>
+        </div>
+      </article>
+
+      <article id="panel-riesgo">
+        <h2>Panel de Riesgo</h2>
+        <p class="tagline">Los indicadores de riesgo en una sola pantalla.</p>
+
+        <h3>Reto</h3>
+        <p>El seguimiento del riesgo financiero y de solvencia vivía en hojas de cálculo dispersas; los tomadores de decisiones carecían de una vista consolidada en tiempo real de su exposición y alertas.</p>
+
+        <h3>Solución</h3>
+        <p>Un dashboard unificado de monitoreo que concentra los indicadores clave (VaR, cobertura de capital, liquidez), resalta lo urgente mediante un sistema de alertas visuales y se analiza de un vistazo.</p>
+
+        <h3>Resultado</h3>
+        <p>Una sola pantalla centralizada para decidir en minutos con certeza de datos, eliminando la reconstrucción manual de métricas.</p>
+
+        <div class="stack" aria-label="Tecnologías">
+          <span>JavaScript</span><span>Dashboards</span><span>Visualización de Datos</span>
+        </div>
+      </article>
+
+      <article id="reportes-regulatorios">
+        <h2>Reportes Regulatorios</h2>
+        <p class="tagline">El reporte regulatorio sin armar Excel a mano.</p>
+
+        <h3>Reto</h3>
+        <p>Armar el reporte regulatorio de aseguradoras (normativa AMIS / CNSF) en cada periodo requería días de trabajo manual, con alto riesgo de inconsistencias y errores de captura entre múltiples archivos.</p>
+
+        <h3>Solución</h3>
+        <p>Una herramienta de automatización que procesa los libros Excel fuente, ejecuta la conciliación y cruce de ramos normativos y genera el entregable oficial automáticamente.</p>
+
+        <h3>Resultado</h3>
+        <p>Reducción drástica del tiempo de generación de días de trabajo manual a solo minutos, con cero errores de transcripción o validación de fórmulas.</p>
+
+        <div class="stack" aria-label="Tecnologías">
+          <span>JavaScript</span><span>XLSX</span><span>Automatización</span>
+        </div>
       </article>
     </section>
 

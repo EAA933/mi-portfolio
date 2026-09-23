@@ -114,7 +114,17 @@ export function crearHUD() {
       <section class="bloque"><h3>Solución</h3><p>${proyecto.solucion || ""}</p></section>
       <section class="bloque"><h3>Resultado</h3><p>${proyecto.resultado || ""}</p></section>
       <div class="chips">${(proyecto.stack || []).map((s) => `<span>${s}</span>`).join("")}</div>
-      <div class="acciones">${acciones.join("")}</div>
+      ${acciones.length ? `<div class="acciones">${acciones.join("")}</div>` : ""}
+
+      <div class="hud-conversion-card">
+        <span class="hcc-tag">💼 Consultoría &amp; Desarrollo Freelance</span>
+        <h3>¿Tienes un reto similar en tu negocio?</h3>
+        <p>Desarrollo soluciones a la medida con arquitectura robusta: desde plataformas web modernas con costo de operación nulo hasta automatizaciones con IA que reducen días de carga manual a solo minutos.</p>
+        <div class="hcc-actions">
+          <a class="btn btn-primario" href="mailto:earandaa933@gmail.com?subject=${encodeURIComponent(`Cotización de solución similar a ${proyecto.nombre}`)}&body=${encodeURIComponent(`Hola Eduardo,\n\nVi tu proyecto "${proyecto.nombre}" en tu portafolio y me gustaría consultar sobre una solución similar:\n\n- Descripción del requerimiento:\n- Fecha tentativa:\n`)}">Cotizar solución similar →</a>
+          <a class="btn btn-secundario" href="https://www.linkedin.com/in/eduardoaranda-risk/" target="_blank" rel="noopener">Conectar en LinkedIn ↗</a>
+        </div>
+      </div>
     `;
 
     // La aparición del contenedor y el contenido se hace por CSS

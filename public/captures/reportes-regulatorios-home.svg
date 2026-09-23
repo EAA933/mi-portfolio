@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750">
+  <defs>
+    <linearGradient id="rpbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e0a1a"/>
+      <stop offset="100%" stop-color="#080612"/>
+    </linearGradient>
+    <linearGradient id="rpcard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#191330"/>
+      <stop offset="100%" stop-color="#0f0c1d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#rpbg)"/>
+
+  <!-- Top bar -->
+  <rect x="0" y="0" width="1200" height="65" fill="#140f26" stroke="#2e2154" stroke-width="1"/>
+  <text x="35" y="40" fill="#c9b6ff" font-family="system-ui, sans-serif" font-weight="700" font-size="18">Automatización de Reportes Regulatorios (AMIS / CNSF)</text>
+  <rect x="990" y="16" width="175" height="32" rx="8" fill="#2e2154"/>
+  <text x="1010" y="37" fill="#c9b6ff" font-family="system-ui, sans-serif" font-size="12" font-weight="600">Exportar Oficial XLSX</text>
+
+  <!-- Ingestion steps -->
+  <g transform="translate(35, 90)">
+    <rect width="350" height="180" rx="10" fill="url(#rpcard)" stroke="#2e2154"/>
+    <text x="25" y="35" fill="#c9b6ff" font-family="system-ui, sans-serif" font-weight="700" font-size="14">Paso 1: Ingestión de Hojas Fuente</text>
+    <text x="25" y="65" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">14 libros Excel detectados</text>
+    <rect x="25" y="80" width="300" height="35" rx="6" fill="#241b3d"/>
+    <text x="35" y="102" fill="#a78bfa" font-family="system-ui, sans-serif" font-size="12">✓ Cartera_Polizas_2026.xlsx (42k filas)</text>
+    <rect x="25" y="125" width="300" height="35" rx="6" fill="#241b3d"/>
+    <text x="35" y="147" fill="#a78bfa" font-family="system-ui, sans-serif" font-size="12">✓ Siniestralidad_Acumulada.xlsx (18k filas)</text>
+
+    <rect x="385" width="350" height="180" rx="10" fill="url(#rpcard)" stroke="#2e2154"/>
+    <text x="410" y="35" fill="#c9b6ff" font-family="system-ui, sans-serif" font-weight="700" font-size="14">Paso 2: Validación &amp; Conciliación</text>
+    <text x="410" y="65" fill="#34d399" font-family="system-ui, sans-serif" font-weight="600" font-size="12">✓ 0 discrepancias de sumas de control</text>
+    <text x="410" y="90" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Cruce de catálogo de ramos AMIS: 100%</text>
+    <rect x="410" y="115" width="300" height="12" rx="6" fill="#241b3d"/>
+    <rect x="410" y="115" width="300" height="12" rx="6" fill="#8b5cf6"/>
+
+    <rect x="770" width="395" height="180" rx="10" fill="url(#rpcard)" stroke="#2e2154"/>
+    <text x="795" y="35" fill="#c9b6ff" font-family="system-ui, sans-serif" font-weight="700" font-size="14">Paso 3: Generación del Formato Final</text>
+    <text x="795" y="70" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="28" font-weight="800">4 minutos</text>
+    <text x="940" y="70" fill="#a78bfa" font-family="system-ui, sans-serif" font-size="12">Antes: 3 a 5 días hábiles</text>
+    <text x="795" y="115" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Fórmulas dinámicas y tablas formateadas según especificación</text>
+  </g>
+
+  <!-- Data table preview -->
+  <g transform="translate(35, 300)">
+    <rect width="1130" height="410" rx="10" fill="url(#rpcard)" stroke="#2e2154"/>
+    <text x="25" y="40" fill="#f8fafc" font-family="system-ui, sans-serif" font-weight="600" font-size="15">Previsualización de Cuadros Regulatorios Consolidados</text>
+    
+    <!-- Table Header -->
+    <rect x="25" y="65" width="1080" height="40" fill="#241b3d"/>
+    <text x="45" y="90" fill="#c9b6ff" font-family="system-ui, sans-serif" font-weight="600" font-size="12">Código Ramo</text>
+    <text x="200" y="90" fill="#c9b6ff" font-family="system-ui, sans-serif" font-weight="600" font-size="12">Descripción Oficial</text>
+    <text x="480" y="90" fill="#c9b6ff" font-family="system-ui, sans-serif" font-weight="600" font-size="12">Prima Emitida Directa</text>
+    <text x="720" y="90" fill="#c9b6ff" font-family="system-ui, sans-serif" font-weight="600" font-size="12">Siniestros Pagados</text>
+    <text x="960" y="90" fill="#c9b6ff" font-family="system-ui, sans-serif" font-weight="600" font-size="12">Índice Siniestr.</text>
+
+    <!-- Table Rows -->
+    <rect x="25" y="115" width="1080" height="40" fill="#140f24"/>
+    <text x="45" y="140" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">01.01</text>
+    <text x="200" y="140" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">Vida Individual y Colectivo</text>
+    <text x="480" y="140" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">$ 84,291,040 MXN</text>
+    <text x="720" y="140" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">$ 49,102,400 MXN</text>
+    <text x="960" y="140" fill="#34d399" font-family="system-ui, sans-serif" font-size="12">58.2%</text>
+
+    <rect x="25" y="165" width="1080" height="40" fill="#1b1430"/>
+    <text x="45" y="190" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">02.04</text>
+    <text x="200" y="190" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">Gastos Médicos Mayores</text>
+    <text x="480" y="190" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">$ 128,450,110 MXN</text>
+    <text x="720" y="190" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">$ 84,200,900 MXN</text>
+    <text x="960" y="190" fill="#34d399" font-family="system-ui, sans-serif" font-size="12">65.5%</text>
+
+    <rect x="25" y="215" width="1080" height="40" fill="#140f24"/>
+    <text x="45" y="240" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">05.02</text>
+    <text x="200" y="240" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">Automóviles Residentes</text>
+    <text x="480" y="240" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">$ 62,110,800 MXN</text>
+    <text x="720" y="240" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">$ 41,890,200 MXN</text>
+    <text x="960" y="240" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="12">67.4%</text>
+  </g>
+</svg>

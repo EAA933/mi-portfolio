@@ -137,8 +137,10 @@ export function crearNave(manager) {
     /**
      * @param {Array<{centro:THREE.Vector3, radio:number}>} obstaculos  planetas a esquivar
      * @param {boolean} aterrizando  si true, se permite entrar al planeta (animación de Explorar)
+     * @param {{x:number, y:number}} mouse  coordenadas normalizadas del puntero (-1..1)
+     * @param {number} velocidad  velocidad instantánea de scroll (warp/inercia)
      */
-    actualizar(dt, camara, entrada = 1, obstaculos = null, aterrizando = false) {
+    actualizar(dt, camara, entrada = 1, obstaculos = null, aterrizando = false, mouse = { x: 0, y: 0 }, velocidad = 0) {
       t += dt;
       if (mixer) mixer.update(dt);
 
@@ -160,11 +162,31 @@ export function crearNave(manager) {
 
       const e = Math.max(Math.min(entrada, 1), 0);
       interno.scale.setScalar(e);
-      interno.position.y = Math.sin(t * 1.3) * 0.12;
-      const giro = fwd.x - _fwdPrev.x;
-      interno.rotation.z += (THREE.MathUtils.clamp(-giro * 12, -0.5, 0.5) - interno.rotation.z) * 0.08;
-      _fwdPrev.copy(fwd);
 
+      // Interacción viva con el mouse y aceleración de vuelo
+      const mx = mouse ? mouse.x || 0 : 0;
+      const my = mouse ? mouse.y || 0 : 0;
+      const velAcel = THREE.MathUtils.clamp(velocidad * 0.04, -0.3, 0.3);
+
+      const giro = fwd.x - _fwdPrev.x;
+
+      // Inclinación lateral (bank roll) combinando giro de cámara y movimiento horizontal del puntero:
+      const targetRoll = THREE.MathUtils.clamp(-giro * 14 - mx * 0.35, -0.6, 0.6);
+      interno.rotation.z += (targetRoll - interno.rotation.z) * 0.1;
+
+      // Inclinación vertical (pitch) según puntero Y y aceleración de scroll:
+      const targetPitch = THREE.MathUtils.clamp(my * 0.22 - velAcel, -0.35, 0.35);
+      interno.rotation.x += (targetPitch - interno.rotation.x) * 0.1;
+
+      // Leve guiñada (yaw) hacia el mouse:
+      const targetYaw = THREE.MathUtils.clamp(-mx * 0.22, -0.3, 0.3);
+      interno.rotation.y += (targetYaw - interno.rotation.y) * 0.1;
+
+      // Desplazamiento orgánico suave: flotación en Y + respuesta al mouse:
+      interno.position.y = Math.sin(t * 1.5) * 0.14 - my * 0.25;
+      interno.position.x += (mx * 0.35 - interno.position.x) * 0.08;
+
+      _fwdPrev.copy(fwd);
     },
   };
 }

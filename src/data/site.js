@@ -11,9 +11,9 @@ export const site = {
   autor: {
     nombre: "Eduardo Aranda Arteaga",
     iniciales: "EAA",                     // preloader / favicon
-    rol: "Desarrollador de producto y web",
+    rol: "Full Stack Engineer · Web 3D & Automatizaciones con IA",
     // Se muestra en el hero bajo el nombre y en el CTA final:
-    lema: "Construyo cosas que la gente usa.",
+    lema: "Transformo procesos manuales y costosos en plataformas web ultra-rápidas y automatizaciones que multiplican resultados.",
     ubicacion: "México",
   },
 
@@ -25,12 +25,11 @@ export const site = {
 
   // Metadatos para <head>: SEO + Open Graph + favicon.
   meta: {
-    titulo: "Eduardo Aranda — Portafolio",
+    titulo: "Eduardo Aranda — Full Stack & Automatizaciones con IA",
     descripcion:
-      "Desarrollador de producto y web. Un viaje por mis proyectos: sitios, " +
-      "herramientas y automatizaciones nacidas de problemas reales.",
+      "Full Stack Engineer. Desarrollo plataformas web de alto rendimiento (Three.js/Cloudflare) y flujos de automatización e IA que ahorran tiempo y costos a empresas.",
     url: "https://eduardoaranda.dev",        // TODO: dominio final (Vercel/Netlify o propio)
-    ogImage: "/og.jpg",                       // TODO: generar imagen de preview 1200x630
+    ogImage: "/og.jpg",
     idioma: "es",
     autor: "Eduardo Aranda Arteaga",
   },

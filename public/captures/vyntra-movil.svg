@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 800" width="450" height="800">
+  <defs>
+    <linearGradient id="vmbg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b141b"/>
+      <stop offset="100%" stop-color="#080e14"/>
+    </linearGradient>
+  </defs>
+  <rect width="450" height="800" fill="url(#vmbg)"/>
+  
+  <!-- WhatsApp Header -->
+  <rect x="0" y="0" width="450" height="80" fill="#1f2c34"/>
+  <circle cx="45" cy="45" r="18" fill="#00a884"/>
+  <text x="75" y="42" fill="#e9edef" font-family="system-ui, sans-serif" font-weight="600" font-size="16">Vyntra Flow Bot</text>
+  <text x="75" y="60" fill="#00a884" font-family="system-ui, sans-serif" font-size="12">En línea 24/7 (IA Comercial)</text>
+
+  <!-- Messages -->
+  <rect x="20" y="110" width="320" height="60" rx="10" fill="#202c33"/>
+  <text x="35" y="135" fill="#e9edef" font-family="system-ui, sans-serif" font-size="13">Hola, ¿cuánto cuesta el plan anual?</text>
+  <text x="290" y="160" fill="#8696a0" font-family="system-ui, sans-serif" font-size="10">10:42 am</text>
+
+  <rect x="90" y="185" width="340" height="110" rx="10" fill="#005c4b"/>
+  <text x="105" y="210" fill="#e9edef" font-family="system-ui, sans-serif" font-size="13">¡Hola! El plan anual tiene 20% de</text>
+  <text x="105" y="230" fill="#e9edef" font-family="system-ui, sans-serif" font-size="13">descuento. Incluye respuestas automáticas</text>
+  <text x="105" y="250" fill="#e9edef" font-family="system-ui, sans-serif" font-size="13">ilimitadas y sincronización de catálogo.</text>
+  <text x="375" y="285" fill="#aebac1" font-family="system-ui, sans-serif" font-size="10">10:42 am ✓✓</text>
+
+  <!-- Bot Card -->
+  <rect x="90" y="310" width="340" height="140" rx="12" fill="#182229" stroke="#00a884" stroke-width="1.5"/>
+  <text x="110" y="340" fill="#00a884" font-family="system-ui, sans-serif" font-weight="700" font-size="13">Catálogo Recomendado</text>
+  <text x="110" y="365" fill="#e9edef" font-family="system-ui, sans-serif" font-size="13">Plan PyME Automatizado</text>
+  <text x="110" y="388" fill="#8696a0" font-family="system-ui, sans-serif" font-size="12">$3,499 MXN / año</text>
+  <rect x="110" y="405" width="300" height="32" rx="6" fill="#00a884"/>
+  <text x="210" y="426" fill="#111b21" font-family="system-ui, sans-serif" font-weight="700" font-size="13">Pagar en línea →</text>
+</svg>

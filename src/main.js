@@ -231,16 +231,99 @@ function iniciar3D() {
     else hud.cerrarCaso();
   }
   hud.pedirCerrar = cerrarUI;
+
+  // ── Navegación superior y helpers de scroll ────────────────────
+  const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+  const irA = (prog) => scroll.lenis.scrollTo(maxScroll() * prog, { duration: 1.4 });
+
+  // ── Navegación por teclado (Flechas, PageUp/Down, Space, Home, End) ───
   window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && hud.estaAbierto()) cerrarUI();
+    if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName) || document.activeElement?.isContentEditable) return;
+
+    if (e.key === "Escape") {
+      if (hud.estaAbierto()) {
+        cerrarUI();
+        return;
+      }
+    }
+
+    // Si el caso de estudio está abierto o la cámara está en transición, no interferir con scroll modal
+    if (modo.enHUD || modo.transicion) return;
+
+    if (e.key === "ArrowDown" || e.key === "PageDown") {
+      e.preventDefault();
+      scroll.lenis.scrollTo(scroll.lenis.scroll + window.innerHeight * 0.75, { duration: 0.8 });
+    } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+      e.preventDefault();
+      scroll.lenis.scrollTo(scroll.lenis.scroll - window.innerHeight * 0.75, { duration: 0.8 });
+    } else if (e.key === " ") {
+      e.preventDefault();
+      const delta = e.shiftKey ? -window.innerHeight * 0.75 : window.innerHeight * 0.75;
+      scroll.lenis.scrollTo(scroll.lenis.scroll + delta, { duration: 0.8 });
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      scroll.lenis.scrollTo(0, { duration: 1.2 });
+    } else if (e.key === "End") {
+      e.preventDefault();
+      scroll.lenis.scrollTo(maxScroll(), { duration: 1.4 });
+    } else if (e.key === "ArrowRight") {
+      // Salto al siguiente planeta u órbita
+      e.preventDefault();
+      const siguiente = rig.snaps.find((s) => s > scroll.progreso + 0.025);
+      if (siguiente !== undefined) irA(siguiente);
+    } else if (e.key === "ArrowLeft") {
+      // Salto al planeta u órbita anterior
+      e.preventDefault();
+      const anterior = [...rig.snaps].reverse().find((s) => s < scroll.progreso - 0.025);
+      if (anterior !== undefined) irA(anterior);
+    }
   });
 
-  // ── Raycaster: clic sobre un planeta → aterrizar ───────────────
+  // ── Raycaster & Pointer Interaction ───────────────────────────
   const ray = new THREE.Raycaster();
   const ndc = new THREE.Vector2();
+  const mouseNorm = { x: 0, y: 0 };
+  let hoveredPlanetIndex = -1;
+  const targetLockEl = document.getElementById("target-lock");
+  const targetLockNombre = targetLockEl?.querySelector(".tl-nombre");
+
+  window.addEventListener("pointermove", (e) => {
+    mouseNorm.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseNorm.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+    if (modo.enHUD || modo.transicion || modo.vistaRapida) {
+      if (hoveredPlanetIndex !== -1) {
+        hoveredPlanetIndex = -1;
+        targetLockEl?.classList.remove("visible");
+        document.body.style.cursor = "";
+      }
+      return;
+    }
+
+    // Raycaster para detectar si el cursor está sobre un planeta
+    ndc.x = mouseNorm.x;
+    ndc.y = mouseNorm.y;
+    ray.setFromCamera(ndc, camara);
+    const hits = ray.intersectObjects(planetas.map((p) => p.grupo), true);
+    if (hits.length && scroll.progreso > 0.02) {
+      let o = hits[0].object;
+      while (o && o.userData.indice === undefined) o = o.parent;
+      if (o && o.userData.indice !== undefined) {
+        hoveredPlanetIndex = o.userData.indice;
+        document.body.style.cursor = "pointer";
+      } else {
+        hoveredPlanetIndex = -1;
+        document.body.style.cursor = "";
+      }
+    } else {
+      hoveredPlanetIndex = -1;
+      document.body.style.cursor = "";
+    }
+  });
+
   window.addEventListener("click", (e) => {
     if (modo.enHUD || modo.transicion) return;
-    if (e.target.closest("#panel-orbita") || e.target.closest("#hud") || e.target.closest("#nav") || e.target.closest("#etiquetas") || e.target.closest("#cta-final")) return;
+    if (e.target.closest("#panel-orbita") || e.target.closest("#hud") || e.target.closest("#nav") || e.target.closest("#etiquetas") || e.target.closest("#cta-final") || e.target.closest("#hero-3d")) return;
     ndc.x = (e.clientX / window.innerWidth) * 2 - 1;
     ndc.y = -(e.clientY / window.innerHeight) * 2 + 1;
     ray.setFromCamera(ndc, camara);
@@ -252,9 +335,12 @@ function iniciar3D() {
     }
   });
 
-  // ── Navegación superior ────────────────────────────────────────
-  const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
-  const irA = (prog) => scroll.lenis.scrollTo(maxScroll() * prog, { duration: 1.4 });
+  // Botón directo para explorar en el hero
+  document.querySelector(".hero-btn-explorar")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    irA(rig.rangos[0].centro);
+  });
+
   document.querySelectorAll("#nav .enlaces a").forEach((a) => {
     a.addEventListener("click", (e) => {
       e.preventDefault();
@@ -313,7 +399,7 @@ function iniciar3D() {
       centro: pl.grupo.position,
       radio: 8 * (projects[j].planeta?.tamaño ?? 1) * (pl.grupo.scale.x || 1) + 6,
     }));
-    nave.actualizar(dt, camara, entrada, obstaculos, modo.transicion || modo.enHUD);
+    nave.actualizar(dt, camara, entrada, obstaculos, modo.transicion || modo.enHUD, mouseNorm, scroll.velocidad);
 
     // Cielo + warp.
     starfield.actualizar(dt, scroll.velocidad, camara);
@@ -377,6 +463,28 @@ function iniciar3D() {
             irAProyecto(i);
           });
         }
+      }
+    }
+
+    // Retícula táctica de Target Lock sobre planetas
+    if (targetLockEl) {
+      const lockIdx = hoveredPlanetIndex !== -1 ? hoveredPlanetIndex : (panelActual !== -1 ? panelActual : -1);
+      if (lockIdx !== -1 && !modo.enHUD && !modo.transicion && entrada > 0.04 && gP < 0.35) {
+        _proj.copy(planetas[lockIdx].grupo.position).project(camara);
+        if (_proj.z < 1) {
+          const sx = (_proj.x * 0.5 + 0.5) * window.innerWidth;
+          const sy = (-_proj.y * 0.5 + 0.5) * window.innerHeight;
+          targetLockEl.style.left = `${sx}px`;
+          targetLockEl.style.top = `${sy}px`;
+          if (targetLockNombre) targetLockNombre.textContent = projects[lockIdx].nombre.toUpperCase();
+          const acc = projects[lockIdx].planeta?.acento || "#38bdf8";
+          targetLockEl.style.setProperty("--accent", acc);
+          targetLockEl.classList.add("visible");
+        } else {
+          targetLockEl.classList.remove("visible");
+        }
+      } else {
+        targetLockEl.classList.remove("visible");
       }
     }
 

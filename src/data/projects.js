@@ -105,7 +105,10 @@ export const projects = [
     ],
     stack: ["IA", "WhatsApp API", "Node", "Automatización"],
     links: { sitio: null, codigo: null }, // TODO: ¿marca propia o de cliente? ¿enlace?
-    capturas: [],
+    capturas: [
+      import.meta.env.BASE_URL + "capturas/vyntra-home.svg",
+      import.meta.env.BASE_URL + "capturas/vyntra-movil.svg"
+    ],
     video: null,
     planeta: { tipo: "gaseoso", acento: "#34d399", tamaño: 1.25, velocidadRotacion: 0.025 }
   },
@@ -129,7 +132,10 @@ export const projects = [
     metricas: [{ valor: 1, etiqueta: "Pantalla, todo el riesgo" }],
     stack: ["JavaScript", "Dashboards", "Datos"],
     links: { sitio: null, codigo: null }, // confidencial
-    capturas: [],
+    capturas: [
+      import.meta.env.BASE_URL + "capturas/panel-riesgo-home.svg",
+      import.meta.env.BASE_URL + "capturas/panel-riesgo-movil.svg"
+    ],
     video: null,
     planeta: { tipo: "hielo", acento: "#8fd0ff", tamaño: 0.95, velocidadRotacion: 0.018 }
   },
@@ -153,7 +159,10 @@ export const projects = [
     metricas: [{ valor: "min", etiqueta: "Antes: días" }],
     stack: ["JavaScript", "XLSX", "Automatización"],
     links: { sitio: null, codigo: null }, // confidencial
-    capturas: [],
+    capturas: [
+      import.meta.env.BASE_URL + "capturas/reportes-regulatorios-home.svg",
+      import.meta.env.BASE_URL + "capturas/reportes-regulatorios-movil.svg"
+    ],
     video: null,
     planeta: { tipo: "cristal", acento: "#c9b6ff", tamaño: 1.0, velocidadRotacion: 0.01 }
   }

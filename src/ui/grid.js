@@ -18,6 +18,9 @@ export function crearGrid(projects, site) {
       const links = [];
       if (p.links?.sitio) links.push(`<a href="${p.links.sitio}" target="_blank" rel="noopener">Ver sitio ↗</a>`);
       if (p.links?.codigo) links.push(`<a href="${p.links.codigo}" target="_blank" rel="noopener">Código ↗</a>`);
+      if (!links.length) {
+        links.push(`<a href="mailto:${site.contacto.email}?subject=${encodeURIComponent(`Consulta de proyecto similar a ${p.nombre}`)}">Cotizar similar →</a>`);
+      }
       const cap = p.capturas?.[0];
       return `
         <article class="vr-card" style="--acc:${p.planeta?.acento || "#8899aa"}">
@@ -45,9 +48,8 @@ export function crearGrid(projects, site) {
         <div class="foto">${site.autor.iniciales}</div>
         <div>
           <h2>${site.autor.nombre}</h2>
-          <p>${site.autor.rol}. Casi todo lo que construyo nace de un problema real:
-             comparar precios, sacar un reporte a tiempo, ordenar información compleja.
-             Trabajo el frente y el fondo, y uso IA para la parte repetitiva.</p>
+          <p style="color:var(--accent);font-weight:600;margin-bottom:8px">⚡ Disponible para desarrollo freelance y proyectos de alto impacto</p>
+          <p>${site.autor.rol}. Ayudo a empresas y fundadores a convertir procesos lentos y costosos en plataformas web ultra-rápidas, tableros de decisión y flujos de automatización con IA. Trabajo extremo a extremo: arquitectura cloud edge, frontend interactivo y backend de datos.</p>
           <div class="acciones">
             <a class="btn btn-primario" href="mailto:${site.contacto.email}">Hablemos</a>
             <a class="btn btn-secundario" href="${site.contacto.linkedin}" target="_blank" rel="noopener">LinkedIn ↗</a>

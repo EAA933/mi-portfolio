@@ -146,3 +146,120 @@ body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
   #panel-orbita.lado-izq, #panel-orbita.lado-der { left: 50% !important; right: auto !important; transform: translate(-50%, 0) !important; top: auto; bottom: 24px; width: calc(100vw - 32px); }
   #panel-orbita.visible { transform: translate(-50%, 0) !important; }
 }
+
+/* ── TARGET LOCK (Retícula táctica espacial) ───────────────── */
+#target-lock {
+  position: fixed;
+  z-index: 15;
+  width: 130px;
+  height: 130px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-principal), transform 0.15s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#target-lock.visible {
+  opacity: 1;
+}
+.tl-bracket {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--accent, #38bdf8);
+}
+.tl-tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+.tl-tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+.tl-bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+.tl-br { bottom: 0; right: 0; border-left: none; border-top: none; }
+.tl-crosshair {
+  width: 14px;
+  height: 14px;
+  border: 1px dashed rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  animation: tl-spin 10s linear infinite;
+}
+@keyframes tl-spin { to { transform: rotate(360deg); } }
+.tl-info {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-family: monospace, var(--font);
+  background: rgba(0, 0, 0, 0.78);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.tl-tag {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--accent, #38bdf8);
+  font-weight: 700;
+}
+.tl-nombre {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.tl-accion {
+  font-size: 10px;
+  color: var(--text-2);
+  letter-spacing: 0.05em;
+}
+
+/* ── TARJETA DE CONVERSIÓN FREELANCE EN HUD ───────────────── */
+.hud-conversion-card {
+  margin-top: 48px;
+  padding: 32px 28px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+.hud-conversion-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent, #38bdf8), transparent);
+}
+.hud-conversion-card .hcc-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent, #38bdf8);
+  margin-bottom: 8px;
+  display: block;
+}
+.hud-conversion-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.hud-conversion-card p {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 22px;
+  max-width: 620px;
+}
+.hud-conversion-card .hcc-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
