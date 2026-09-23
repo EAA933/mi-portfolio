@@ -182,5 +182,17 @@ body.modo-3d #hero-3d { display: flex; }
   #nav { padding: 14px 18px; }
   #hero-3d h1 { font-size: clamp(40px, 13vw, 60px); }
 }
+/* ── Efecto de Túnel Hiperespacial / Warp Vignette ─────────── */
+#warp-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9;
+  opacity: 0;
+  background: radial-gradient(circle at center, transparent 38%, rgba(56, 189, 248, 0.08) 65%, rgba(192, 38, 211, 0.28) 100%);
+  mix-blend-mode: screen;
+  transition: opacity 0.12s ease-out;
+}
+
 /* Respeta el notch en iOS */
 #nav { padding-top: max(18px, env(safe-area-inset-top)); }

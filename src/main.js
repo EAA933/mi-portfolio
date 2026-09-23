@@ -15,10 +15,14 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import "./styles/base.css";
 import "./styles/hud.css";
 import "./styles/grid.css";
+import "./styles/radar.css";
+import "./styles/contact.css";
 
 import projects from "./data/projects.js";
 import site from "./data/site.js";
 import { crearGrid } from "./ui/grid.js";
+import { crearRadar } from "./ui/radar.js";
+import { crearModalContacto } from "./ui/contactModal.js";
 import { detectarCapacidades, GestorCalidad } from "./core/quality.js";
 import { Renderizador } from "./core/renderer.js";
 import { RigCamara } from "./core/cameraRig.js";
@@ -74,8 +78,8 @@ function iniciar3D() {
   escena.add(new THREE.HemisphereLight(0x8098c0, 0x060608, 0.28));
   const solDir = sol.position.clone().normalize();
 
-  // — Cielo estrellado —
-  const starfield = new Starfield(escena, calidad.params.estrellas);
+  // — Cielo estrellado con túnel warp relativista —
+  const starfield = new Starfield(escena, calidad.params.estrellas, camara);
 
   // — Trayectoria de la cámara (derivada de projects.js) —
   const rig = new RigCamara(projects);
@@ -216,6 +220,7 @@ function iniciar3D() {
 
   // ── Ruteo (#slug) + botón atrás ────────────────────────────────
   function irAProyecto(i) {
+    dispararSaltoWarp(1.2);
     router.abrir(projects[i].slug); // crea entrada en el historial
     aterrizar(i);
   }
@@ -234,7 +239,23 @@ function iniciar3D() {
 
   // ── Navegación superior y helpers de scroll ────────────────────
   const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
-  const irA = (prog) => scroll.lenis.scrollTo(maxScroll() * prog, { duration: 1.4 });
+
+  // ── Sistema de Sobrecarga / Salto Hiperespacial (Warp Drive) ──
+  const warpState = { boost: 0 };
+  const dispararSaltoWarp = (duracion = 1.35) => {
+    gsap.killTweensOf(warpState);
+    warpState.boost = 1.0;
+    gsap.to(warpState, {
+      boost: 0,
+      duration: duracion,
+      ease: "power2.out",
+    });
+  };
+
+  const irA = (prog, conWarp = true) => {
+    if (conWarp) dispararSaltoWarp(1.4);
+    scroll.lenis.scrollTo(maxScroll() * prog, { duration: 1.4 });
+  };
 
   // ── Navegación por teclado (Flechas, PageUp/Down, Space, Home, End) ───
   window.addEventListener("keydown", (e) => {
@@ -335,6 +356,25 @@ function iniciar3D() {
     }
   });
 
+  // — Modal de contacto profesional y captura de leads —
+  const modalContacto = crearModalContacto(site);
+
+  // Delegar apertura del modal de contacto en cualquier botón de la interfaz
+  document.addEventListener("click", (e) => {
+    const trigger = e.target.closest(".btn-trigger-contacto");
+    if (trigger) {
+      e.preventDefault();
+      const tipo = trigger.dataset.tipo;
+      const mensaje = trigger.dataset.mensaje;
+      modalContacto.abrir({ tipo, mensaje });
+    }
+  });
+
+  // — Radar de navegación estelar —
+  const radar = crearRadar(projects, rig, (targetProgreso) => {
+    irA(targetProgreso);
+  });
+
   // Botón directo para explorar en el hero
   document.querySelector(".hero-btn-explorar")?.addEventListener("click", (e) => {
     e.preventDefault();
@@ -347,12 +387,24 @@ function iniciar3D() {
       const t = a.getAttribute("href");
       if (t === "#proyectos") irA(rig.rangos[0].centro);
       else if (t === "#sobre-mi") irA(0.985);
-      else if (t === "#contacto") irA(1);
+      else if (t === "#contacto") {
+        if (modo.vistaRapida) {
+          modalContacto.abrir();
+        } else {
+          irA(1);
+          setTimeout(() => modalContacto.abrir(), 500);
+        }
+      }
     });
   });
 
   // — Vista rápida (cuadrícula) + switch persistente —
-  const gridInstance = crearGrid(projects, site);
+  const gridInstance = crearGrid(projects, site, (idx) => {
+    setVista("viaje", true);
+    setTimeout(() => {
+      irAProyecto(idx);
+    }, 100);
+  });
   function setVista(v, persistir = true) {
     modo.vistaRapida = v === "rapida";
     document.body.classList.toggle("modo-rapida", modo.vistaRapida);
@@ -387,10 +439,18 @@ function iniciar3D() {
     if (modo.vistaRapida) return;
     if (!rzd.pausado) calidad.actualizar(dt);
 
+    // Cálculo de factor de warp instantáneo (scroll continuo + sobrecarga por saltos estelares)
+    const scrollWarp = THREE.MathUtils.clamp(Math.abs(scroll.velocidad) / 220, 0, 1);
+    const warpFactor = Math.max(scrollWarp, warpState.boost);
+
+    // Micro-shake de cabina y dilatación relativista de FOV durante hiperespacio
+    const camShake = !modo.enHUD && !modo.transicion ? warpFactor * 0.16 : 0;
+    const fovBoost = !modo.enHUD && !modo.transicion ? warpFactor * 5.5 : 0;
+
     // La cámara sigue al scroll salvo durante aterrizaje/HUD.
     if (!modo.transicion && !modo.enHUD) {
       rig.actualizar(scroll.progreso);
-      rig.aplicarSuavizado(camara);
+      rig.aplicarSuavizado(camara, camShake, fovBoost);
     }
 
     // "Entrada": al inicio (hero) solo se ve el nombre sobre negro; al
@@ -403,10 +463,17 @@ function iniciar3D() {
       centro: pl.grupo.position,
       radio: 8 * (projects[j].planeta?.tamaño ?? 1) * (pl.grupo.scale.x || 1) + 6,
     }));
-    nave.actualizar(dt, camara, entrada, obstaculos, modo.transicion || modo.enHUD, mouseNorm, scroll.velocidad);
+    nave.actualizar(dt, camara, entrada, obstaculos, modo.transicion || modo.enHUD, mouseNorm, scroll.velocidad, warpFactor);
 
-    // Cielo + warp.
-    starfield.actualizar(dt, scroll.velocidad, camara);
+    // Cielo + warp relativista (estrellas estiradas en velocidad luz).
+    starfield.actualizar(dt, scroll.velocidad, camara, warpFactor);
+
+    // Viñeta óptica de velocidad luz
+    const warpVignette = document.getElementById("warp-vignette");
+    if (warpVignette) {
+      const vOp = (!modo.enHUD && !modo.transicion) ? warpFactor * 0.75 : 0;
+      warpVignette.style.opacity = vOp.toFixed(3);
+    }
 
     // Planetas vivos.
     for (const pl of planetas) pl.actualizar(dt, solDir);
@@ -492,6 +559,9 @@ function iniciar3D() {
         targetLockEl.classList.remove("visible");
       }
     }
+
+    // Actualizar telemetría de radar y posición de nave
+    radar.actualizar(scroll.progreso);
 
     rzd.render();
   });

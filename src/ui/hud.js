@@ -10,6 +10,7 @@
  * ------------------------------------------------------------------
  */
 import { gsap } from "gsap";
+import { montarGraficoEficiencia } from "../components/EfficiencyChart.jsx";
 
 const EASE = "power3.out";
 
@@ -41,6 +42,7 @@ export function crearHUD() {
 
   let onCerrarActual = null;
   let animPanel = null;
+  let reactRootActual = null;
 
   function aplicarAcento(proyecto) {
     const acc = proyecto.planeta?.acento || "#d8a94b";
@@ -115,6 +117,12 @@ export function crearHUD() {
       <section class="bloque hud-reveal"><h3>Reto</h3><p>${proyecto.reto || ""}</p></section>
       <section class="bloque hud-reveal"><h3>Solución</h3><p>${proyecto.solucion || ""}</p></section>
       <section class="bloque hud-reveal"><h3>Resultado</h3><p>${proyecto.resultado || ""}</p></section>
+
+      <!-- Gráfico interactivo Recharts: Eficiencia Operativa -->
+      <section class="bloque bloque-eficiencia hud-reveal">
+        <div id="hud-eficiencia-container"></div>
+      </section>
+
       <div class="chips hud-reveal">${(proyecto.stack || []).map((s) => `<span>${s}</span>`).join("")}</div>
       ${acciones.length ? `<div class="acciones hud-reveal">${acciones.join("")}</div>` : ""}
 
@@ -123,11 +131,21 @@ export function crearHUD() {
         <h3>¿Tienes un reto similar en tu negocio?</h3>
         <p>Desarrollo soluciones a la medida con arquitectura robusta: desde plataformas web modernas con costo de operación nulo hasta automatizaciones con IA que reducen días de carga manual a solo minutos.</p>
         <div class="hcc-actions">
-          <a class="btn btn-primario" href="mailto:earandaa933@gmail.com?subject=${encodeURIComponent(`Cotización de solución similar a ${proyecto.nombre}`)}&body=${encodeURIComponent(`Hola Eduardo,\n\nVi tu proyecto "${proyecto.nombre}" en tu portafolio y me gustaría consultar sobre una solución similar:\n\n- Descripción del requerimiento:\n- Fecha tentativa:\n`)}">Cotizar solución similar →</a>
+          <button type="button" class="btn btn-primario btn-trigger-contacto" data-tipo="${proyecto.categoria === 'automatizacion' ? 'Automatización con IA' : 'Plataforma Web / 3D'}" data-mensaje="Hola Eduardo, estuve viendo el caso de estudio de &quot;${proyecto.nombre}&quot; y me interesa desarrollar una solución con requerimientos similares.">Cotizar solución similar →</button>
           <a class="btn btn-secundario" href="https://www.linkedin.com/in/eduardoaranda-risk/" target="_blank" rel="noopener">Conectar en LinkedIn ↗</a>
         </div>
       </div>
     `;
+
+    // Montar el gráfico interactivo con Recharts
+    if (reactRootActual) {
+      try { reactRootActual.unmount(); } catch (e) {}
+      reactRootActual = null;
+    }
+    const efContainer = wrap.querySelector("#hud-eficiencia-container");
+    if (efContainer && proyecto.eficiencia) {
+      reactRootActual = montarGraficoEficiencia(efContainer, proyecto);
+    }
 
     // Animación suave de entrada (fade-in / slide-up) para cada bloque al hacer scroll
     const hudObserver = new IntersectionObserver(
@@ -160,6 +178,10 @@ export function crearHUD() {
     if (!hud.classList.contains("activo")) return;
     const cb = onCerrarActual;
     onCerrarActual = null;
+    if (reactRootActual) {
+      try { reactRootActual.unmount(); } catch (e) {}
+      reactRootActual = null;
+    }
     hud.classList.remove("activo");
     document.body.classList.remove("enfoque-hud");
     setTimeout(() => { if (cb) cb(); }, 480);

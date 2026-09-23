@@ -164,13 +164,23 @@ export class RigCamara {
     this._fovObjetivo = lerp(kf[i].fov, kf[i + 1].fov, fs);
   }
 
-  // Aplica el suavizado (lerp 0.08) sobre la cámara real. Se llama cada frame.
-  aplicarSuavizado(camara) {
+  // Aplica el suavizado (lerp 0.08) sobre la cámara real, con micro-shake y dilatación relativista de FOV.
+  aplicarSuavizado(camara, shake = 0, fovBoost = 0) {
     camara.position.lerp(this._posObjetivo, 0.08);
+
+    // Micro-shake de cabina durante el salto warp / alta velocidad
+    if (shake > 0.001) {
+      camara.position.x += (Math.random() - 0.5) * shake;
+      camara.position.y += (Math.random() - 0.5) * shake;
+      camara.position.z += (Math.random() - 0.5) * shake;
+    }
+
     this._lookActual.lerp(this._lookObjetivo, 0.08);
     camara.lookAt(this._lookActual);
 
-    const nuevoFov = lerp(camara.fov, this._fovObjetivo, 0.08);
+    // Dilatación de FOV relativista (+ hasta 6 grados en hipervelocidad)
+    const targetFov = this._fovObjetivo + fovBoost;
+    const nuevoFov = lerp(camara.fov, targetFov, 0.08);
     if (Math.abs(nuevoFov - camara.fov) > 0.001) {
       camara.fov = nuevoFov;
       camara.updateProjectionMatrix();

@@ -1,0 +1,249 @@
+/* ── RADAR ESTELAR (Minimapa táctico de navegación) ───────── */
+#radar-estelar {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-28px);
+  z-index: 14;
+  background: rgba(8, 8, 14, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 14px 16px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: monospace, var(--font);
+  user-select: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-principal), transform 0.4s var(--ease-principal), visibility 0.4s;
+  --radar-acc: #38bdf8;
+}
+
+/* Solo se activa y hace visible cuando sale la nave del hangar / hero */
+#radar-estelar.en-vuelo {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Ocultar en modo rápida y durante el enfoque del HUD */
+body.modo-rapida #radar-estelar,
+body.enfoque-hud #radar-estelar,
+body.modal-abierto #radar-estelar {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(-50%) translateX(-28px) !important;
+}
+
+.radar-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.radar-icono {
+  font-size: 13px;
+  animation: radar-spin 6s ease-in-out infinite alternate;
+}
+
+@keyframes radar-spin {
+  0% { transform: rotate(-8deg); }
+  100% { transform: rotate(8deg); }
+}
+
+.radar-titulo {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--radar-acc);
+  text-transform: uppercase;
+}
+
+.radar-telemetria {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.radar-track {
+  display: flex;
+  gap: 14px;
+  position: relative;
+}
+
+.radar-linea {
+  width: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  position: relative;
+  margin: 6px 0;
+}
+
+.radar-progreso-linea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, #38bdf8, var(--radar-acc));
+  box-shadow: 0 0 10px var(--radar-acc);
+  border-radius: 3px;
+  transition: height 0.1s linear;
+}
+
+.radar-ship-cursor {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 10px;
+  filter: drop-shadow(0 0 6px var(--radar-acc));
+  transition: top 0.1s linear;
+  pointer-events: none;
+}
+
+.radar-ship-cursor .ship-icon {
+  transform: rotate(90deg);
+  color: var(--radar-acc);
+  font-weight: 900;
+}
+
+.radar-sectores {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radar-sector {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.radar-sector:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateX(3px);
+}
+
+.radar-nodo {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  position: relative;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.radar-sector:hover .radar-nodo {
+  background: #fff;
+}
+
+.radar-pulso {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.radar-sector.activo .radar-nodo {
+  background: var(--radar-acc);
+  box-shadow: 0 0 8px var(--radar-acc);
+  transform: scale(1.3);
+}
+
+.radar-sector.activo .radar-pulso {
+  opacity: 1;
+  border-color: var(--radar-acc);
+  animation: radar-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes radar-ping {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+.radar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.radar-cod {
+  font-size: 9px;
+  color: var(--text-2);
+  letter-spacing: 0.08em;
+}
+
+.radar-sector.activo .radar-cod {
+  color: var(--radar-acc);
+  font-weight: 700;
+}
+
+.radar-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.radar-sector:hover .radar-tag,
+.radar-sector.activo .radar-tag {
+  color: #fff;
+}
+
+/* ── MÓVIL: Versión compacta ── */
+@media (max-width: 768px) {
+  #radar-estelar {
+    left: 14px;
+    top: auto;
+    bottom: 24px;
+    transform: translateY(24px);
+    padding: 8px 12px;
+    border-radius: 12px;
+  }
+  #radar-estelar.en-vuelo {
+    transform: translateY(0);
+  }
+  .radar-tag,
+  .radar-titulo {
+    display: none;
+  }
+  .radar-track {
+    gap: 8px;
+  }
+  .radar-sector {
+    padding: 3px 4px;
+  }
+  body.modo-rapida #radar-estelar,
+  body.enfoque-hud #radar-estelar,
+  body.modal-abierto #radar-estelar {
+    transform: translateY(24px) !important;
+  }
+}
