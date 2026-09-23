@@ -3214,3 +3214,93 @@ body.tema-oscuro.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
   line-height: 1.5;
   color: var(--text);
 }
+
+/* ============================================================
+   MARCA EXACTA cosechahidalguense.com
+   Fuentes reales (Caprasimo títulos · Figtree cuerpo), lienzo
+   crema #F5EAD8 y CTA terracota #C67139. Alinea el caso de
+   estudio con la identidad del sitio en vivo.
+   ============================================================ */
+#hud.tema-cosecha { font-family: "Figtree", system-ui, -apple-system, sans-serif !important; }
+
+/* Títulos grandes con Caprasimo (como el sitio real) */
+#hud.tema-cosecha h1,
+#hud.tema-cosecha h2,
+#hud.tema-cosecha .hud-story-section h2,
+#hud.tema-cosecha .sim-titulo,
+#hud.tema-cosecha .diagrama-topbar-titulo {
+  font-family: "Caprasimo", Georgia, serif !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Lienzo crema exacto de la marca */
+#hud.tema-cosecha,
+body.tema-oscuro #hud.tema-cosecha {
+  background:
+    radial-gradient(120% 55% at 50% -5%, rgba(255, 240, 197, 0.40) 0%, transparent 60%),
+    linear-gradient(180deg, #f7efe0 0%, #f5ead8 55%, #efe3cc 100%) !important;
+}
+
+/* CTA terracota (color de botón del sitio) */
+#hud.tema-cosecha .btn-primario,
+#hud.tema-cosecha .btn-trigger-contacto {
+  background: #c67139 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+#hud.tema-cosecha .btn-primario:hover,
+#hud.tema-cosecha .btn-trigger-contacto:hover {
+  background: #b5622d !important;
+  box-shadow: 0 10px 26px -6px rgba(198, 113, 57, 0.45) !important;
+}
+
+/* "Hidalguense" con Caprasimo en verde de marca (sin degradado Playfair) */
+.cosecha-serif-accent {
+  font-family: "Caprasimo", Georgia, serif !important;
+  font-style: normal !important;
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: #3f7a34 !important;
+  padding-left: 4px !important;
+}
+
+/* ── Galería real del sitio (fotos + admin) enmarcada como pedido del cliente ── */
+#hud.tema-cosecha .cosecha-galeria-real {
+  margin: 40px 0 8px;
+}
+#hud.tema-cosecha .cosecha-galeria-real .galeria-real-intro {
+  background: #ebddc5;
+  border: 1px solid rgba(63, 122, 52, 0.25);
+  border-radius: 18px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+#hud.tema-cosecha .cosecha-galeria-real .galeria-real-intro strong { color: #3f7a34; }
+#hud.tema-cosecha .cosecha-galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+#hud.tema-cosecha .cosecha-shot {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -12px rgba(60, 40, 20, 0.25);
+}
+#hud.tema-cosecha .cosecha-shot .cosecha-shot-bar {
+  height: 30px; display: flex; align-items: center; gap: 6px; padding: 0 12px;
+  background: #f3ece0; border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+#hud.tema-cosecha .cosecha-shot .cosecha-shot-bar i { width: 9px; height: 9px; border-radius: 50%; background: #c9b79a; }
+#hud.tema-cosecha .cosecha-shot .cosecha-shot-url { font-size: 11px; color: #7a6f5e; margin-left: 8px; }
+#hud.tema-cosecha .cosecha-shot img { display: block; width: 100%; height: auto; }
+#hud.tema-cosecha .cosecha-shot figcaption {
+  padding: 14px 16px 16px; font-size: 13.5px; color: #52463a; line-height: 1.5;
+}
+#hud.tema-cosecha .cosecha-shot figcaption b { color: #201e1d; font-weight: 700; display: block; margin-bottom: 3px; }
+#hud.tema-cosecha .cosecha-pedido {
+  display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: #c67139; margin-bottom: 6px;
+}

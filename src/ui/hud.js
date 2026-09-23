@@ -546,7 +546,7 @@ export function crearHUD() {
                 <div class="sim-productor-explicacion">
                   <span class="sim-tag-agtech">🌿 Panel Autónomo Desplegado en Cloudflare</span>
                   <h4>Autonomía Tecnológica Total para los Agricultores</h4>
-                  <p>A diferencia de sistemas que requieren desarrolladores para cambiar un precio o dar de alta un agricultor, la consola `/admin.html` ofrece:</p>
+                  <p>A diferencia de sistemas que requieren desarrolladores para cambiar un precio o dar de alta un agricultor, la consola <code>/admin.html</code> ofrece:</p>
                   <ul class="sim-feature-list">
                     <li><b>Independencia de Operación:</b> La cooperativa y agricultores actualizan temporadas de corte y números de contacto en 2 toques.</li>
                     <li><b>Sincronización en el Borde con D1:</b> Base de datos distribuida con replicación instantánea que responde en menos de 35ms en México.</li>
@@ -577,6 +577,45 @@ export function crearHUD() {
 
           <div class="story-hosting-grid">
             ${kpisHTML}
+          </div>
+        </section>
+
+        <!-- 05. GALERÍA REAL DEL SITIO — todo sobre peticiones del cliente -->
+        <section class="hud-story-section hud-reveal" id="seccion-galeria">
+          <div class="hud-story-tag"><span>📸</span> 05. La entrega · sobre peticiones del cliente</div>
+          <h2>Cada pantalla nació de una petición concreta</h2>
+          <p class="story-subtitulo">Fotos reales de <b>cosechahidalguense.com</b> en producción. Nada es de relleno: cada vista responde a algo que el productor pidió, y así lo construimos.</p>
+
+          <div class="cosecha-galeria-real">
+            <div class="galeria-real-intro hud-reveal">
+              <p><strong>Cómo trabajamos:</strong> escuchamos la necesidad del cliente (vender directo por WhatsApp sin intermediarios, empacar con QR trazable, y un panel que ellos mismos manejen), y la volvimos una pieza concreta del producto. Esto es lo que quedó en línea.</p>
+            </div>
+
+            <div class="cosecha-galeria-grid">
+              <figure class="cosecha-shot hud-reveal">
+                <div class="cosecha-shot-bar"><i></i><i></i><i></i><span class="cosecha-shot-url">cosechahidalguense.com</span></div>
+                <img src="${import.meta.env.BASE_URL}captures/cosecha-home.png" alt="Inicio de Cosecha Hidalguense" loading="lazy" />
+                <figcaption><span class="cosecha-pedido">Pedido: “que se vea serio y del campo”</span><b>Portada de marca</b>Propuesta de valor clara, catálogo destacado y botón directo a WhatsApp.</figcaption>
+              </figure>
+
+              <figure class="cosecha-shot hud-reveal">
+                <div class="cosecha-shot-bar"><i></i><i></i><i></i><span class="cosecha-shot-url">/productores</span></div>
+                <img src="${import.meta.env.BASE_URL}captures/cosecha-catalogo.png" alt="Catálogo de productores" loading="lazy" />
+                <figcaption><span class="cosecha-pedido">Pedido: “que encuentren por verdura”</span><b>Catálogo de productores</b>Filtros por cultivo y color, ficha con certificaciones y enlace 1‑a‑1.</figcaption>
+              </figure>
+
+              <figure class="cosecha-shot hud-reveal">
+                <div class="cosecha-shot-bar"><i></i><i></i><i></i><span class="cosecha-shot-url">/cajas</span></div>
+                <img src="${import.meta.env.BASE_URL}captures/cosecha-cajas.png" alt="Venta de cajas agrícolas" loading="lazy" />
+                <figcaption><span class="cosecha-pedido">Pedido: “vender las cajas con QR”</span><b>Venta de cajas</b>Empaque agrícola con trazabilidad “quién sembró tu caja”.</figcaption>
+              </figure>
+
+              <figure class="cosecha-shot hud-reveal">
+                <div class="cosecha-shot-bar"><i></i><i></i><i></i><span class="cosecha-shot-url">/admin.html</span></div>
+                <img src="${import.meta.env.BASE_URL}captures/cosecha-admin.png" alt="Panel de administración (login)" loading="lazy" />
+                <figcaption><span class="cosecha-pedido">Pedido: “que yo lo actualice solo”</span><b>Panel /admin.html</b>Login privado; el productor gestiona catálogo, cajas y mensajes desde su teléfono. Corre en Cloudflare (Pages + Workers + D1), $0/mes.</figcaption>
+              </figure>
+            </div>
           </div>
         </section>
       `;
