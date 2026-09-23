@@ -465,6 +465,88 @@ export const projects = [
   },
 
   {
+    slug: "gestor-incidentes",
+    nombre: "Gestor de Incidentes",
+    categoria: "web",
+    tagline: "Seguimiento de incidentes de riesgo operativo, del reporte al cierre.",
+    descripcion:
+      "Aplicación web para registrar incidentes de riesgo operativo, dar " +
+      "seguimiento a sus sesiones y reportarlos por trimestre, con login y " +
+      "datos en la nube.",
+    reto:
+      "El seguimiento de incidentes de riesgo vivía en correos y hojas de " +
+      "cálculo: era difícil saber qué seguía abierto, qué sesión estaba " +
+      "vencida y cuánto sumaban los incidentes financieros de cada trimestre.",
+    solucion:
+      "Una app en Next.js con login y Supabase (RLS por usuario): cada " +
+      "incidente guarda área, corresponsal, causa raíz, monto y bitácora de " +
+      "sesiones, con filtros por estado y por trimestre de registro en SCALA.",
+    resultado:
+      "Todo el seguimiento en una sola pantalla: abiertos, vencidos y monto " +
+      "financiero por moneda de un vistazo, y exportación a CSV/JSON para " +
+      "los reportes.",
+    resultadoTag: "Activa en Vercel",
+    metricas: [
+      { valor: "4", etiqueta: "Indicadores en tablero" },
+      { valor: "CSV", etiqueta: "Exportación de reportes" },
+    ],
+
+    // Puntos de interés arquitectónicos para el Modo Inspección 360°
+    hotspots: [
+      {
+        id: "gi-tablero",
+        titulo: "Tablero de Estado",
+        categoria: "Monitoreo",
+        icono: "🚨",
+        pos: [0.7, 0.58, 0.42],
+        descripcion: "Total de incidentes, abiertos, monto financiero sumado por moneda y sesiones de seguimiento vencidas, calculados al momento.",
+        impacto: "Lo urgente salta a la vista"
+      },
+      {
+        id: "gi-trimestre",
+        titulo: "Filtro Trimestral por SCALA",
+        categoria: "Reporte Regulatorio",
+        icono: "🗓️",
+        pos: [-0.78, 0.36, 0.5],
+        descripcion: "Agrupa incidentes por el trimestre en que se registraron en SCALA, combinable con filtros de estado, búsqueda y orden.",
+        impacto: "Cierre trimestral sin armar Excel"
+      },
+      {
+        id: "gi-supabase",
+        titulo: "Login y Datos en la Nube",
+        categoria: "Seguridad",
+        icono: "🔐",
+        pos: [0.2, -0.82, 0.54],
+        descripcion: "Autenticación con Supabase y Row Level Security: cada usuario solo ve sus incidentes. Opción de cerrar sesión al cerrar la pestaña.",
+        impacto: "Datos protegidos por usuario"
+      },
+      {
+        id: "gi-puente",
+        titulo: "Puente para Redes Corporativas",
+        categoria: "Infraestructura",
+        icono: "🌉",
+        pos: [-0.42, -0.46, -0.78],
+        descripcion: "El navegador habla con /sb en el mismo dominio y Vercel lo reenvía a Supabase, así funciona en redes que bloquean *.supabase.co.",
+        impacto: "Funciona dentro de la oficina"
+      }
+    ],
+
+    eficiencia: null,
+
+    stack: ["Next.js", "TypeScript", "Supabase", "Tailwind", "Vercel"],
+    links: {
+      sitio: "https://incident-self.vercel.app",
+      codigo: "https://github.com/EAA933/IncidentManager",
+    },
+    capturas: [
+      import.meta.env.BASE_URL + "captures/incident-home.png",
+      import.meta.env.BASE_URL + "captures/incident-movil.png"
+    ],
+    video: null,
+    planeta: { tipo: "centinela", acento: "#fb7185", tamaño: 1.02, velocidadRotacion: 0.012 }
+  },
+
+  {
     slug: "panel-riesgo",
     nombre: "Panel de Riesgo",
     categoria: "web",
