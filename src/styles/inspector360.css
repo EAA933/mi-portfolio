@@ -1,0 +1,404 @@
+/* ============================================================
+   inspector360.css — Modo Inspección 3D Orbital Libre
+   Estética aeroespacial, visionOS glass y hotspots 3D holográficos
+   ============================================================ */
+
+#inspector-360 {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s;
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+}
+
+#inspector-360.activo {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+#inspector-360.arrastrando {
+  cursor: grabbing;
+}
+
+/* ── BARRA SUPERIOR ────────────────────────────────────────── */
+.i360-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 50;
+  pointer-events: auto;
+}
+
+.i360-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 6px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.i360-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--i360-acc, #38bdf8);
+  box-shadow: 0 0 12px var(--i360-acc, #38bdf8);
+  animation: i360Pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes i360Pulse {
+  0%, 100% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.3); opacity: 1; }
+}
+
+.i360-badge-txt {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--i360-acc, #38bdf8);
+  text-transform: uppercase;
+}
+
+.i360-titular {
+  text-align: center;
+}
+
+.i360-nombre {
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+}
+
+.i360-tipo {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+
+.i360-btn-cerrar {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  font-size: 13px !important;
+  padding: 9px 18px !important;
+  transition: all 0.2s ease !important;
+}
+
+.i360-btn-cerrar:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: scale(1.03);
+}
+
+/* ── CAPA DE HOTSPOTS 3D PROYECTADOS ───────────────────────── */
+.i360-hotspots-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 48;
+}
+
+.i360-hotspot-punto {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: -18px;
+  margin-top: -18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.12s ease, opacity 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.hs-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--hs-acc, #38bdf8);
+  box-shadow: 0 0 14px var(--hs-acc, #38bdf8);
+  animation: hsRingPulse 2.2s infinite;
+}
+
+@keyframes hsRingPulse {
+  0% { transform: scale(0.7); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 0.3; }
+  100% { transform: scale(0.7); opacity: 0.8; }
+}
+
+.hs-core {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 10px var(--hs-acc, #38bdf8);
+  transition: transform 0.2s ease;
+}
+
+.i360-hotspot-punto:hover .hs-core {
+  transform: scale(1.35);
+}
+
+.hs-tag {
+  position: absolute;
+  left: 42px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(10, 15, 26, 0.88);
+  border: 1px solid var(--hs-acc, rgba(56, 189, 248, 0.4));
+  padding: 4px 10px;
+  border-radius: 6px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  opacity: 0.9;
+  pointer-events: none;
+  transform: translateY(-50%);
+  top: 50%;
+  transition: all 0.2s ease;
+}
+
+.i360-hotspot-punto:hover .hs-tag {
+  opacity: 1;
+  background: rgba(15, 23, 42, 0.98);
+  border-color: var(--hs-acc, #38bdf8);
+  box-shadow: 0 0 18px var(--hs-acc, #38bdf8);
+}
+
+/* ── MODAL / CARD DE DETALLE DE HOTSPOT ─────────────────────── */
+.i360-card-hotspot {
+  position: absolute;
+  bottom: 96px;
+  left: 36px;
+  width: min(380px, calc(100vw - 72px));
+  background: rgba(10, 15, 26, 0.94);
+  border: 1px solid var(--ich-acc, #38bdf8);
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 24px rgba(0, 0, 0, 0.5);
+  z-index: 55;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.i360-card-hotspot.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.ich-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ich-icon {
+  font-size: 24px;
+}
+
+.ich-cat {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ich-titulo {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.ich-cerrar {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.ich-cerrar:hover {
+  color: #fff;
+}
+
+.ich-desc {
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.ich-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+}
+
+.ich-impacto-lbl {
+  color: #94a3b8;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+.ich-impacto-val {
+  font-weight: 700;
+}
+
+/* ── BARRA INFERIOR DE CONTROLES TÁCTICOS ───────────────────── */
+.i360-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 50;
+  pointer-events: auto;
+  flex-wrap: wrap;
+}
+
+.i360-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+
+.i360-controles {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.i360-ctrl-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #94a3b8;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+}
+
+.i360-ctrl-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.i360-ctrl-btn.activo {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--i360-acc, rgba(56, 189, 248, 0.5));
+  box-shadow: 0 0 14px var(--i360-acc, rgba(56, 189, 248, 0.2));
+}
+
+/* Modificaciones de contexto cuando está activo */
+body.modo-inspeccion-360 #lienzo {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+body.modo-inspeccion-360 #nav,
+body.modo-inspeccion-360 #radar-estelar,
+body.modo-inspeccion-360 #panel-orbita {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .i360-header {
+    padding: 16px;
+    flex-wrap: wrap;
+  }
+  .i360-badge {
+    display: none;
+  }
+  .i360-titular {
+    text-align: left;
+  }
+  .i360-footer {
+    padding: 16px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .i360-hint {
+    justify-content: center;
+  }
+  .i360-controles {
+    justify-content: center;
+  }
+  .i360-card-hotspot {
+    left: 16px;
+    right: 16px;
+    bottom: 110px;
+    width: auto;
+  }
+}

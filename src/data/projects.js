@@ -41,6 +41,46 @@ export const projects = [
       { valor: 100, etiqueta: "En el borde (ms de carga)" }
     ],
 
+    // Puntos de interés arquitectónicos para el Modo Inspección 360°
+    hotspots: [
+      {
+        id: "ch-edge",
+        titulo: "Cloudflare Pages & Edge Workers",
+        categoria: "Arquitectura Serverless",
+        icono: "🌐",
+        pos: [0.82, 0.38, 0.42],
+        descripcion: "Despliegue serverless global sin servidor físico. Respuestas HTTP en el borde de la red con caché perimetral.",
+        impacto: "Latencia sub-50ms en México"
+      },
+      {
+        id: "ch-d1",
+        titulo: "Base de Datos Distribuida D1",
+        categoria: "SQL en el Borde",
+        icono: "🗄️",
+        pos: [-0.74, 0.48, 0.46],
+        descripcion: "Base de datos SQL serverless sin costo de aprovisionamiento mensual ni límites estrictos de conexiones.",
+        impacto: "$0 USD/mes costo fijo"
+      },
+      {
+        id: "ch-admin",
+        titulo: "Panel Autónomo de Productores",
+        categoria: "Gestión Móvil",
+        icono: "🌱",
+        pos: [0.18, -0.66, 0.73],
+        descripcion: "Consola web privada con diseño responsivo donde los agricultores suben fotos y gestionan pedidos desde su teléfono.",
+        impacto: "100% autogestión sin soporte técnico"
+      },
+      {
+        id: "ch-ssl",
+        titulo: "Seguridad & Red Perimetral",
+        categoria: "Ciberseguridad",
+        icono: "🛡️",
+        pos: [-0.32, -0.68, -0.65],
+        descripcion: "Protección DDoS automática, compresión Brotli y certificados SSL emitidos en milisegundos.",
+        impacto: "99.99% Uptime ininterrumpido"
+      }
+    ],
+
     // Datos interactivos de Recharts: Eficiencia operativa ganada
     eficiencia: {
       resumen: {
@@ -106,6 +146,46 @@ export const projects = [
       { valor: "<1 min", etiqueta: "Tiempo de respuesta" },
     ],
 
+    // Puntos de interés arquitectónicos para el Modo Inspección 360°
+    hotspots: [
+      {
+        id: "vf-ia",
+        titulo: "Motor de IA Conversacional",
+        categoria: "Inteligencia Artificial",
+        icono: "🤖",
+        pos: [0.72, 0.62, 0.3],
+        descripcion: "Modelo semántico adaptado al tono comercial de la empresa: analiza intenciones, responde objeciones y recomienda productos.",
+        impacto: "88% de resolución autónoma"
+      },
+      {
+        id: "vf-api",
+        titulo: "WhatsApp Cloud API Oficial",
+        categoria: "Mensajería Empresarial",
+        icono: "💬",
+        pos: [-0.8, 0.2, 0.56],
+        descripcion: "Infraestructura directa sobre la API en la nube de Meta sin emuladores ni riesgo de suspensión de línea.",
+        impacto: ">1,000 chats en simultáneo"
+      },
+      {
+        id: "vf-scoring",
+        titulo: "Scoring y Calificación de Leads",
+        categoria: "Filtro Comercial",
+        icono: "⚡",
+        pos: [0.15, -0.85, 0.5],
+        descripcion: "Evaluación en tiempo real del presupuesto y necesidad del prospecto antes de transferir la conversación a un cerrador.",
+        impacto: "3x mayor efectividad comercial"
+      },
+      {
+        id: "vf-crm",
+        titulo: "Sincronización Webhook & Node.js",
+        categoria: "Backend de Integración",
+        icono: "🔄",
+        pos: [-0.4, -0.4, -0.82],
+        descripcion: "Event loop asíncrono que inserta prospectos calificados en CRMs y hojas de cálculo al instante.",
+        impacto: "Cero pérdida de datos"
+      }
+    ],
+
     // Datos interactivos de Recharts: Eficiencia operativa ganada
     eficiencia: {
       resumen: {
@@ -157,6 +237,46 @@ export const projects = [
       "Una sola pantalla para decidir, en vez de reconstruir el estado a mano.",
     metricas: [{ valor: 1, etiqueta: "Pantalla, todo el riesgo" }],
 
+    // Puntos de interés arquitectónicos para el Modo Inspección 360°
+    hotspots: [
+      {
+        id: "pr-var",
+        titulo: "Motor de Cálculo de VaR & Liquidez",
+        categoria: "Finanzas Cuantitativas",
+        icono: "📊",
+        pos: [0.82, 0.45, 0.35],
+        descripcion: "Algoritmos vectorizados en el cliente que calculan escenarios de estrés y exposición patrimonial en milisegundos.",
+        impacto: "Cálculo instantáneo en navegador"
+      },
+      {
+        id: "pr-alertas",
+        titulo: "Matriz de Alertas Tempranas",
+        categoria: "Monitoreo Activo",
+        icono: "🚨",
+        pos: [-0.65, 0.7, 0.29],
+        descripcion: "Sistema de centinela visual con umbrales configurables que resalta desviaciones de solvencia antes de que sean críticas.",
+        impacto: "Mitigación inmediata de riesgo"
+      },
+      {
+        id: "pr-etl",
+        titulo: "Consolidador de Libros Contables",
+        categoria: "Ingesta de Datos",
+        icono: "📑",
+        pos: [0.3, -0.6, 0.74],
+        descripcion: "Fusión de archivos dispersos de múltiples sucursales con normalización de esquemas y validación relacional.",
+        impacto: "28 horas/semana ahorradas"
+      },
+      {
+        id: "pr-ui",
+        titulo: "Diseño Ejecutivo de Alta Densidad",
+        categoria: "UX / Visualización",
+        icono: "🎯",
+        pos: [-0.5, -0.55, -0.67],
+        descripcion: "Jerarquía inspirada en consolas de misión aeroespacial: información crítica legible sin desplazamientos confusos.",
+        impacto: "Decisiones en <3 minutos"
+      }
+    ],
+
     // Datos interactivos de Recharts: Eficiencia operativa ganada
     eficiencia: {
       resumen: {
@@ -207,6 +327,46 @@ export const projects = [
     resultado:
       "De días de trabajo manual a minutos, sin errores de transcripción.",
     metricas: [{ valor: "min", etiqueta: "Antes: días" }],
+
+    // Puntos de interés arquitectónicos para el Modo Inspección 360°
+    hotspots: [
+      {
+        id: "rr-parser",
+        titulo: "Parser XLSX Ultrarrápido",
+        categoria: "Ingesta de Archivos",
+        icono: "⚡",
+        pos: [0.75, 0.55, 0.36],
+        descripcion: "Motor de streaming que procesa matrices de millones de celdas en memoria sin colapsar el explorador.",
+        impacto: "De 6 días a 12 minutos"
+      },
+      {
+        id: "rr-reglas",
+        titulo: "Validador de Normativa AMIS / CNSF",
+        categoria: "Cumplimiento Regulatorio",
+        icono: "⚖️",
+        pos: [-0.85, 0.3, 0.43],
+        descripcion: "Matriz algorítmica de más de 60 reglas de coherencia contable y ramos de seguros que previene multas.",
+        impacto: "0% error de transcripción"
+      },
+      {
+        id: "rr-layout",
+        titulo: "Generador de Layout Oficial",
+        categoria: "Entrega Normativa",
+        icono: "📦",
+        pos: [0.25, -0.75, 0.61],
+        descripcion: "Ensamblador que produce el archivo plano final con la codificación y estructura que exige el regulador.",
+        impacto: "Aprobación al 1er intento"
+      },
+      {
+        id: "rr-auditoria",
+        titulo: "Trazabilidad & Logs de Cruce",
+        categoria: "Gobernanza",
+        icono: "🔒",
+        pos: [-0.45, -0.5, -0.74],
+        descripcion: "Pistas de auditoría completas que permiten inspeccionar el origen exacto de cada celda consolidada.",
+        impacto: "Auditorías 100% transparentes"
+      }
+    ],
 
     // Datos interactivos de Recharts: Eficiencia operativa ganada
     eficiencia: {

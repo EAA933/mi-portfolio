@@ -65,9 +65,15 @@ export function crearHUD() {
       <p class="tagline">${proyecto.tagline || ""}</p>
       <div class="chips">${(proyecto.stack || []).slice(0, 5).map((s) => `<span>${s}</span>`).join("")}</div>
       <div class="metricas">${metricas}</div>
-      <button class="btn btn-primario" data-explorar>Explorar →</button>
+      <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+        <button class="btn btn-primario" data-explorar>Explorar caso →</button>
+        <button type="button" class="btn btn-secundario btn-orbita-360" title="Inspección libre 360°">🪐 Vista 360°</button>
+      </div>
     `;
     panel.querySelector("[data-explorar]").addEventListener("click", () => onExplorar(proyecto));
+    panel.querySelector(".btn-orbita-360")?.addEventListener("click", () => {
+      if (api.onPedirInspeccion360) api.onPedirInspeccion360(proyecto);
+    });
 
     // Aparición por CSS (clase .visible) — robusta ante el throttle del rAF.
     panel.className = lado === "der" ? "lado-der" : "lado-izq";
@@ -103,9 +109,16 @@ export function crearHUD() {
 
     wrap.innerHTML = `
       <header class="hud-header hud-reveal">
-        <div class="eyebrow">${proyecto.categoria === "automatizacion" ? "Automatización" : "Sitio web"}</div>
-        <h1>${proyecto.nombre}</h1>
-        <p class="tagline">${proyecto.tagline || ""}</p>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;">
+          <div>
+            <div class="eyebrow">${proyecto.categoria === "automatizacion" ? "Automatización" : "Sitio web"}</div>
+            <h1>${proyecto.nombre}</h1>
+            <p class="tagline">${proyecto.tagline || ""}</p>
+          </div>
+          <button type="button" class="btn btn-secundario btn-abrir-inspeccion-360" style="margin-top:6px;border-color:var(--accent);box-shadow:0 0 20px -4px var(--accent);display:inline-flex;align-items:center;gap:8px;">
+            <span style="font-size:16px">🪐</span> Inspeccionar Planeta 360°
+          </button>
+        </div>
       </header>
       <div class="metricas hud-reveal">${metricas}</div>
       <div class="galeria hud-reveal">
@@ -146,6 +159,11 @@ export function crearHUD() {
     if (efContainer && proyecto.eficiencia) {
       reactRootActual = montarGraficoEficiencia(efContainer, proyecto);
     }
+
+    // Botón para activar el Modo Inspección 3D Orbital Libre
+    wrap.querySelector(".btn-abrir-inspeccion-360")?.addEventListener("click", () => {
+      if (api.onPedirInspeccion360) api.onPedirInspeccion360(proyecto);
+    });
 
     // Animación suave de entrada (fade-in / slide-up) para cada bloque al hacer scroll
     const hudObserver = new IntersectionObserver(
@@ -193,6 +211,15 @@ export function crearHUD() {
     abrirCaso,
     cerrarCaso,
     estaAbierto: () => hud.classList.contains("activo"),
+    ocultarTemporalmentePara360: () => {
+      hud.classList.remove("activo");
+      document.body.classList.remove("enfoque-hud");
+    },
+    restaurarTras360: () => {
+      hud.classList.add("activo");
+      document.body.classList.add("enfoque-hud");
+    },
+    onPedirInspeccion360: null,
     // main.js puede sobreescribir esto para enrutar el cierre por el
     // historial (botón atrás). Por defecto solo cierra el HUD.
     pedirCerrar: () => cerrarCaso(),

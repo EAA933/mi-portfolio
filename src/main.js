@@ -17,12 +17,14 @@ import "./styles/hud.css";
 import "./styles/grid.css";
 import "./styles/radar.css";
 import "./styles/contact.css";
+import "./styles/inspector360.css";
 
 import projects from "./data/projects.js";
 import site from "./data/site.js";
 import { crearGrid } from "./ui/grid.js";
 import { crearRadar } from "./ui/radar.js";
 import { crearModalContacto } from "./ui/contactModal.js";
+import { crearInspector360 } from "./ui/inspector360.js";
 import { detectarCapacidades, GestorCalidad } from "./core/quality.js";
 import { Renderizador } from "./core/renderer.js";
 import { RigCamara } from "./core/cameraRig.js";
@@ -151,6 +153,35 @@ function iniciar3D() {
 
   // Estado de la interacción cámara/HUD.
   const modo = { enHUD: false, transicion: false, indice: -1, orbita: null, vistaRapida: false };
+
+  // ── Modo Inspección 3D Orbital Libre (Planet 360° Viewer) ──
+  const inspector360 = crearInspector360(escena, camara, projects, planetas, (idx) => {
+    if (modo.enHUD) {
+      hud.restaurarTras360();
+    } else {
+      regresar();
+    }
+  });
+
+  hud.onPedirInspeccion360 = (proyecto) => {
+    const idx = projects.findIndex((p) => p.slug === proyecto.slug);
+    if (idx >= 0) {
+      if (!modo.orbita) {
+        modo.orbita = {
+          pos: camara.position.clone(),
+          quat: camara.quaternion.clone(),
+          fov: camara.fov,
+        };
+      }
+      scroll.lenis.stop();
+      if (hud.estaAbierto()) {
+        hud.ocultarTemporalmentePara360();
+      } else {
+        hud.ocultarPanel();
+      }
+      inspector360.abrir(idx);
+    }
+  };
 
   // ── Aterrizaje: la cámara (y la nave que la precede) descienden al
   //    planeta y se abre el caso de estudio ─────────────────────────
@@ -444,13 +475,18 @@ function iniciar3D() {
     const warpFactor = Math.max(scrollWarp, warpState.boost);
 
     // Micro-shake de cabina y dilatación relativista de FOV durante hiperespacio
-    const camShake = !modo.enHUD && !modo.transicion ? warpFactor * 0.16 : 0;
-    const fovBoost = !modo.enHUD && !modo.transicion ? warpFactor * 5.5 : 0;
+    const camShake = !modo.enHUD && !modo.transicion && !inspector360.estaActivo() ? warpFactor * 0.16 : 0;
+    const fovBoost = !modo.enHUD && !modo.transicion && !inspector360.estaActivo() ? warpFactor * 5.5 : 0;
 
-    // La cámara sigue al scroll salvo durante aterrizaje/HUD.
-    if (!modo.transicion && !modo.enHUD) {
+    // La cámara sigue al scroll salvo durante aterrizaje/HUD/inspección 360.
+    if (!modo.transicion && !modo.enHUD && !inspector360.estaActivo()) {
       rig.actualizar(scroll.progreso);
       rig.aplicarSuavizado(camara, camShake, fovBoost);
+    }
+
+    // Modo Inspección 3D Orbital Libre
+    if (inspector360.estaActivo()) {
+      inspector360.actualizar(dt);
     }
 
     // "Entrada": al inicio (hero) solo se ve el nombre sobre negro; al
@@ -463,7 +499,7 @@ function iniciar3D() {
       centro: pl.grupo.position,
       radio: 8 * (projects[j].planeta?.tamaño ?? 1) * (pl.grupo.scale.x || 1) + 6,
     }));
-    nave.actualizar(dt, camara, entrada, obstaculos, modo.transicion || modo.enHUD, mouseNorm, scroll.velocidad, warpFactor);
+    nave.actualizar(dt, camara, entrada, obstaculos, modo.transicion || modo.enHUD || inspector360.estaActivo(), mouseNorm, scroll.velocidad, warpFactor);
 
     // Cielo + warp relativista (estrellas estiradas en velocidad luz).
     starfield.actualizar(dt, scroll.velocidad, camara, warpFactor);
@@ -471,7 +507,7 @@ function iniciar3D() {
     // Viñeta óptica de velocidad luz
     const warpVignette = document.getElementById("warp-vignette");
     if (warpVignette) {
-      const vOp = (!modo.enHUD && !modo.transicion) ? warpFactor * 0.75 : 0;
+      const vOp = (!modo.enHUD && !modo.transicion && !inspector360.estaActivo()) ? warpFactor * 0.75 : 0;
       warpVignette.style.opacity = vOp.toFixed(3);
     }
 
@@ -493,7 +529,7 @@ function iniciar3D() {
       planetas[j].grupo.visible = entrada > 0.004; // hero: planetas ocultos
       // Etiqueta proyectada (solo en la vista de galaxia).
       const et = etiquetas[j];
-      if (gP > 0.25 && !modo.enHUD && !modo.transicion) {
+      if (gP > 0.25 && !modo.enHUD && !modo.transicion && !inspector360.estaActivo()) {
         _proj.copy(planetas[j].grupo.position).project(camara);
         const enFrente = _proj.z < 1;
         et.style.left = `${(_proj.x * 0.5 + 0.5) * window.innerWidth}px`;
@@ -506,7 +542,7 @@ function iniciar3D() {
       }
     }
     // CTA final.
-    const cVis = suave(0.95, 0.99, scroll.progreso) * (modo.enHUD ? 0 : 1);
+    const cVis = suave(0.95, 0.99, scroll.progreso) * (modo.enHUD || inspector360.estaActivo() ? 0 : 1);
     cta.style.opacity = String(cVis);
     cta.style.transform = `translateY(${Math.max(0, (1 - cVis) * 32)}px)`;
     cta.style.pointerEvents = cVis > 0.5 ? "auto" : "none";
@@ -514,12 +550,12 @@ function iniciar3D() {
     // Hero: se desvanece en el primer 5% del scroll (y se oculta en HUD).
     if (hero)
       hero.style.opacity =
-        modo.enHUD || modo.transicion
+        modo.enHUD || modo.transicion || inspector360.estaActivo()
           ? "0"
           : String(Math.max(1 - scroll.progreso / 0.05, 0));
 
     // Panel de órbita según la ventana del planeta.
-    if (!modo.enHUD && !modo.transicion) {
+    if (!modo.enHUD && !modo.transicion && !inspector360.estaActivo()) {
       let idx = -1;
       for (let j = 0; j < rig.rangos.length; j++) {
         const r = rig.rangos[j];
@@ -541,7 +577,7 @@ function iniciar3D() {
     // Retícula táctica de Target Lock sobre planetas
     if (targetLockEl) {
       const lockIdx = hoveredPlanetIndex !== -1 ? hoveredPlanetIndex : (panelActual !== -1 ? panelActual : -1);
-      if (lockIdx !== -1 && !modo.enHUD && !modo.transicion && entrada > 0.04 && gP < 0.35) {
+      if (lockIdx !== -1 && !modo.enHUD && !modo.transicion && !inspector360.estaActivo() && entrada > 0.04 && gP < 0.35) {
         _proj.copy(planetas[lockIdx].grupo.position).project(camara);
         if (_proj.z < 1) {
           const sx = (_proj.x * 0.5 + 0.5) * window.innerWidth;
@@ -576,6 +612,29 @@ function iniciar3D() {
     }
   }
 
-  window.__portafolio = { rzd, rig, scroll, calidad, modo, aterrizar };
+  // Atajo de teclado: 'I' para entrar/salir de Modo Inspección 360°
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "i" || e.key === "I") {
+      if (inspector360.estaActivo()) {
+        inspector360.cerrar();
+      } else if (modo.enHUD && modo.indice >= 0) {
+        hud.ocultarTemporalmentePara360();
+        inspector360.abrir(modo.indice);
+      } else if (panelActual >= 0) {
+        if (!modo.orbita) {
+          modo.orbita = {
+            pos: camara.position.clone(),
+            quat: camara.quaternion.clone(),
+            fov: camara.fov,
+          };
+        }
+        scroll.lenis.stop();
+        hud.ocultarPanel();
+        inspector360.abrir(panelActual);
+      }
+    }
+  });
+
+  window.__portafolio = { rzd, rig, scroll, calidad, modo, aterrizar, inspector360 };
   console.info(`[main] Modo 3D · nivel "${calidad.nivel}" · ${projects.length} planeta(s).`);
 }
