@@ -1,7 +1,7 @@
 /**
  * factory.js — crea el planeta correcto según projects.js
  * ------------------------------------------------------------------
- * Cada proyecto trae planeta.tipo ("gaseoso"|"terrestre"|"hielo"|"cristal").
+ * Cada proyecto trae planeta.tipo ("huerto"|"medico"|"terrestre"|"gaseoso"|"hielo"|"cristal").
  * El factory devuelve un objeto uniforme { grupo, actualizar(dt, solDir) }
  * sin que main.js tenga que saber de qué tipo es cada uno.
  * ------------------------------------------------------------------
@@ -12,6 +12,7 @@ import { crearTerrestre } from "./terrestre.js";
 import { crearGaseoso } from "./gaseoso.js";
 import { crearHielo } from "./hielo.js";
 import { crearCristal } from "./cristal.js";
+import { crearMedico } from "./medico.js";
 
 const CREADORES = {
   huerto: crearHuerto,
@@ -19,6 +20,7 @@ const CREADORES = {
   gaseoso: crearGaseoso,
   hielo: crearHielo,
   cristal: crearCristal,
+  medico: crearMedico,
 };
 
 export function crearPlaneta(proyecto, radioBase = 8) {

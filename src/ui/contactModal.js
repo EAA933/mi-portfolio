@@ -68,9 +68,12 @@ export function crearModalContacto(site) {
               <span class="msg-error" id="err-mensaje"></span>
             </div>
 
+            <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
+            <span class="msg-error" id="err-envio" role="alert"></span>
+
             <div class="contacto-acciones">
               <button type="submit" class="btn btn-primario btn-submit">
-                <span class="txt-btn">Enviar propuesta →</span>
+                <span class="txt-btn">Enviar mensaje →</span>
                 <span class="spinner-btn" aria-hidden="true"></span>
               </button>
               <span class="contacto-directo">
@@ -113,6 +116,7 @@ export function crearModalContacto(site) {
   const errNombre = modal.querySelector("#err-nombre");
   const errEmail = modal.querySelector("#err-email");
   const errMensaje = modal.querySelector("#err-mensaje");
+  const errEnvio = modal.querySelector("#err-envio");
 
   // Selección de tipo de servicio con pills
   pills.forEach((btn) => {
@@ -182,24 +186,68 @@ export function crearModalContacto(site) {
       fecha: new Date().toISOString(),
     };
 
-    // Guardar en almacenamiento local como registro confiable
-    try {
-      const prev = JSON.parse(localStorage.getItem("ea_leads") || "[]");
-      prev.push(lead);
-      localStorage.setItem("ea_leads", JSON.stringify(prev));
-    } catch (err) {}
+    errEnvio.textContent = "";
 
-    // Simulación de envío con confirmación instantánea
-    setTimeout(() => {
-      submitBtn.classList.remove("cargando");
-      submitBtn.disabled = false;
-
-      cuerpo.classList.add("oculto");
-      exito.classList.remove("oculto");
-
-      exitoDetalle.innerHTML = `Gracias, <strong>${lead.nombre}</strong>. He recibido tu solicitud sobre <em>"${lead.tipo}"</em>. Te responderé directamente a <strong>${lead.email}</strong> en menos de 24 horas.`;
-    }, 700);
+    enviarLead(lead)
+      .then((via) => {
+        cuerpo.classList.add("oculto");
+        exito.classList.remove("oculto");
+        mostrarExito(lead, via);
+      })
+      .catch(() => {
+        errEnvio.innerHTML = `No se pudo enviar el mensaje. Escríbeme directo a <a href="${mailtoDe(lead)}">${site.contacto.email}</a>.`;
+      })
+      .finally(() => {
+        submitBtn.classList.remove("cargando");
+        submitBtn.disabled = false;
+      });
   });
+
+  function mailtoDe(lead) {
+    const asunto = `Proyecto: ${lead.tipo} — ${lead.nombre}`;
+    const cuerpoCorreo = `${lead.mensaje}\n\nTipo: ${lead.tipo}\nPlazo: ${lead.plazo}\nNombre: ${lead.nombre}\nCorreo: ${lead.email}`;
+    return `mailto:${site.contacto.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpoCorreo)}`;
+  }
+
+  // Envía por Web3Forms; sin access key, abre el cliente de correo del visitante.
+  async function enviarLead(lead) {
+    const key = site.contacto.web3formsKey;
+    if (!key) {
+      window.location.href = mailtoDe(lead);
+      return "mailto";
+    }
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        access_key: key,
+        subject: `Portafolio · ${lead.tipo} — ${lead.nombre}`,
+        from_name: "Portafolio Eduardo Aranda",
+        replyto: lead.email,
+        botcheck: form.querySelector('[name="botcheck"]').checked,
+        ...lead,
+      }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.success) throw new Error(data.message || `HTTP ${res.status}`);
+    return "web3forms";
+  }
+
+  function mostrarExito(lead, via) {
+    const titulo = exito.querySelector("h3");
+    exitoDetalle.textContent = "";
+    const nombre = document.createElement("strong");
+    nombre.textContent = lead.nombre;
+    const correo = document.createElement("strong");
+    correo.textContent = lead.email;
+    if (via === "mailto") {
+      titulo.textContent = "Se abrió tu correo";
+      exitoDetalle.append("Gracias, ", nombre, ". Revisa tu cliente de correo y presiona Enviar para que me llegue tu mensaje.");
+    } else {
+      titulo.textContent = "¡Mensaje enviado!";
+      exitoDetalle.append("Gracias, ", nombre, ". Recibí los detalles de tu proyecto y te responderé a ", correo, " en menos de 24 horas.");
+    }
+  }
 
   function abrirModal(prellenado = {}) {
     if (prellenado.tipo) {
@@ -232,6 +280,7 @@ export function crearModalContacto(site) {
     errNombre.textContent = "";
     errEmail.textContent = "";
     errMensaje.textContent = "";
+    errEnvio.textContent = "";
     pills[0].click();
     exito.classList.add("oculto");
     cuerpo.classList.remove("oculto");

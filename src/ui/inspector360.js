@@ -328,6 +328,7 @@ export function crearInspector360(escena, camara, projects, planetas, onSalir) {
       gaseoso: "GIGANTE GASEOSO • ANILLOS DE HIELO & AURORAS",
       hielo: "MUNDO CRIOGÉNICO • GLACIARES DE METANO",
       cristal: "PLANETA DE CRISTAL • RED GEOMÉTRICA DE DATOS",
+      medico: "MUNDO CLÍNICO • ESCÁNER DE PRECIOS & ANILLO DE CÁPSULAS",
     };
     elHeaderTipo.textContent = tipos[proyecto.planeta?.tipo] || "CUERPO CELESTE";
     cont.style.setProperty("--i360-acc", acento);

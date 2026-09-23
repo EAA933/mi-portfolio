@@ -679,39 +679,5 @@ function iniciar3D() {
 
   window.__portafolio = { rzd, rig, scroll, calidad, modo, aterrizar, inspector360, hud };
 
-  // Helper admin para consola y llamadas directas
-  window.admin = function(subtab) {
-    aterrizar(0);
-    setTimeout(() => {
-      const btnAdmin = document.querySelector('.sim-segment-btn[data-modo="admin"]');
-      if (btnAdmin) btnAdmin.click();
-      if (subtab) {
-        const t = document.querySelector(`.sim-admin-tab[data-subtab="${subtab}"]`);
-        if (t) t.click();
-      }
-    }, 800);
-    return "📱 Abriendo panel /admin.html en el simulador de Cosecha Hidalguense...";
-  };
-  window.admin.html = function(opcion) {
-    if (opcion === "url" || opcion === "nav") {
-      window.location.href = "/admin.html";
-      return "Navegando a /admin.html...";
-    }
-    aterrizar(0);
-    setTimeout(() => {
-      const btnAdmin = document.querySelector('.sim-segment-btn[data-modo="admin"]');
-      if (btnAdmin) btnAdmin.click();
-    }, 800);
-    return "📱 Abriendo panel /admin.html en el simulador 3D (para abrir la página completa usa admin.html('nav')).";
-  };
-  window.admin.html.toString = function() { return "/admin.html"; };
-  window.admin.html.valueOf = function() { return "/admin.html"; };
-  window.admin.abrir = window.admin;
-  window.admin.panel = window.admin;
-  window.admin.pwa = window.admin.html;
-  window.admin.version = "1.0.0";
-  window.admin.plataforma = "Cloudflare D1 + Workers";
-  window.admin.estado = "online";
-
   console.info(`[main] Modo 3D · nivel "${calidad.nivel}" · ${projects.length} planeta(s).`);
 }

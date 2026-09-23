@@ -19,6 +19,8 @@ npm run preview    # previsualiza el build local
 2. O arrastra la carpeta `dist/` a app.netlify.com/drop.
 
 ## Antes de publicar (checklist)
+- [ ] **Formulario de contacto**: crea una access key gratis en web3forms.com (con tu correo)
+      y pégala en `contacto.web3formsKey` de `src/data/site.js`. Sin key, el formulario abre el cliente de correo.
 - [ ] **CV**: coloca tu PDF en `public/cv.pdf` (el botón "Descargar CV" ya lo usa).
 - [ ] **Imagen Open Graph**: añade `public/og.jpg` (1200×630). Ya está referenciada en `index.html`.
 - [ ] **Peso**: `public/references/` (~6 MB del storyboard) se sirve pero **no lo usa la app**.

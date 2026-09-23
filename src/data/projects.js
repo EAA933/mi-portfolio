@@ -175,70 +175,7 @@ export const projects = [
             titulo: "Panel de Control /admin.html",
             desc: "Consola de administración autónoma con pestañas para gestionar el catálogo de Productores, la oferta de Cajas y la bandeja de Mensajes de contacto."
           }
-        ],
-        simulador: {
-          cultivos: [
-            { id: "pimiento", nombre: "Pimiento morrón", colores: ["Rojo", "Amarillo", "Naranja", "Verde"], icon: "🫑" },
-            { id: "pepino", nombre: "Pepino", colores: ["Verde"], icon: "🥒" },
-            { id: "chile-jalapeno", nombre: "Chile Jalapeño", colores: ["Verde"], icon: "🌶️" },
-            { id: "chile-serrano", nombre: "Chile Serrano", colores: ["Verde"], icon: "🌶️" },
-            { id: "berenjena", nombre: "Berenjena", colores: ["Morado"], icon: "🍆" },
-            { id: "jitomate", nombre: "Jitomate Bola", colores: ["Rojo"], icon: "🍅" }
-          ],
-          productores: [
-            {
-              id: 1,
-              nombre: "Hermanos Arteaga Trejo",
-              cultivo: "Pimiento morrón",
-              colores: ["Amarillo", "Naranja", "Rojo", "Verde"],
-              municipio: "Tasquillo, Hidalgo",
-              temporada: "Agosto - Enero",
-              whatsapp: "771 118 9043",
-              certificaciones: ["SENASICA"],
-              destacado: true
-            },
-            {
-              id: 2,
-              nombre: "Agroindustrias Terramex",
-              cultivo: "Pimiento morrón",
-              colores: ["Amarillo", "Naranja", "Rojo", "Verde"],
-              municipio: "Tasquillo, Hidalgo",
-              temporada: "Junio - Noviembre",
-              whatsapp: "771 712 9511",
-              certificaciones: ["PrimusGFS"],
-              destacado: true
-            },
-            {
-              id: 3,
-              nombre: "Invernaderos de Tasquillo",
-              cultivo: "Pimiento morrón",
-              colores: ["Amarillo", "Naranja", "Rojo", "Verde"],
-              municipio: "Tasquillo, Hidalgo",
-              temporada: "Agosto - Enero",
-              whatsapp: "55 3207 3065",
-              certificaciones: ["SENASICA"],
-              destacado: true
-            }
-          ],
-          cajas: [
-            {
-              id: "caja-morron",
-              nombre: "Caja Ventilada para Pimiento Morrón",
-              medidas: "50 × 30 × 28 cm",
-              capacidad: "5 kg a 10 kg",
-              precioUnitario: 24.50,
-              resistencia: "Doble corrugado resistente a condensación y estiba en tarima"
-            },
-            {
-              id: "caja-pepino",
-              nombre: "Caja Agrícola Multiusos con Asas",
-              medidas: "60 × 40 × 22 cm",
-              capacidad: "12 kg a 15 kg",
-              precioUnitario: 28.00,
-              resistencia: "Ventilada con troquel ergonómico de fácil estibado"
-            }
-          ]
-        }
+        ]
       },
 
       impacto: {
@@ -361,97 +298,87 @@ export const projects = [
   },
 
   {
-    slug: "vyntra-flow",
-    nombre: "Vyntra Flow",
-    categoria: "automatizacion",
-    tagline: "Ventas por WhatsApp en piloto automático.",
+    slug: "medscan",
+    nombre: "MedScan",
+    categoria: "web",
+    tagline: "Compara el precio de tus medicamentos en 12 farmacias de México.",
     descripcion:
-      "Automatización comercial por WhatsApp con IA para PyMEs: responde, " +
-      "califica y da seguimiento a prospectos sin intervención humana.",
+      "Comparador de precios de medicamentos: buscas una sustancia o marca y " +
+      "consulta en vivo las farmacias, agrupa por dosis y te dice cuál es la " +
+      "opción más barata por tableta.",
     reto:
-      "Las PyMEs pierden ventas por no contestar a tiempo en WhatsApp: los " +
-      "mensajes llegan a toda hora y un humano no da abasto ni es rentable.",
+      "El mismo medicamento puede costar varias veces más según la farmacia, y " +
+      "comparar a mano significa abrir cada sitio, buscar la misma dosis y " +
+      "calcular el precio por pieza de presentaciones distintas.",
     solucion:
-      "Un flujo con IA que atiende, entiende la intención, responde con el " +
-      "catálogo y agenda o deriva a un humano solo cuando hace falta.",
+      "Un backend en Node que consulta 9 farmacias en paralelo (APIs VTEX y " +
+      "scrapers), normaliza dosis y piezas, calcula el precio unitario y " +
+      "transmite el progreso en tiempo real al frontend en React (PWA).",
     resultado:
-      "Respuesta inmediata 24/7 y seguimiento constante, sin ampliar el equipo.",
+      "Una búsqueda muestra en segundos la opción más barata por tableta. " +
+      "Ejemplo real: paracetamol 500 mg desde $8.00 en Similares, 71% menos " +
+      "que la opción más cara.",
+    resultadoTag: "Precio por tableta en segundos",
     metricas: [
-      { valor: "24/7", etiqueta: "Atención" },
-      { valor: "<1 min", etiqueta: "Tiempo de respuesta" },
+      { valor: 12, etiqueta: "Farmacias comparadas" },
+      { valor: "+90", etiqueta: "Sustancias en catálogo" },
     ],
 
     // Puntos de interés arquitectónicos para el Modo Inspección 360°
     hotspots: [
       {
-        id: "vf-ia",
-        titulo: "Motor de IA Conversacional",
-        categoria: "Inteligencia Artificial",
-        icono: "🤖",
-        pos: [0.72, 0.62, 0.3],
-        descripcion: "Modelo semántico adaptado al tono comercial de la empresa: analiza intenciones, responde objeciones y recomienda productos.",
-        impacto: "88% de resolución autónoma"
+        id: "ms-scrapers",
+        titulo: "Consulta Paralela a Farmacias",
+        categoria: "Scraping & APIs",
+        icono: "🔎",
+        pos: [0.74, 0.55, 0.38],
+        descripcion: "9 farmacias con precio en vivo (catálogos VTEX y scrapers HTML) consultadas en paralelo con timeout por tienda; las demás se ofrecen como enlace directo.",
+        impacto: "Una tienda caída no frena la búsqueda"
       },
       {
-        id: "vf-api",
-        titulo: "WhatsApp Cloud API Oficial",
-        categoria: "Mensajería Empresarial",
-        icono: "💬",
-        pos: [-0.8, 0.2, 0.56],
-        descripcion: "Infraestructura directa sobre la API en la nube de Meta sin emuladores ni riesgo de suspensión de línea.",
-        impacto: ">1,000 chats en simultáneo"
+        id: "ms-normalizacion",
+        titulo: "Normalización de Dosis y Precio Unitario",
+        categoria: "Procesamiento de Datos",
+        icono: "💊",
+        pos: [-0.8, 0.35, 0.48],
+        descripcion: "Extrae dosis, piezas y forma del nombre del producto, agrupa \"1 g\" con \"1000 mg\", separa genéricos de marcas y calcula el precio por tableta.",
+        impacto: "Compara presentaciones distintas"
       },
       {
-        id: "vf-scoring",
-        titulo: "Scoring y Calificación de Leads",
-        categoria: "Filtro Comercial",
+        id: "ms-sse",
+        titulo: "Progreso en Tiempo Real (SSE)",
+        categoria: "Experiencia de Usuario",
         icono: "⚡",
-        pos: [0.15, -0.85, 0.5],
-        descripcion: "Evaluación en tiempo real del presupuesto y necesidad del prospecto antes de transferir la conversación a un cerrador.",
-        impacto: "3x mayor efectividad comercial"
+        pos: [0.2, -0.82, 0.54],
+        descripcion: "Server-Sent Events avisan farmacia por farmacia mientras llegan los precios, con caché para búsquedas repetidas y rate limiting.",
+        impacto: "El usuario ve avance, no una espera"
       },
       {
-        id: "vf-crm",
-        titulo: "Sincronización Webhook & Node.js",
-        categoria: "Backend de Integración",
-        icono: "🔄",
-        pos: [-0.4, -0.4, -0.82],
-        descripcion: "Event loop asíncrono que inserta prospectos calificados en CRMs y hojas de cálculo al instante.",
-        impacto: "Cero pérdida de datos"
+        id: "ms-alertas",
+        titulo: "Historial y Alertas de Precio",
+        categoria: "Automatización",
+        icono: "🔔",
+        pos: [-0.42, -0.45, -0.79],
+        descripcion: "Un cron diario recorre el catálogo, guarda historial de precios y monitorea la salud de cada scraper; con Supabase avisa por correo o push cuando baja un precio.",
+        impacto: "Avisos aunque la app esté cerrada"
       }
     ],
 
-    // Datos interactivos de Recharts: Eficiencia operativa ganada
-    eficiencia: {
-      resumen: {
-        porcentaje: "93% ahorro operativo",
-        tiempo: "99.7% más veloz",
-        impacto: "$7,200 USD/año ahorrados",
-      },
-      comparativas: {
-        tiempo: [
-          { concepto: "1ra respuesta", antes: 48, conSolucion: 0.2, ahorro: "-99.6%", detalle: "De 4 horas de espera a menos de 45 segundos inmediatos." },
-          { concepto: "Calificación lead", antes: 65, conSolucion: 3.5, ahorro: "-95%", detalle: "IA sondea presupuesto, interés y urgencia de compra." },
-          { concepto: "Seguimiento post", antes: 32, conSolucion: 1.0, ahorro: "-97%", detalle: "Reactivación automática de prospectos que dejaron de responder." },
-          { concepto: "Registro en CRM", antes: 24, conSolucion: 0.5, ahorro: "-98%", detalle: "Sincronización directa mediante Webhooks y Node.js." },
-        ],
-        costos: [
-          { concepto: "Turnos de atención", antes: 780, conSolucion: 60, ahorro: "$720/mes", detalle: "Atención comercial nocturna y fines de semana cubierta al 100%." },
-          { concepto: "Fugas de prospectos", antes: 450, conSolucion: 40, ahorro: "$410/mes", detalle: "Respuesta instantánea evita que el cliente compre a la competencia." },
-          { concepto: "Licencias de chat", antes: 90, conSolucion: 20, ahorro: "$70/mes", detalle: "Integración sobre API oficial sin cobro por asientos múltiples." },
-          { concepto: "Capacitación staff", antes: 180, conSolucion: 15, ahorro: "$165/mes", detalle: "Catálogo y objeciones indexadas en la memoria de la IA." },
-        ],
-      },
-    },
+    // Sin gráfico de Recharts: las métricas de este proyecto son medibles
+    // directo en la app, no estimaciones de ahorro operativo.
+    eficiencia: null,
 
-    stack: ["IA", "WhatsApp API", "Node", "Automatización"],
-    links: { sitio: null, codigo: null },
+    stack: ["React", "Node.js", "Express", "Supabase", "PWA"],
+    links: {
+      sitio: null,
+      codigo: null, // https://github.com/EAA933/medscan — agregar cuando el repo sea público
+    },
     capturas: [
-      import.meta.env.BASE_URL + "capturas/vyntra-home.svg",
-      import.meta.env.BASE_URL + "capturas/vyntra-movil.svg"
+      import.meta.env.BASE_URL + "captures/medscan-home.png",
+      import.meta.env.BASE_URL + "captures/medscan-movil.png"
     ],
     video: null,
-    planeta: { tipo: "gaseoso", acento: "#34d399", tamaño: 1.25, velocidadRotacion: 0.025 }
+    planeta: { tipo: "medico", acento: "#818cf8", tamaño: 1.12, velocidadRotacion: 0.014 }
   },
 
   {

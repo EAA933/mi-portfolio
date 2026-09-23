@@ -4,68 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Compatibilidad para entornos iframe / proxies con window.fetch y API global admin -->
-  <script>
-    (function() {
-      try {
-        var _fetch = window.fetch ? window.fetch.bind(window) : undefined;
-        Object.defineProperty(window, 'fetch', {
-          get: function() { return _fetch; },
-          set: function(val) { _fetch = val; },
-          configurable: true,
-          enumerable: true
-        });
-      } catch (e1) {
-        try {
-          var _protoFetch = Window.prototype.fetch;
-          Object.defineProperty(Window.prototype, 'fetch', {
-            get: function() { return _protoFetch; },
-            set: function(val) { _protoFetch = val; },
-            configurable: true,
-            enumerable: true
-          });
-        } catch (e2) {}
-      }
-    })();
-
-    // Definición global de `admin` y `admin.html` para evitar ReferenceError / TypeError en consola
-    var admin = function(accion) {
-      if (window.__portafolio && typeof window.__portafolio.aterrizar === 'function') {
-        window.__portafolio.aterrizar(0);
-        setTimeout(function() {
-          var btnAdmin = document.querySelector('.sim-segment-btn[data-modo="admin"]');
-          if (btnAdmin) btnAdmin.click();
-        }, 700);
-      }
-      return "📱 Consola /admin.html activa. Visualizando panel en el simulador de Cosecha Hidalguense.";
-    };
-    admin.html = function(opcion) {
-      if (opcion === "url" || opcion === "nav") {
-        window.location.href = "/admin.html";
-        return "Navegando a /admin.html...";
-      }
-      if (window.__portafolio && typeof window.__portafolio.aterrizar === 'function') {
-        window.__portafolio.aterrizar(0);
-        setTimeout(function() {
-          var btnAdmin = document.querySelector('.sim-segment-btn[data-modo="admin"]');
-          if (btnAdmin) btnAdmin.click();
-        }, 700);
-        return "📱 Abriendo panel /admin.html en el simulador 3D (para abrir la página completa ejecuta admin.html('nav')).";
-      }
-      window.location.href = "/admin.html";
-      return "Navegando a /admin.html...";
-    };
-    admin.html.toString = function() { return "/admin.html"; };
-    admin.html.valueOf = function() { return "/admin.html"; };
-    admin.abrir = admin;
-    admin.panel = admin;
-    admin.pwa = admin.html;
-    admin.version = "1.0.0";
-    admin.plataforma = "Cloudflare Pages + Workers + D1";
-    admin.estado = "online";
-    window.admin = admin;
-  </script>
-
   <!-- SEO -->
   <title>Eduardo Aranda — Full Stack &amp; Automatizaciones con IA</title>
   <meta name="description" content="Full Stack Engineer. Desarrollo plataformas web de alto rendimiento (Three.js/Cloudflare) y flujos de automatización e IA que ahorran tiempo y costos a empresas." />
@@ -185,7 +123,7 @@
         <p class="tagline">Del campo de Hidalgo a tu mesa, en línea.</p>
 
         <h3>01. Concepto Creativo: Lo que el cliente pidió vs lo desarrollado</h3>
-        <p>El cliente buscaba una solución para pequeños productores agrícolas de Hidalgo que solo vendían en tianguis y coordinaban pedidos de forma caótica por correo y redes sociales. Desarrollé el concepto integral "Del campo de Hidalgo a tu mesa en un clic": marca campirana honesta, modelo de cajas de temporada y canastas agroecológicas con historias que destacan el rostro campesino sin intermediarios.</p>
+        <p>Productores de invernadero de Tasquillo y el Valle del Mezquital (pimiento morrón, pepino, jitomate) perdían gran parte de su margen con intermediarios y vendían sin identidad de marca. Desarrollé el concepto integral "Del campo hidalguense para tu mesa": catálogo de productores con contacto directo por WhatsApp y cajas agrícolas con código QR de trazabilidad ("Quién sembró tu caja").</p>
 
         <h3>02. Experiencia Visual &amp; Catálogo</h3>
         <p>Catálogo público ultra-rápido en Cloudflare Pages optimizado para compras directas y experiencia móvil intuitiva.</p>
@@ -202,24 +140,21 @@
         <p style="margin-top:20px"><a href="https://cosechahidalguense.com" target="_blank" rel="noopener">Ver sitio →</a></p>
       </article>
 
-      <article id="vyntra-flow">
-        <h2>Vyntra Flow</h2>
-        <p class="tagline">Ventas por WhatsApp en piloto automático.</p>
+      <article id="medscan">
+        <h2>MedScan</h2>
+        <p class="tagline">Compara el precio de tus medicamentos en 12 farmacias de México.</p>
 
         <h3>Reto</h3>
-        <p>Las PyMEs pierden ventas por no contestar a tiempo en WhatsApp: los mensajes llegan a toda hora y un humano no da abasto ni es rentable atender fuera de horario.</p>
+        <p>El mismo medicamento puede costar varias veces más según la farmacia, y comparar a mano significa abrir cada sitio, buscar la misma dosis y calcular el precio por pieza de presentaciones distintas.</p>
 
         <h3>Solución</h3>
-        <p>Un flujo automatizado con IA que atiende 24/7, comprende la intención del cliente, responde con el catálogo comercial adecuado y agenda o deriva a un humano solo cuando es necesario.</p>
+        <p>Un backend en Node que consulta 9 farmacias en paralelo (APIs VTEX y scrapers), normaliza dosis y piezas, separa genéricos de marcas y calcula el precio por tableta. El frontend en React (PWA) muestra el progreso farmacia por farmacia vía Server-Sent Events.</p>
 
         <h3>Resultado</h3>
-        <p>Respuesta inmediata en menos de 1 minuto las 24 horas del día y seguimiento constante de prospectos calificados sin ampliar el equipo de ventas.</p>
-
-        <h3>Eficiencia operativa ganada</h3>
-        <p>Ahorro del 93% en costos operativos de atención comercial y aceleración del 99.7% en tiempos de primera respuesta.</p>
+        <p>Una búsqueda muestra en segundos la opción más barata por tableta. Ejemplo real: paracetamol 500 mg desde $8.00 en Similares, 71% menos que la opción más cara. Incluye historial diario de precios y alertas por correo o push cuando un precio baja.</p>
 
         <div class="stack" aria-label="Tecnologías">
-          <span>IA</span><span>WhatsApp API</span><span>Node.js</span><span>Automatización</span>
+          <span>React</span><span>Node.js</span><span>Express</span><span>Supabase</span><span>PWA</span>
         </div>
       </article>
 

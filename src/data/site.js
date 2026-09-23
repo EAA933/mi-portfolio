@@ -21,6 +21,10 @@ export const site = {
     email: "earandaa933@gmail.com",
     github: "https://github.com/EAA933",
     linkedin: "https://www.linkedin.com/in/eduardoaranda-risk/",
+    // Access key de Web3Forms (https://web3forms.com): los mensajes del
+    // formulario llegan a tu correo. Es pública por diseño (va en el
+    // cliente). Si queda vacía, el formulario abre el cliente de correo.
+    web3formsKey: "",
   },
 
   // Metadatos para <head>: SEO + Open Graph + favicon.
