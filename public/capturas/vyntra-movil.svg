@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+  <rect width="390" height="844" fill="#0b0d12"/>
+  <!-- Status bar & Header -->
+  <rect x="0" y="0" width="390" height="88" fill="#151922"/>
+  <circle cx="36" cy="54" r="14" fill="#34d399"/>
+  <text x="60" y="52" fill="#eef1f7" font-size="16" font-weight="700">Vyntra Flow Mobile</text>
+  <text x="60" y="68" fill="#34d399" font-size="11">● Agente IA Activo</text>
+  
+  <!-- Chat Messages -->
+  <rect x="18" y="108" width="280" height="60" rx="14" fill="#1b2029"/>
+  <text x="32" y="134" fill="#e8eaf2" font-size="13">¿Tienen pimientos para entrega?</text>
+  <text x="32" y="152" fill="#8a8fa8" font-size="11">10:14 AM</text>
+
+  <rect x="80" y="184" width="292" height="92" rx="14" fill="#0f3d2e"/>
+  <text x="96" y="210" fill="#d6ffe9" font-size="13">¡Hola! Sí tenemos pimientos en</text>
+  <text x="96" y="230" fill="#d6ffe9" font-size="13">los 4 colores. ¿Cuántas cajas</text>
+  <text x="96" y="250" fill="#d6ffe9" font-size="13">necesitas agendar? 🚚</text>
+  <text x="354" y="264" fill="#34d399" font-size="10" text-anchor="end">IA</text>
+
+  <rect x="18" y="292" width="240" height="56" rx="14" fill="#1b2029"/>
+  <text x="32" y="318" fill="#e8eaf2" font-size="13">Necesito 20 cajas rojas.</text>
+  <text x="32" y="336" fill="#8a8fa8" font-size="11">10:15 AM</text>
+
+  <rect x="80" y="364" width="292" height="96" rx="14" fill="#0f3d2e"/>
+  <text x="96" y="390" fill="#d6ffe9" font-size="13">Listo, cotización generada:</text>
+  <text x="96" y="412" fill="#ffffff" font-size="14" font-weight="700">20 cajas × $250 = $5,000</text>
+  <text x="96" y="432" fill="#a7f3d0" font-size="12">Envío incluido a destino.</text>
+  <text x="354" y="448" fill="#34d399" font-size="10" text-anchor="end">IA</text>
+
+  <!-- KPI card overlay in mobile -->
+  <rect x="18" y="484" width="354" height="140" rx="16" fill="#12151d" stroke="#222b3a" stroke-width="1.5"/>
+  <text x="36" y="516" fill="#34d399" font-size="12" font-weight="700" letter-spacing="1">MÉTRICA EN TIEMPO REAL</text>
+  <text x="36" y="548" fill="#ffffff" font-size="28" font-weight="800">&lt; 45 seg</text>
+  <text x="36" y="572" fill="#8a8fa8" font-size="13">Tiempo promedio de respuesta</text>
+  <rect x="36" y="594" width="318" height="6" rx="3" fill="#1f2937"/>
+  <rect x="36" y="594" width="300" height="6" rx="3" fill="#34d399"/>
+
+  <!-- Footer Input Mockup -->
+  <rect x="0" y="756" width="390" height="88" fill="#151922"/>
+  <rect x="18" y="774" width="300" height="44" rx="22" fill="#1b2029"/>
+  <text x="38" y="801" fill="#8a8fa8" font-size="13">Escribe un mensaje...</text>
+  <circle cx="348" cy="796" r="20" fill="#34d399"/>
+  <polygon points="344,788 356,796 344,804" fill="#0b0d12"/>
+</svg>

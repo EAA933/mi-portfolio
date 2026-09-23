@@ -73,11 +73,12 @@ function iniciar3D() {
   const pmrem = new THREE.PMREMGenerator(rzd.renderer);
   escena.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
-  // Sol único (alto contraste día/noche) + relleno frío tenue.
-  const sol = new THREE.DirectionalLight(0xffffff, 2.3);
-  sol.position.set(-1, 0.4, 0.6);
+  // Sol principal (alto contraste y calidez) + luz ambiental cósmica
+  const sol = new THREE.DirectionalLight(0xffffff, 2.5);
+  sol.position.set(-1, 0.6, 0.6);
   escena.add(sol);
-  escena.add(new THREE.HemisphereLight(0x8098c0, 0x060608, 0.28));
+  const hemiLuz = new THREE.HemisphereLight(0x8098c0, 0x060608, 0.6);
+  escena.add(hemiLuz);
   const solDir = sol.position.clone().normalize();
 
   // — Cielo estrellado con túnel warp relativista —
@@ -187,6 +188,7 @@ function iniciar3D() {
   //    planeta y se abre el caso de estudio ─────────────────────────
   function aterrizar(i) {
     if (modo.transicion || modo.enHUD) return;
+    if (i === undefined || i === null || i < 0 || i >= projects.length) return;
     modo.transicion = true;
     modo.indice = i;
     scroll.lenis.stop();
@@ -207,13 +209,13 @@ function iniciar3D() {
     dummy.lookAt(P);
     const quatTo = dummy.quaternion.clone();
 
-    tweenCamara(posTo, quatTo, 66, 1.2, "power3.in", () => {
+    // Desenfoque suave al descender a la superficie
+    gsap.delayedCall(0.4, () => document.body.classList.add("enfoque-hud"));
+    tweenCamara(posTo, quatTo, 66, 0.8, "power2.out", () => {
       modo.transicion = false;
       modo.enHUD = true;
       hud.abrirCaso(projects[i], () => regresar());
     });
-    // Desenfoque al "cruzar la atmósfera".
-    gsap.delayedCall(0.85, () => document.body.classList.add("enfoque-hud"));
   }
 
   function regresar() {
@@ -251,6 +253,7 @@ function iniciar3D() {
 
   // ── Ruteo (#slug) + botón atrás ────────────────────────────────
   function irAProyecto(i) {
+    if (i === undefined || i === null || i < 0 || i >= projects.length) return;
     dispararSaltoWarp(1.2);
     router.abrir(projects[i].slug); // crea entrada en el historial
     aterrizar(i);
@@ -338,6 +341,8 @@ function iniciar3D() {
   let hoveredPlanetIndex = -1;
   const targetLockEl = document.getElementById("target-lock");
   const targetLockNombre = targetLockEl?.querySelector(".tl-nombre");
+  const targetLockTag = targetLockEl?.querySelector(".tl-tag");
+  const targetLockAccion = targetLockEl?.querySelector(".tl-accion");
 
   window.addEventListener("pointermove", (e) => {
     mouseNorm.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -383,7 +388,7 @@ function iniciar3D() {
     if (hits.length) {
       let o = hits[0].object;
       while (o && o.userData.indice === undefined) o = o.parent;
-      if (o) irAProyecto(o.userData.indice);
+      if (o && o.userData?.indice !== undefined) irAProyecto(o.userData.indice);
     }
   });
 
@@ -453,9 +458,30 @@ function iniciar3D() {
   document.querySelectorAll("#switch-vista button").forEach((b) =>
     b.addEventListener("click", () => setVista(b.dataset.vista))
   );
+
+  // Scroll-triggered reveal para los artículos del contenido semántico
+  if ("IntersectionObserver" in window) {
+    const articulosObserver = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revelado");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+    );
+    document.querySelectorAll("#contenido article").forEach((art) => {
+      articulosObserver.observe(art);
+    });
+  }
   let vistaGuardada = "3d";
   try { vistaGuardada = localStorage.getItem("ea-vista") || "3d"; } catch (e) {}
   if (vistaGuardada === "rapida") setVista("rapida", false);
+
+  // Limpiar cualquier tema viejo en localStorage
+  try { localStorage.removeItem("ea-tema"); } catch (e) {}
 
   // Hero overlay (nombre) que se desvanece al empezar a navegar.
   const hero = document.getElementById("hero-3d");
@@ -503,6 +529,14 @@ function iniciar3D() {
 
     // Cielo + warp relativista (estrellas estiradas en velocidad luz).
     starfield.actualizar(dt, scroll.velocidad, camara, warpFactor);
+
+    // Cálculo de transición de ambiente hacia un amanecer de huerto y cosecha agrícola
+    // El fondo siempre es el espacio cósmico puro con cielo estrellado
+    escena.background.set(0x000000);
+    sol.color.set(0xffffff);
+    sol.intensity = 2.4;
+    hemiLuz.color.set(0x8098c0);
+    hemiLuz.groundColor.set(0x060608);
 
     // Viñeta óptica de velocidad luz
     const warpVignette = document.getElementById("warp-vignette");
@@ -585,6 +619,14 @@ function iniciar3D() {
           targetLockEl.style.left = `${sx}px`;
           targetLockEl.style.top = `${sy}px`;
           if (targetLockNombre) targetLockNombre.textContent = projects[lockIdx].nombre.toUpperCase();
+          const esHuertoLock = projects[lockIdx].planeta?.tipo === "huerto";
+          if (targetLockTag) {
+            targetLockTag.textContent = esHuertoLock ? "🌿 PROYECTO AGRÍCOLA // HUERTO" : "OBJETIVO EN RANGO";
+          }
+          if (targetLockAccion) {
+            targetLockAccion.textContent = esHuertoLock ? "CLIC PARA CONOCER EL HUERTO" : "CLIC PARA ATERRIZAR";
+          }
+          targetLockEl.classList.toggle("tema-huerto", esHuertoLock);
           const acc = projects[lockIdx].planeta?.acento || "#38bdf8";
           targetLockEl.style.setProperty("--accent", acc);
           targetLockEl.classList.add("visible");
@@ -635,6 +677,41 @@ function iniciar3D() {
     }
   });
 
-  window.__portafolio = { rzd, rig, scroll, calidad, modo, aterrizar, inspector360 };
+  window.__portafolio = { rzd, rig, scroll, calidad, modo, aterrizar, inspector360, hud };
+
+  // Helper admin para consola y llamadas directas
+  window.admin = function(subtab) {
+    aterrizar(0);
+    setTimeout(() => {
+      const btnAdmin = document.querySelector('.sim-segment-btn[data-modo="admin"]');
+      if (btnAdmin) btnAdmin.click();
+      if (subtab) {
+        const t = document.querySelector(`.sim-admin-tab[data-subtab="${subtab}"]`);
+        if (t) t.click();
+      }
+    }, 800);
+    return "📱 Abriendo panel /admin.html en el simulador de Cosecha Hidalguense...";
+  };
+  window.admin.html = function(opcion) {
+    if (opcion === "url" || opcion === "nav") {
+      window.location.href = "/admin.html";
+      return "Navegando a /admin.html...";
+    }
+    aterrizar(0);
+    setTimeout(() => {
+      const btnAdmin = document.querySelector('.sim-segment-btn[data-modo="admin"]');
+      if (btnAdmin) btnAdmin.click();
+    }, 800);
+    return "📱 Abriendo panel /admin.html en el simulador 3D (para abrir la página completa usa admin.html('nav')).";
+  };
+  window.admin.html.toString = function() { return "/admin.html"; };
+  window.admin.html.valueOf = function() { return "/admin.html"; };
+  window.admin.abrir = window.admin;
+  window.admin.panel = window.admin;
+  window.admin.pwa = window.admin.html;
+  window.admin.version = "1.0.0";
+  window.admin.plataforma = "Cloudflare D1 + Workers";
+  window.admin.estado = "online";
+
   console.info(`[main] Modo 3D · nivel "${calidad.nivel}" · ${projects.length} planeta(s).`);
 }

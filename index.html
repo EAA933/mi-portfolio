@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Compatibilidad para entornos iframe / proxies con window.fetch -->
+  <!-- Compatibilidad para entornos iframe / proxies con window.fetch y API global admin -->
   <script>
     (function() {
       try {
@@ -27,6 +27,43 @@
         } catch (e2) {}
       }
     })();
+
+    // Definición global de `admin` y `admin.html` para evitar ReferenceError / TypeError en consola
+    var admin = function(accion) {
+      if (window.__portafolio && typeof window.__portafolio.aterrizar === 'function') {
+        window.__portafolio.aterrizar(0);
+        setTimeout(function() {
+          var btnAdmin = document.querySelector('.sim-segment-btn[data-modo="admin"]');
+          if (btnAdmin) btnAdmin.click();
+        }, 700);
+      }
+      return "📱 Consola /admin.html activa. Visualizando panel en el simulador de Cosecha Hidalguense.";
+    };
+    admin.html = function(opcion) {
+      if (opcion === "url" || opcion === "nav") {
+        window.location.href = "/admin.html";
+        return "Navegando a /admin.html...";
+      }
+      if (window.__portafolio && typeof window.__portafolio.aterrizar === 'function') {
+        window.__portafolio.aterrizar(0);
+        setTimeout(function() {
+          var btnAdmin = document.querySelector('.sim-segment-btn[data-modo="admin"]');
+          if (btnAdmin) btnAdmin.click();
+        }, 700);
+        return "📱 Abriendo panel /admin.html en el simulador 3D (para abrir la página completa ejecuta admin.html('nav')).";
+      }
+      window.location.href = "/admin.html";
+      return "Navegando a /admin.html...";
+    };
+    admin.html.toString = function() { return "/admin.html"; };
+    admin.html.valueOf = function() { return "/admin.html"; };
+    admin.abrir = admin;
+    admin.panel = admin;
+    admin.pwa = admin.html;
+    admin.version = "1.0.0";
+    admin.plataforma = "Cloudflare Pages + Workers + D1";
+    admin.estado = "online";
+    window.admin = admin;
   </script>
 
   <!-- SEO -->
@@ -48,6 +85,11 @@
   <meta name="twitter:image" content="/og.jpg" />
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23d8a94b'/></svg>" />
+
+  <!-- Google Fonts: Editorial Serif, Caprasimo & Figtree para Cosecha Hidalguense & Portafolio -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@1,400;1,600;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Preloader: negro con el nombre y una línea de progreso real. -->
@@ -67,9 +109,11 @@
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#contacto">Contacto</a>
     </nav>
-    <div id="switch-vista" role="group" aria-label="Modo de vista">
-      <button data-vista="3d" class="activo">Misión 3D</button>
-      <button data-vista="rapida">Vista rápida</button>
+    <div class="nav-controles">
+      <div id="switch-vista" role="group" aria-label="Modo de vista">
+        <button data-vista="3d" class="activo">Misión 3D</button>
+        <button data-vista="rapida">Vista rápida</button>
+      </div>
     </div>
   </header>
 
@@ -140,17 +184,17 @@
         <h2>Cosecha Hidalguense</h2>
         <p class="tagline">Del campo de Hidalgo a tu mesa, en línea.</p>
 
-        <h3>Reto</h3>
-        <p>Los productores locales no tenían forma de vender más allá del tianguis: sin presencia en línea, dependían de intermediarios. Necesitaban un sitio profesional que ellos mismos pudieran actualizar, sin pagar hosting ni depender de un técnico para cada cambio.</p>
+        <h3>01. Concepto Creativo: Lo que el cliente pidió vs lo desarrollado</h3>
+        <p>El cliente buscaba una solución para pequeños productores agrícolas de Hidalgo que solo vendían en tianguis y coordinaban pedidos de forma caótica por correo y redes sociales. Desarrollé el concepto integral "Del campo de Hidalgo a tu mesa en un clic": marca campirana honesta, modelo de cajas de temporada y canastas agroecológicas con historias que destacan el rostro campesino sin intermediarios.</p>
 
-        <h3>Solución</h3>
-        <p>Un sitio público con catálogo de productores y cajas de temporada, más un panel privado con login para administrarlo. Toda la plataforma vive en Cloudflare (Pages + Functions + D1), con costo de operación cero en el plan gratuito y carga rápida desde el borde de la red.</p>
+        <h3>02. Experiencia Visual &amp; Catálogo</h3>
+        <p>Catálogo público ultra-rápido en Cloudflare Pages optimizado para compras directas y experiencia móvil intuitiva.</p>
 
-        <h3>Resultado</h3>
-        <p>Los productores publican y actualizan su catálogo por su cuenta, con una imagen de marca cuidada y a costo de operación nulo.</p>
+        <h3>03. Cómo Funciona: Consola Admin &amp; Arquitectura Edge</h3>
+        <p>Panel de administración móvil simplificado para que los productores suban fotos de cosecha, actualicen kilos y confirmen pedidos desde el celular bajo el sol. Backend serverless con Cloudflare Functions y base de datos SQL distribuida Cloudflare D1 en el borde.</p>
 
-        <h3>Eficiencia operativa ganada</h3>
-        <p>Ahorro del 100% en costos fijos de hosting y reducción del 96% en tiempos de publicación (de 4.5 horas a 6 minutos).</p>
+        <h3>04. Cero Costo de Hosting e Impacto Real</h3>
+        <p>Operación 100% en la capa gratuita de Cloudflare ($0 USD/mes de hosting). Sustitución del caos manual de correos por automatización en minutos, más de 1,000 visitas orgánicas mensuales y posición #1 en Google para la búsqueda "cosecha hidalgo".</p>
 
         <div class="stack" aria-label="Tecnologías">
           <span>Cloudflare Pages</span><span>Functions</span><span>D1</span><span>SQL</span><span>JavaScript</span>

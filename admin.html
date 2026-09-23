@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cosecha Hidalguense — Consola /admin.html</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    // Declaración global del objeto y función admin
+    var admin = function(cmd) {
+      console.info("[admin] Consola activa:", cmd || "online");
+      return admin;
+    };
+    admin.html = function() {
+      console.info("[admin] Ya te encuentras en /admin.html");
+      return "✓ Ya te encuentras en /admin.html";
+    };
+    admin.html.toString = function() { return "/admin.html"; };
+    admin.html.valueOf = function() { return "/admin.html"; };
+    admin.abrir = admin;
+    admin.panel = admin;
+    admin.pwa = admin.html;
+    admin.version = "1.0.0";
+    admin.plataforma = "Cloudflare Pages + Workers + D1";
+    admin.estado = "online";
+    admin.costoHosting = "$0 USD/mes";
+    window.admin = admin;
+  </script>
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --card-bg: #ffffff;
+      --text: #1d1d1f;
+      --text-muted: #6e6e73;
+      --accent: #15803d;
+      --accent-light: #dcfce7;
+      --border: rgba(0, 0, 0, 0.08);
+      --font: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+      line-height: 1.5;
+    }
+    .top-bar {
+      max-width: 960px;
+      margin: 0 auto 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .top-bar a.back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      background: #ffffff;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .top-bar a.back-btn:hover {
+      background: #000000;
+      color: #ffffff;
+      border-color: #000000;
+    }
+    .badge-edge {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header.admin-header {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    p.sub {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-card {
+      background: #fafaf9;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .stat-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Tabs */
+    .tabs-nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .tab-btn {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.activo {
+      background: #1d1d1f;
+      color: #ffffff;
+      border-color: #1d1d1f;
+    }
+
+    /* Paneles */
+    .tab-panel { display: none; }
+    .tab-panel.activo { display: block; }
+
+    .card, .stat-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .card.revelado, .stat-card.revelado {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item-list { display: flex; flex-direction: column; gap: 12px; }
+    .list-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fafaf9;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .list-row-info h4 { font-size: 15px; font-weight: 700; }
+    .list-row-info p { font-size: 13px; color: var(--text-muted); }
+    .pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .pill-green { background: #dcfce7; color: #15803d; }
+    .pill-blue { background: #e0f2fe; color: #0284c7; }
+    .btn-toggle {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .sql-box {
+      background: #18181b;
+      color: #a1a1aa;
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 16px;
+      border-radius: 14px;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+    .sql-keyword { color: #f43f5e; font-weight: 600; }
+    .sql-string { color: #10b981; }
+    .sql-comment { color: #71717a; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <a href="/" class="back-btn">← Volver al Portafolio 3D</a>
+    <span class="badge-edge">⚡ Cloudflare D1 · $0 USD/mes</span>
+  </div>
+
+  <div class="container">
+    <header class="admin-header">
+      <div class="header-row">
+        <div>
+          <h1>🌿 Consola Admin PWA</h1>
+          <p class="sub">Gestión directa de productores, cajas agrícolas con QR y pedidos de Cosecha Hidalguense.</p>
+        </div>
+        <button type="button" class="btn-toggle" id="btn-sync">⚡ Sincronizar D1</button>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-val">3 Productores</div>
+          <div class="stat-label">Tasquillo &amp; Valle del Mezquital</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">3,850 kg</div>
+          <div class="stat-label">Capacidad corte semanal</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">$0 USD</div>
+          <div class="stat-label">Costo mensual de infraestructura</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="tabs-nav">
+      <button type="button" class="tab-btn activo" data-target="panel-productores">👨‍🌾 Productores</button>
+      <button type="button" class="tab-btn" data-target="panel-cajas">📦 Cajas &amp; Trazabilidad QR</button>
+      <button type="button" class="tab-btn" data-target="panel-mensajes">💬 Mensajes WhatsApp</button>
+      <button type="button" class="tab-btn" data-target="panel-sql">💻 Cloudflare SQL (D1)</button>
+    </div>
+
+    <!-- Panel 1: Productores -->
+    <div class="tab-panel activo" id="panel-productores">
+      <div class="card">
+        <div class="card-title">
+          <span>Productores Activos en Catálogo</span>
+          <span class="pill pill-green">Directo sin intermediarios</span>
+        </div>
+        <div class="item-list">
+          <div class="list-row">
+            <div class="list-row-info">
+              <h4>Hermanos Arteaga Trejo</h4>
+              <p>Tasquillo, Hidalgo · Pimiento morrón hidropónico (Rojo, Amarillo, Naranja) · 1,200 kg/sem</p>
+            </div>
+            <button type="button" class="btn-toggle" onclick="toggleEstado(this)">🟢 Activo</button>
+          </div>
+          <div class="list-row">
+            <div class="list-row-info">
+              <h4>Familia Mendoza</h4>
+              <p>Ixmiquilpan, Hidalgo · Jitomate Saladette &amp; Cherry de invernadero · 1,800 kg/sem</p>
+            </div>
+            <button type="button" class="btn-toggle" onclick="toggleEstado(this)">🟢 Activo</button>
+          </div>
+          <div class="list-row">
+            <div class="list-row-info">
+              <h4>Don J. Guadalupe Chávez</h4>
+              <p>Zimapán, Hidalgo · Hortalizas baby, calabacita &amp; pepino persa · 850 kg/sem</p>
+            </div>
+            <button type="button" class="btn-toggle" onclick="toggleEstado(this)">🟢 Activo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: Cajas -->
+    <div class="tab-panel" id="panel-cajas">
+      <div class="card">
+        <div class="card-title">
+          <span>Modelos de Empaque Trazable</span>
+          <span class="pill pill-blue">QR 'Quién sembró tu caja'</span>
+        </div>
+        <div class="item-list">
+          <div class="list-row">
+            <div class="list-row-info">
+              <h4>Caja Agrícola Ventilada 5 kg</h4>
+              <p>Cartón corrugado kraft micro-perforado para pimiento y jitomate de invernadero.</p>
+            </div>
+            <span class="pill pill-green">$18.50 MXN / pieza</span>
+          </div>
+          <div class="list-row">
+            <div class="list-row-info">
+              <h4>Caja Master Exportación 10 kg</h4>
+              <p>Resistencia ECT-44 apilable para distribución mayorista y restaurantes.</p>
+            </div>
+            <span class="pill pill-green">$26.80 MXN / pieza</span>
+          </div>
+          <div class="list-row">
+            <div class="list-row-info">
+              <h4>Canasta Familiar Mixta 6 kg</h4>
+              <p>Empaque premium con agarradera para venta directa a familias en Pachuca y CDMX.</p>
+            </div>
+            <span class="pill pill-green">$22.00 MXN / pieza</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 3: Mensajes -->
+    <div class="tab-panel" id="panel-mensajes">
+      <div class="card">
+        <div class="card-title">
+          <span>Últimas Solicitudes Directas</span>
+          <span class="pill pill-green">Conexión 1-a-1</span>
+        </div>
+        <div class="item-list">
+          <div class="list-row">
+            <div class="list-row-info">
+              <h4>Restaurante El Mezquite (Pachuca)</h4>
+              <p>"Hola, solicitamos 40 kg de pimiento rojo y 20 kg de naranja para entrega los martes."</p>
+            </div>
+            <span class="pill pill-blue">Vía WhatsApp</span>
+          </div>
+          <div class="list-row">
+            <div class="list-row-info">
+              <h4>Distribuidora San Juan (Ixmiquilpan)</h4>
+              <p>"Cotización de 100 cajas ventiladas de 5kg impresas con nuestro logo y QR de origen."</p>
+            </div>
+            <span class="pill pill-blue">Vía Formulario</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 4: SQL D1 -->
+    <div class="tab-panel" id="panel-sql">
+      <div class="card">
+        <div class="card-title">
+          <span>Consulta en Vivo: Cloudflare D1 Edge SQL</span>
+          <span class="pill pill-green">&lt;35ms Latencia</span>
+        </div>
+        <div class="sql-box">
+<span class="sql-comment">-- Consulta ejecutada en Cloudflare Workers Edge:</span>
+<span class="sql-keyword">SELECT</span> p.id, p.nombre, p.municipio, p.whatsapp,
+       c.nombre <span class="sql-keyword">AS</span> empaque, c.precio_unitario
+<span class="sql-keyword">FROM</span> productores p
+<span class="sql-keyword">LEFT JOIN</span> cajas_asignadas ca <span class="sql-keyword">ON</span> ca.productor_id = p.id
+<span class="sql-keyword">LEFT JOIN</span> cajas c <span class="sql-keyword">ON</span> c.id = ca.caja_id
+<span class="sql-keyword">WHERE</span> p.activo = 1
+<span class="sql-keyword">ORDER BY</span> p.nombre <span class="sql-keyword">ASC</span>;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activo'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('activo'));
+        btn.classList.add('activo');
+        const target = document.getElementById(btn.dataset.target);
+        if (target) target.classList.add('activo');
+      });
+    });
+
+    function toggleEstado(btn) {
+      if (btn.textContent.includes("Activo")) {
+        btn.textContent = "🔴 En Pausa";
+        btn.style.background = "#b91c1c";
+      } else {
+        btn.textContent = "🟢 Activo";
+        btn.style.background = "var(--accent)";
+      }
+    }
+
+    document.getElementById('btn-sync')?.addEventListener('click', function() {
+      const b = this;
+      b.textContent = "⏳ Sincronizando...";
+      setTimeout(() => {
+        b.textContent = "✓ Sincronizado en D1";
+        setTimeout(() => { b.textContent = "⚡ Sincronizar D1"; }, 2000);
+      }, 400);
+    });
+
+    // Scroll-triggered reveal para las tarjetas de admin
+    if ("IntersectionObserver" in window) {
+      const cardObserver = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revelado");
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
+      );
+      document.querySelectorAll(".card, .stat-card").forEach((card) => {
+        cardObserver.observe(card);
+      });
+    } else {
+      document.querySelectorAll(".card, .stat-card").forEach((card) => {
+        card.classList.add("revelado");
+      });
+    }
+  </script>
+</body>
+</html>

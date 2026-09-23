@@ -7,12 +7,14 @@
  * ------------------------------------------------------------------
  */
 import * as THREE from "three";
+import { crearHuerto } from "./huerto.js";
 import { crearTerrestre } from "./terrestre.js";
 import { crearGaseoso } from "./gaseoso.js";
 import { crearHielo } from "./hielo.js";
 import { crearCristal } from "./cristal.js";
 
 const CREADORES = {
+  huerto: crearHuerto,
   terrestre: crearTerrestre,
   gaseoso: crearGaseoso,
   hielo: crearHielo,

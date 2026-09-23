@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+  <rect width="390" height="844" fill="#0c0e14"/>
+  <!-- Status bar & Header -->
+  <rect x="0" y="0" width="390" height="88" fill="#161a24"/>
+  <circle cx="36" cy="54" r="14" fill="#f59e0b"/>
+  <text x="60" y="52" fill="#f8fafc" font-size="16" font-weight="700">Reportes Regulatorios</text>
+  <text x="60" y="68" fill="#f59e0b" font-size="11">● Pipeline Automatizado</text>
+
+  <!-- Status card -->
+  <rect x="18" y="104" width="354" height="120" rx="16" fill="#1a202c" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="36" y="134" fill="#a0aec0" font-size="12" font-weight="600">REPORTE PERIÓDICO CNBV / BANXICO</text>
+  <text x="36" y="172" fill="#ffffff" font-size="26" font-weight="800">100% Validado</text>
+  <text x="36" y="198" fill="#38a169" font-size="12">✓ 48 archivos Excel cruzados en 12 segundos</text>
+
+  <!-- Progress bar -->
+  <rect x="18" y="240" width="354" height="96" rx="16" fill="#1a202c" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="36" y="270" fill="#f8fafc" font-size="13" font-weight="700">Estado del Pipeline Regulatorio</text>
+  <rect x="36" y="286" width="318" height="10" rx="5" fill="#2d3748"/>
+  <rect x="36" y="286" width="318" height="10" rx="5" fill="#f59e0b"/>
+  <text x="36" y="318" fill="#a0aec0" font-size="11">Fase 4/4: Archivo XML &amp; PDF listo para entrega</text>
+
+  <!-- Validation items -->
+  <text x="22" y="366" fill="#f8fafc" font-size="14" font-weight="700">Reglas de Negocio Validadas</text>
+
+  <rect x="18" y="380" width="354" height="64" rx="12" fill="#1a202c" stroke="#2d3748" stroke-width="1"/>
+  <circle cx="42" cy="412" r="10" fill="#38a169"/>
+  <text x="64" y="408" fill="#f8fafc" font-size="13" font-weight="600">Catálogo de Cuentas R01</text>
+  <text x="64" y="426" fill="#a0aec0" font-size="11">1,480 registros conciliados sin omisiones</text>
+
+  <rect x="18" y="454" width="354" height="64" rx="12" fill="#1a202c" stroke="#2d3748" stroke-width="1"/>
+  <circle cx="42" cy="486" r="10" fill="#38a169"/>
+  <text x="64" y="482" fill="#f8fafc" font-size="13" font-weight="600">Matriz de Provisiones Preventivas</text>
+  <text x="64" y="500" fill="#a0aec0" font-size="11">Cálculo de cartera vencida alineado</text>
+
+  <rect x="18" y="528" width="354" height="64" rx="12" fill="#1a202c" stroke="#2d3748" stroke-width="1"/>
+  <circle cx="42" cy="560" r="10" fill="#38a169"/>
+  <text x="64" y="556" fill="#f8fafc" font-size="13" font-weight="600">Huella Criptográfica SHA-256</text>
+  <text x="64" y="574" fill="#a0aec0" font-size="11">Hash inmutable generado para auditoría</text>
+
+  <!-- Download button simulation -->
+  <rect x="18" y="612" width="354" height="52" rx="14" fill="#f59e0b"/>
+  <text x="195" y="644" fill="#000000" font-size="14" font-weight="700" text-anchor="middle">📥 Descargar Paquete Regulatorio Final</text>
+</svg>

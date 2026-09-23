@@ -1,11 +1,2129 @@
 /* ============================================================
-   hud.css — panel de órbita + HUD del caso de estudio (Fase 3)
-   Vidrio tipo visionOS, movimiento con el ease principal.
+   TEMA HUERTO & COSECHA ORGÁNICA (#hud.tema-cosecha)
+   Estética Apple Editorial:
+   Lienzo beige cálido y sobrio (porcelana / avena suave), tipografía
+   nítida de alto contraste y cajas Bento con colores vibrantes y vivos
+   que reflejan la frescura del huerto botánico y las hortalizas.
    ============================================================ */
+
+#hud.tema-cosecha,
+body.tema-oscuro #hud.tema-cosecha {
+  --text: #1d1d1f !important;
+  --text-2: #4a4a4f !important;
+  --hairline: rgba(0, 0, 0, 0.09) !important;
+  --accent: #15803d !important;
+  color: #1d1d1f !important;
+
+  background:
+    /* Luz cálida matutina sutil y difusa */
+    radial-gradient(110% 55% at 50% -5%, rgba(254, 240, 138, 0.28) 0%, rgba(240, 253, 244, 0.5) 28%, transparent 72%),
+    radial-gradient(90% 45% at 10% 12%, rgba(254, 243, 199, 0.35) 0%, transparent 60%),
+    radial-gradient(85% 45% at 90% 20%, rgba(220, 252, 231, 0.35) 0%, transparent 60%),
+    /* Lienzo beige porcelana Apple sobrio y elegante */
+    linear-gradient(180deg, #fbf9f5 0%, #f6f3ec 48%, #f0ece3 100%) !important;
+}
+
+#hud.tema-cosecha::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 280px;
+  background: radial-gradient(ellipse 950px 220px at 50% 0%, rgba(255, 255, 255, 0.65) 0%, transparent 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+#hud.tema-cosecha .hud-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+/* Botón cerrar estilo Apple Pill con desenfoque de cristal */
+#hud.tema-cosecha .cerrar {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  color: #1d1d1f;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 10px 22px;
+  transition: all 0.25s var(--ease-principal);
+}
+
+#hud.tema-cosecha .cerrar:hover {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.18);
+  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+#hud.tema-cosecha .hud-header .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 6px 16px;
+  border-radius: 999px;
+  color: #166534;
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(22, 101, 52, 0.06);
+}
+
+#hud.tema-cosecha .eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  display: inline-block;
+}
+
+#hud.tema-cosecha h1 {
+  font-size: clamp(38px, 6vw, 68px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: #1d1d1f;
+  text-shadow: none;
+}
+
+.cosecha-serif-accent {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  background: linear-gradient(135deg, #15803d 0%, #b45309 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-left: 6px;
+  display: inline-block;
+}
+
+#hud.tema-cosecha .tagline {
+  color: #52525b;
+  font-size: clamp(17px, 2.2vw, 22px);
+  font-weight: 400;
+  margin-top: 10px;
+}
+
+.cosecha-tagline-fresco {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* Botón 360° Recorrer Huerto estilo Apple */
+#hud.tema-cosecha .btn-cosecha-recorrido {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: #15803d !important;
+  font-weight: 700 !important;
+  border-radius: 999px !important;
+  padding: 10px 22px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+  backdrop-filter: blur(16px);
+  transition: all 0.25s ease;
+}
+
+#hud.tema-cosecha .btn-cosecha-recorrido:hover {
+  background: #ffffff !important;
+  border-color: #22c55e !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.22) !important;
+  color: #14532d !important;
+}
+
+/* ── Apple Bento Grid de Métricas con Cajas de Colores Vivos ── */
+#hud.tema-cosecha .metricas {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 38px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+  gap: 16px;
+}
+
+#hud.tema-cosecha .metricas .m {
+  border-radius: 22px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 6px 22px -4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#hud.tema-cosecha .metricas .m:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.08);
+}
+
+#hud.tema-cosecha .m-val-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+#hud.tema-cosecha .metricas .m b {
+  font-size: clamp(32px, 3.6vw, 46px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-shadow: none;
+}
+
+#hud.tema-cosecha .m-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+#hud.tema-cosecha .metricas .m span {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Caja 1: Costo $0 (Verde Brote Fresco & Huerto) */
+#hud.tema-cosecha .metricas .m:nth-child(1) {
+  background: linear-gradient(145deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1px solid #86efac;
+}
+#hud.tema-cosecha .metricas .m:nth-child(1) b {
+  color: #14532d;
+}
+#hud.tema-cosecha .metricas .m:nth-child(1) .m-badge {
+  background: #bbf7d0;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+#hud.tema-cosecha .metricas .m:nth-child(1) span {
+  color: #166534;
+}
+
+/* Caja 2: +1,000 Visitas (Miel & Cosecha Dorada) */
+#hud.tema-cosecha .metricas .m:nth-child(2) {
+  background: linear-gradient(145deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #fde68a;
+}
+#hud.tema-cosecha .metricas .m:nth-child(2) b {
+  color: #78350f;
+}
+#hud.tema-cosecha .metricas .m:nth-child(2) .m-badge {
+  background: #fde68a;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+}
+#hud.tema-cosecha .metricas .m:nth-child(2) span {
+  color: #92400e;
+}
+
+/* Caja 3: #1 en Google (Azul Cielo & Edge Cloudflare) */
+#hud.tema-cosecha .metricas .m:nth-child(3) {
+  background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+}
+#hud.tema-cosecha .metricas .m:nth-child(3) b {
+  color: #1e3a8a;
+}
+#hud.tema-cosecha .metricas .m:nth-child(3) .m-badge {
+  background: #bfdbfe;
+  color: #1d4ed8;
+  border: 1px solid #93c5fd;
+}
+#hud.tema-cosecha .metricas .m:nth-child(3) span {
+  color: #1e40af;
+}
+
+/* Caja 4: Minutos vs Días (Púrpura & Hortaliza Orgánica) */
+#hud.tema-cosecha .metricas .m:nth-child(4) {
+  background: linear-gradient(145deg, #faf5ff 0%, #f3e8ff 100%);
+  border: 1px solid #e9d5ff;
+}
+#hud.tema-cosecha .metricas .m:nth-child(4) b {
+  color: #581c87;
+}
+#hud.tema-cosecha .metricas .m:nth-child(4) .m-badge {
+  background: #e9d5ff;
+  color: #6b21a8;
+  border: 1px solid #d8b4fe;
+}
+#hud.tema-cosecha .metricas .m:nth-child(4) span {
+  color: #6b21a8;
+}
+
+/* Botón primario Apple minimalista */
+#hud.tema-cosecha .btn-primario,
+#hud.tema-cosecha .hcc-actions .btn-primario {
+  background: #111827 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border-radius: 999px !important;
+  padding: 12px 28px !important;
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16) !important;
+  transition: all 0.25s ease;
+}
+
+#hud.tema-cosecha .btn-primario:hover,
+#hud.tema-cosecha .hcc-actions .btn-primario:hover {
+  transform: translateY(-2px);
+  background: #000000 !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.24) !important;
+  color: #ffffff !important;
+}
+
+/* Micro-partículas sutiles de polvo solar y rocío */
+.hud-cosecha-particulas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hud-cosecha-mote {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(254, 240, 138, 0.7) 0%, rgba(134, 239, 172, 0.4) 60%, transparent 100%);
+  box-shadow: 0 0 10px rgba(254, 240, 138, 0.35);
+  opacity: 0.35;
+  animation: flotarPolen 14s infinite ease-in-out;
+}
+
+@keyframes flotarPolen {
+  0% { transform: translateY(105vh) translateX(0) scale(0.7); opacity: 0; }
+  20% { opacity: 0.45; }
+  80% { opacity: 0.45; }
+  100% { transform: translateY(-10vh) translateX(45px) scale(1.15); opacity: 0; }
+}
+
+/* ── Galería Showcase Header ── */
+.galeria-showcase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.galeria-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #166534;
+  letter-spacing: 0.05em;
+}
+
+.badge-pulse-live {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulsoLive 1.6s ease-in-out infinite;
+}
+
+@keyframes pulsoLive {
+  0%, 100% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.35); opacity: 1; }
+}
+
+.galeria-badge-tech {
+  font-size: 11.5px;
+  font-family: monospace;
+  color: #334155;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+#hud.tema-cosecha .dispositivo {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 25px 65px -12px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+#hud.tema-cosecha .dispositivo.mac .barra {
+  background: #f5f5f7;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+#hud.tema-cosecha .dispositivo.mac .barra i:nth-child(1) { background: #ef4444; opacity: 1; }
+#hud.tema-cosecha .dispositivo.mac .barra i:nth-child(2) { background: #f59e0b; opacity: 1; }
+#hud.tema-cosecha .dispositivo.mac .barra i:nth-child(3) { background: #10b981; opacity: 1; }
+
+#hud.tema-cosecha .barra-url {
+  color: #6b7280;
+  font-family: monospace;
+}
+
+#hud.tema-cosecha .dispositivo.phone {
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Cajas de Storytelling Bento con Colores Sobrios y Vivos ── */
+#hud.tema-cosecha .hud-story-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+#hud.tema-cosecha .hud-story-tag {
+  color: #15803d;
+  font-weight: 700;
+}
+
+#hud.tema-cosecha .hud-story-section h2 {
+  color: #111827;
+}
+
+#hud.tema-cosecha .story-subtitulo {
+  color: #52525b;
+}
+
+#hud.tema-cosecha .story-admin-lead {
+  color: #374151;
+}
+
+/* Caja Bento Reto Cliente (Melocotón / Terracota Cálido) */
+#hud.tema-cosecha .story-card-box.cliente {
+  background: linear-gradient(145deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #fed7aa;
+  border-left: 5px solid #ea580c;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px -4px rgba(234, 88, 12, 0.08);
+}
+
+#hud.tema-cosecha .story-card-box.cliente .story-card-badge {
+  background: #fed7aa;
+  color: #9a3412;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+#hud.tema-cosecha .story-card-box.cliente h4 {
+  color: #9a3412;
+}
+
+#hud.tema-cosecha .story-card-box.cliente p {
+  color: #7c2d12;
+}
+
+/* Caja Bento Concepto Desarrollado (Esmeralda / Menta Fresca) */
+#hud.tema-cosecha .story-card-box.desarrollador {
+  background: linear-gradient(145deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 1px solid #a7f3d0;
+  border-left: 5px solid #059669;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px -4px rgba(5, 150, 105, 0.08);
+}
+
+#hud.tema-cosecha .story-badge-dev {
+  background: #a7f3d0;
+  color: #065f46;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+#hud.tema-cosecha .story-card-box.desarrollador h4 {
+  color: #064e3b;
+}
+
+#hud.tema-cosecha .story-card-box.desarrollador p {
+  color: #065f46;
+}
+
+/* ── Cajas de Pilares Bento Grid (Colores Específicos) ── */
+#hud.tema-cosecha .story-pilar-card {
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+}
+
+#hud.tema-cosecha .story-pilar-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* Pilar 1: Salvia & Menta */
+#hud.tema-cosecha .story-pilar-card:nth-child(1) {
+  background: linear-gradient(145deg, #f0fdf4 0%, #ffffff 100%);
+  border: 1px solid #bbf7d0;
+}
+#hud.tema-cosecha .story-pilar-card:nth-child(1) h5 {
+  color: #14532d;
+}
+#hud.tema-cosecha .story-pilar-card:nth-child(1) p {
+  color: #166534;
+}
+
+/* Pilar 2: Ámbar & Durazno */
+#hud.tema-cosecha .story-pilar-card:nth-child(2) {
+  background: linear-gradient(145deg, #fffbeb 0%, #ffffff 100%);
+  border: 1px solid #fde68a;
+}
+#hud.tema-cosecha .story-pilar-card:nth-child(2) h5 {
+  color: #78350f;
+}
+#hud.tema-cosecha .story-pilar-card:nth-child(2) p {
+  color: #92400e;
+}
+
+/* Pilar 3: Cielo & Aguamarina */
+#hud.tema-cosecha .story-pilar-card:nth-child(3) {
+  background: linear-gradient(145deg, #eff6ff 0%, #ffffff 100%);
+  border: 1px solid #bfdbfe;
+}
+#hud.tema-cosecha .story-pilar-card:nth-child(3) h5 {
+  color: #1e3a8a;
+}
+#hud.tema-cosecha .story-pilar-card:nth-child(3) p {
+  color: #1e40af;
+}
+
+/* ── Panel de Diagrama de Arquitectura Apple ── */
+#hud.tema-cosecha .hud-diagrama-wrapper {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-top: 3px solid #22c55e;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.08);
+}
+
+#hud.tema-cosecha .hud-diagrama-wrapper::before {
+  display: none;
+}
+
+#hud.tema-cosecha .diagrama-topbar {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+#hud.tema-cosecha .diagrama-topbar-tag {
+  color: #15803d;
+}
+
+#hud.tema-cosecha .diagrama-topbar-titulo {
+  color: #0f172a;
+}
+
+#hud.tema-cosecha .diagrama-tabs {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+#hud.tema-cosecha .diagrama-tab {
+  color: #64748b;
+  font-weight: 600;
+}
+
+#hud.tema-cosecha .diagrama-tab.activo {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Nodos del pipeline con cajas de colores vivos */
+#hud.tema-cosecha .diagrama-nodo {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+#hud.tema-cosecha .diagrama-nodo:nth-child(1) {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(1) .diagrama-step-badge {
+  background: #3b82f6;
+  color: #ffffff;
+  border: none;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(1) .diagrama-nodo-body h6 {
+  color: #1e3a8a;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(1) .diagrama-nodo-body p {
+  color: #1e40af;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(1) .diagrama-nodo-tech {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+#hud.tema-cosecha .diagrama-nodo:nth-child(2) {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(2) .diagrama-step-badge {
+  background: #22c55e;
+  color: #ffffff;
+  border: none;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(2) .diagrama-nodo-body h6 {
+  color: #14532d;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(2) .diagrama-nodo-body p {
+  color: #166534;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(2) .diagrama-nodo-tech {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
+#hud.tema-cosecha .diagrama-nodo:nth-child(3) {
+  background: #fff7ed;
+  border-color: #fed7aa;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(3) .diagrama-step-badge {
+  background: #f97316;
+  color: #ffffff;
+  border: none;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(3) .diagrama-nodo-body h6 {
+  color: #7c2d12;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(3) .diagrama-nodo-body p {
+  color: #9a3412;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(3) .diagrama-nodo-tech {
+  background: #ffedd5;
+  color: #c2410c;
+  border-color: #fed7aa;
+}
+
+#hud.tema-cosecha .diagrama-nodo:nth-child(4) {
+  background: #faf5ff;
+  border-color: #e9d5ff;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(4) .diagrama-step-badge {
+  background: #a855f7;
+  color: #ffffff;
+  border: none;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(4) .diagrama-nodo-body h6 {
+  color: #581c87;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(4) .diagrama-nodo-body p {
+  color: #6b21a8;
+}
+#hud.tema-cosecha .diagrama-nodo:nth-child(4) .diagrama-nodo-tech {
+  background: #f3e8ff;
+  color: #7e22ce;
+  border-color: #e9d5ff;
+}
+
+/* ── Cajas de Impacto Bento Grid con Colores Vivos ── */
+#hud.tema-cosecha .story-impacto-card {
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+#hud.tema-cosecha .story-impacto-card:nth-child(1) {
+  background: linear-gradient(145deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1px solid #86efac;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(1) .story-impacto-valor {
+  color: #15803d;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(1) .story-impacto-titulo {
+  color: #14532d;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(1) .story-impacto-desc {
+  color: #166534;
+}
+
+#hud.tema-cosecha .story-impacto-card:nth-child(2) {
+  background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(2) .story-impacto-valor {
+  color: #2563eb;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(2) .story-impacto-titulo {
+  color: #1e3a8a;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(2) .story-impacto-desc {
+  color: #1e40af;
+}
+
+#hud.tema-cosecha .story-impacto-card:nth-child(3) {
+  background: linear-gradient(145deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #fde68a;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(3) .story-impacto-valor {
+  color: #d97706;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(3) .story-impacto-titulo {
+  color: #78350f;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(3) .story-impacto-desc {
+  color: #92400e;
+}
+
+#hud.tema-cosecha .story-impacto-card:nth-child(4) {
+  background: linear-gradient(145deg, #faf5ff 0%, #f3e8ff 100%);
+  border: 1px solid #e9d5ff;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(4) .story-impacto-valor {
+  color: #9333ea;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(4) .story-impacto-titulo {
+  color: #581c87;
+}
+#hud.tema-cosecha .story-impacto-card:nth-child(4) .story-impacto-desc {
+  color: #6b21a8;
+}
+
+/* Comparativa Antes / Ahora */
+#hud.tema-cosecha .story-comparativa-box {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+#hud.tema-cosecha .story-comp-item.antes {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+}
+#hud.tema-cosecha .story-comp-item.antes .story-comp-tag {
+  color: #dc2626;
+}
+#hud.tema-cosecha .story-comp-item.antes p {
+  color: #4b5563;
+}
+
+#hud.tema-cosecha .story-comp-item.ahora {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-left: 4px solid #10b981;
+  border-radius: 14px;
+  padding: 16px;
+}
+#hud.tema-cosecha .story-comp-item.ahora .story-comp-tag {
+  color: #059669;
+}
+#hud.tema-cosecha .story-comp-item.ahora p {
+  color: #064e3b;
+}
+
+/* Tarjeta CTA de conversión en tema huerto Apple */
+#hud.tema-cosecha .hud-conversion-card {
+  background: linear-gradient(135deg, #18181b 0%, #09090b 100%);
+  border: 1px solid #27272a;
+  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+}
+
+#hud.tema-cosecha .hud-conversion-card h3 {
+  color: #ffffff;
+}
+
+#hud.tema-cosecha .hud-conversion-card p {
+  color: #a1a1aa;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   NUEVA EXPERIENCIA DE DISEÑO UI & SIMULADOR INTERACTIVO (COSECHA)
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── 01. EL RETO & PUNTOS DE DOLOR ── */
+#hud.tema-cosecha .story-reto-intro {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid #c67139;
+  border-radius: 18px;
+  padding: 20px 24px;
+  margin: 16px 0 24px 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+#hud.tema-cosecha .story-reto-intro p {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #374151;
+  margin: 0;
+}
+
+#hud.tema-cosecha .story-reto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+#hud.tema-cosecha .story-reto-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 22px 20px;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+#hud.tema-cosecha .story-reto-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
+}
+
+/* Reto 1: Coyotaje / Intermediarios */
+#hud.tema-cosecha .story-reto-card:nth-child(1) {
+  border-top: 4px solid #e11d48;
+  background: linear-gradient(180deg, #fff1f2 0%, #ffffff 42%);
+}
+#hud.tema-cosecha .story-reto-card:nth-child(1) .story-reto-icon {
+  background: #ffe4e6;
+  color: #e11d48;
+}
+
+/* Reto 2: Granel e Invisibilidad */
+#hud.tema-cosecha .story-reto-card:nth-child(2) {
+  border-top: 4px solid #ea580c;
+  background: linear-gradient(180deg, #fff7ed 0%, #ffffff 42%);
+}
+#hud.tema-cosecha .story-reto-card:nth-child(2) .story-reto-icon {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+/* Reto 3: Brecha Digital en Campo */
+#hud.tema-cosecha .story-reto-card:nth-child(3) {
+  border-top: 4px solid #2563eb;
+  background: linear-gradient(180deg, #eff6ff 0%, #ffffff 42%);
+}
+#hud.tema-cosecha .story-reto-card:nth-child(3) .story-reto-icon {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+/* Reto 4: Falta de Empaque Especializado */
+#hud.tema-cosecha .story-reto-card:nth-child(4) {
+  border-top: 4px solid #7a8a5e;
+  background: linear-gradient(180deg, #f7f9f2 0%, #ffffff 42%);
+}
+#hud.tema-cosecha .story-reto-card:nth-child(4) .story-reto-icon {
+  background: #e9eedc;
+  color: #56633f;
+}
+
+#hud.tema-cosecha .story-reto-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+
+#hud.tema-cosecha .story-reto-card h5 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+}
+
+#hud.tema-cosecha .story-reto-card p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* ── 02. FLUJOS DE DIAGRAMAS & PIPELINE ── */
+#hud.tema-cosecha .diagrama-lead-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+
+#hud.tema-cosecha .diagrama-lead-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+#hud.tema-cosecha .diagrama-lead-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.5;
+}
+
+/* ── 03. LA SOLUCIÓN: PILARES BENTO ── */
+#hud.tema-cosecha .story-solucion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+  margin: 20px 0 28px 0;
+}
+
+#hud.tema-cosecha .story-solucion-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 22px 20px;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+#hud.tema-cosecha .story-solucion-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Solución 1: Catálogo Especializado */
+#hud.tema-cosecha .story-solucion-card:nth-child(1) {
+  border-top: 4px solid #c67139;
+  background: linear-gradient(180deg, #fff7ed 0%, #ffffff 45%);
+}
+#hud.tema-cosecha .story-solucion-card:nth-child(1) .story-solucion-icon {
+  background: #ffedd5;
+}
+
+/* Solución 2: Cajas con QR Integrado */
+#hud.tema-cosecha .story-solucion-card:nth-child(2) {
+  border-top: 4px solid #7a8a5e;
+  background: linear-gradient(180deg, #f7f9f2 0%, #ffffff 45%);
+}
+#hud.tema-cosecha .story-solucion-card:nth-child(2) .story-solucion-icon {
+  background: #e9eedc;
+}
+
+/* Solución 3: Productores Reales de Tasquillo */
+#hud.tema-cosecha .story-solucion-card:nth-child(3) {
+  border-top: 4px solid #10b981;
+  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 45%);
+}
+#hud.tema-cosecha .story-solucion-card:nth-child(3) .story-solucion-icon {
+  background: #dcfce7;
+}
+
+/* Solución 4: Panel /admin.html */
+#hud.tema-cosecha .story-solucion-card:nth-child(4) {
+  border-top: 4px solid #0284c7;
+  background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 45%);
+}
+#hud.tema-cosecha .story-solucion-card:nth-child(4) .story-solucion-icon {
+  background: #e0f2fe;
+}
+
+#hud.tema-cosecha .story-solucion-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+#hud.tema-cosecha .story-solucion-card h5 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.01em;
+}
+
+#hud.tema-cosecha .story-solucion-card p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* ── Simulador Interactivo de Experiencia Digital ── */
+#hud.tema-cosecha .hud-simulador-cosecha {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  padding: 26px;
+  margin: 32px 0 20px 0;
+  box-shadow: 0 14px 36px -8px rgba(0, 0, 0, 0.07);
+  position: relative;
+  overflow: hidden;
+}
+
+#hud.tema-cosecha .sim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+#hud.tema-cosecha .sim-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  color: #c67139;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+#hud.tema-cosecha .sim-titulo {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.02em;
+}
+
+#hud.tema-cosecha .sim-subtitulo {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  max-width: 620px;
+  line-height: 1.5;
+}
+
+#hud.tema-cosecha .sim-segmented-control {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 4px;
+  display: inline-flex;
+  gap: 4px;
+}
+
+#hud.tema-cosecha .sim-segment-btn {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#hud.tema-cosecha .sim-segment-btn:hover {
+  color: #111827;
+}
+
+#hud.tema-cosecha .sim-segment-btn.activo {
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Vista 1: Catálogo & Productores ── */
+#hud.tema-cosecha .sim-grid-comprador {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 860px) {
+  #hud.tema-cosecha .sim-grid-comprador {
+    grid-template-columns: 1fr;
+  }
+}
+
+#hud.tema-cosecha .sim-col-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+
+/* Píldoras de cultivo */
+#hud.tema-cosecha .sim-cultivos-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#hud.tema-cosecha .sim-cultivo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#hud.tema-cosecha .sim-cultivo-pill:hover {
+  border-color: #c67139;
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+#hud.tema-cosecha .sim-cultivo-pill.activo {
+  background: #fff7ed;
+  border-color: #c67139;
+  color: #9a3412;
+  box-shadow: 0 2px 8px rgba(198, 113, 57, 0.18);
+}
+
+#hud.tema-cosecha .sim-cultivo-ico {
+  font-size: 15px;
+}
+
+/* Píldoras de color para pimiento morrón */
+#hud.tema-cosecha .sim-colores-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#hud.tema-cosecha .sim-color-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#hud.tema-cosecha .sim-color-btn .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+#hud.tema-cosecha .sim-color-btn:hover {
+  border-color: var(--c);
+}
+
+#hud.tema-cosecha .sim-color-btn.activo {
+  border-color: var(--c);
+  background: #fafafa;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+  font-weight: 700;
+}
+
+/* Lista de tarjetas de productores */
+#hud.tema-cosecha .sim-productores-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#hud.tema-cosecha .sim-productor-card {
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#hud.tema-cosecha .sim-productor-card:hover {
+  border-color: #10b981;
+  background: #f0fdf4;
+  transform: translateY(-1.5px);
+}
+
+#hud.tema-cosecha .sim-productor-card.seleccionado {
+  border-color: #10b981;
+  background: #f0fdf4;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25), 0 6px 16px rgba(16, 185, 129, 0.08);
+}
+
+#hud.tema-cosecha .sim-prod-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+#hud.tema-cosecha .sim-prod-disco {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #7a8a5e;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+#hud.tema-cosecha .sim-prod-meta {
+  flex: 1;
+}
+
+#hud.tema-cosecha .sim-prod-meta h5 {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 2px 0;
+}
+
+#hud.tema-cosecha .sim-prod-mun {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+#hud.tema-cosecha .sim-prod-temporada {
+  font-size: 11px;
+  font-weight: 700;
+  color: #15803d;
+  background: #dcfce7;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+#hud.tema-cosecha .sim-prod-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+#hud.tema-cosecha .sim-badge-cert {
+  font-size: 11px;
+  font-weight: 700;
+  color: #065f46;
+  background: #a7f3d0;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+#hud.tema-cosecha .sim-badge-cultivo {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9a3412;
+  background: #fed7aa;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+/* Columna de resumen & WhatsApp */
+#hud.tema-cosecha .sim-checkout-card {
+  background: #fbf9f5;
+  border: 1px solid #e7e5e4;
+  border-radius: 18px;
+  padding: 20px;
+  position: sticky;
+  top: 20px;
+}
+
+#hud.tema-cosecha .sim-checkout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+#hud.tema-cosecha .sim-checkout-tag {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #78716c;
+}
+
+#hud.tema-cosecha .sim-origen-pill {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+#hud.tema-cosecha .sim-checkout-item {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1c1917;
+  margin-bottom: 4px;
+}
+
+#hud.tema-cosecha .sim-cultivo-badge-selected {
+  font-size: 13px;
+  color: #57534e;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+#hud.tema-cosecha .sim-checkout-divider {
+  height: 1px;
+  background: #e7e5e4;
+  margin: 14px 0;
+}
+
+#hud.tema-cosecha .sim-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+  color: #44403c;
+  margin-bottom: 6px;
+}
+
+#hud.tema-cosecha .sim-garantia-envio {
+  font-size: 12px;
+  color: #65a30d;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+#hud.tema-cosecha .sim-whatsapp-box {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+#hud.tema-cosecha .sim-wa-header {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #166534;
+  margin-bottom: 8px;
+}
+
+#hud.tema-cosecha .sim-wa-preview {
+  background: #ffffff;
+  border: 1px solid #dcfce7;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: #14532d;
+  white-space: pre-wrap;
+  margin: 0 0 12px 0;
+  max-height: 130px;
+  overflow-y: auto;
+}
+
+#hud.tema-cosecha .sim-btn-wa {
+  width: 100%;
+  background: #16a34a !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 11px 16px !important;
+  border-radius: 999px !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25) !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer;
+}
+
+#hud.tema-cosecha .sim-btn-wa:hover {
+  background: #15803d !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35) !important;
+}
+
+#hud.tema-cosecha .sim-wa-feedback {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #15803d;
+  margin-top: 8px;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+/* ── Vista 2: Cajas Agrícolas & Trazabilidad QR ── */
+#hud.tema-cosecha .sim-cajas-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 860px) {
+  #hud.tema-cosecha .sim-cajas-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+#hud.tema-cosecha .sim-cajas-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#hud.tema-cosecha .sim-caja-option {
+  background: #fafaf9;
+  border: 1.5px solid #e7e5e4;
+  border-radius: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#hud.tema-cosecha .sim-caja-option:hover {
+  border-color: #c67139;
+  background: #fff7ed;
+  transform: translateY(-1px);
+}
+
+#hud.tema-cosecha .sim-caja-option.seleccionada {
+  border-color: #c67139;
+  background: #fff7ed;
+  box-shadow: 0 0 0 2px rgba(198, 113, 57, 0.2);
+}
+
+#hud.tema-cosecha .sim-caja-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+#hud.tema-cosecha .sim-caja-tag {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1c1917;
+}
+
+#hud.tema-cosecha .sim-caja-precio {
+  font-size: 15px;
+  font-weight: 800;
+  color: #c67139;
+}
+
+#hud.tema-cosecha .sim-caja-dims {
+  font-size: 12px;
+  font-weight: 600;
+  color: #78716c;
+  margin-bottom: 4px;
+}
+
+#hud.tema-cosecha .sim-caja-det {
+  font-size: 12.5px;
+  color: #57534e;
+  margin: 0;
+  line-height: 1.4;
+}
+
+#hud.tema-cosecha .sim-volumen-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#hud.tema-cosecha .sim-vol-btn {
+  background: #f5f5f4;
+  border: 1.5px solid #e7e5e4;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #57534e;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#hud.tema-cosecha .sim-vol-btn:hover {
+  border-color: #c67139;
+  color: #1c1917;
+}
+
+#hud.tema-cosecha .sim-vol-btn.activo {
+  background: #c67139;
+  border-color: #c67139;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+#hud.tema-cosecha .sim-cajas-cotizacion-box {
+  background: #fbf9f5;
+  border: 1px solid #e7e5e4;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+#hud.tema-cosecha .sim-cajas-cot-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #44403c;
+  margin-bottom: 6px;
+}
+
+#hud.tema-cosecha .sim-cajas-cot-row b {
+  font-size: 20px;
+  font-weight: 800;
+  color: #c67139;
+}
+
+#hud.tema-cosecha .sim-cajas-cot-desc {
+  font-size: 12px;
+  color: #78716c;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Mockup visual de la caja de cartón corrugado */
+#hud.tema-cosecha .sim-caja-mockup-card {
+  background: #fdfaf6;
+  border: 1px solid #e7e5e4;
+  border-radius: 18px;
+  padding: 20px;
+}
+
+#hud.tema-cosecha .sim-caja-mockup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #78716c;
+  margin-bottom: 14px;
+}
+
+#hud.tema-cosecha .sim-badge-caja-tipo {
+  background: #f5ead8;
+  color: #8c491a;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+#hud.tema-cosecha .sim-caja-grafica {
+  background: #d6c3a1;
+  background-image: repeating-linear-gradient(45deg, #d6c3a1, #d6c3a1 10px, #ccb893 10px, #ccb893 20px);
+  border: 2px solid #b8a27b;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+#hud.tema-cosecha .sim-caja-impresion {
+  border: 1.5px dashed #8c491a;
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.35);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#hud.tema-cosecha .sim-caja-brand-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #5a2c0a;
+  letter-spacing: 0.04em;
+}
+
+#hud.tema-cosecha .sim-caja-brand-sub {
+  font-size: 10px;
+  font-weight: 700;
+  color: #7a3e12;
+  letter-spacing: 0.08em;
+  margin: 3px 0 8px 0;
+}
+
+#hud.tema-cosecha .sim-caja-sellos-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #56633f;
+}
+
+#hud.tema-cosecha .sim-caja-qr-area {
+  background: #ffffff;
+  border: 1px solid #e7e5e4;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+#hud.tema-cosecha .sim-caja-qr-area:hover {
+  transform: scale(1.02);
+  border-color: #c67139;
+  box-shadow: 0 6px 18px rgba(198, 113, 57, 0.18);
+}
+
+#hud.tema-cosecha .sim-caja-qr-box {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+}
+
+#hud.tema-cosecha .sim-caja-qr-svg {
+  width: 100%;
+  height: 100%;
+}
+
+#hud.tema-cosecha .sim-qr-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#hud.tema-cosecha .sim-qr-label b {
+  font-size: 12px;
+  color: #8c491a;
+  letter-spacing: 0.02em;
+}
+
+#hud.tema-cosecha .sim-qr-label span {
+  font-size: 11px;
+  color: #78716c;
+}
+
+/* Ficha de trazabilidad revelada tras escanear */
+#hud.tema-cosecha .sim-trazabilidad-revelada {
+  background: #ffffff;
+  border: 1.5px solid #a7f3d0;
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 14px;
+  display: none;
+}
+
+#hud.tema-cosecha .sim-trazabilidad-revelada.visible {
+  display: block;
+}
+
+@keyframes pulsoTrazabilidad {
+  0% { transform: scale(0.96); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#hud.tema-cosecha .sim-traza-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+#hud.tema-cosecha .sim-traza-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #10b981;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+#hud.tema-cosecha .sim-traza-header h6 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #065f46;
+  margin: 0;
+}
+
+#hud.tema-cosecha .sim-traza-header p {
+  font-size: 11px;
+  color: #047857;
+  margin: 0;
+}
+
+#hud.tema-cosecha .sim-traza-grid {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 4px 10px;
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+#hud.tema-cosecha .sim-traza-k {
+  font-weight: 700;
+  color: #6b7280;
+}
+
+#hud.tema-cosecha .sim-traza-v {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* ── Vista 3: Panel PWA Móvil /admin.html ── */
+#hud.tema-cosecha .sim-productor-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  #hud.tema-cosecha .sim-productor-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+#hud.tema-cosecha .sim-phone-frame {
+  background: #18181b;
+  border-radius: 36px;
+  padding: 12px;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.3);
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+#hud.tema-cosecha .sim-phone-notch {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+
+#hud.tema-cosecha .sim-phone-notch span {
+  width: 70px;
+  height: 14px;
+  background: #09090b;
+  border-radius: 0 0 10px 10px;
+}
+
+#hud.tema-cosecha .sim-phone-screen {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 16px 14px;
+  overflow: hidden;
+}
+
+#hud.tema-cosecha .sim-phone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+#hud.tema-cosecha .sim-pwa-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: #15803d;
+  background: #dcfce7;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+#hud.tema-cosecha .sim-battery {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+#hud.tema-cosecha .sim-admin-subtabs {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+
+#hud.tema-cosecha .sim-admin-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748b;
+  padding: 5px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#hud.tema-cosecha .sim-admin-tab.activo {
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+#hud.tema-cosecha .sim-phone-body h5 {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+}
+
+#hud.tema-cosecha .sim-phone-sub {
+  font-size: 11px;
+  color: #64748b;
+  margin: 0 0 12px 0;
+}
+
+#hud.tema-cosecha .sim-switch-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+#hud.tema-cosecha .sim-switch-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+}
+
+#hud.tema-cosecha .sim-switch-desc {
+  font-size: 11px;
+}
+
+#hud.tema-cosecha .sim-toggle-pill {
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#hud.tema-cosecha .sim-toggle-pill.inactivo {
+  background: #94a3b8;
+}
+
+#hud.tema-cosecha .sim-stepper-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+#hud.tema-cosecha .sim-stepper-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+#hud.tema-cosecha .sim-stepper-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#hud.tema-cosecha .sim-step-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+#hud.tema-cosecha .sim-step-btn:hover {
+  background: #cbd5e1;
+}
+
+#hud.tema-cosecha .sim-kilos-val {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+#hud.tema-cosecha .sim-sync-btn {
+  width: 100%;
+  background: #0f172a !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#hud.tema-cosecha .sim-sync-btn:hover {
+  background: #000000 !important;
+}
+
+#hud.tema-cosecha .sim-telemetry-badge {
+  font-size: 10px;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 7px 10px;
+  margin-top: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+#hud.tema-cosecha .sim-telemetry-badge.ok {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+#hud.tema-cosecha .sim-telemetry-badge.sync {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e40af;
+}
+
+#hud.tema-cosecha .sim-pulse-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #3b82f6;
+  border-radius: 50%;
+  animation: pulsoLive 1s infinite;
+  margin-right: 4px;
+}
+
+#hud.tema-cosecha .sim-admin-caja-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+#hud.tema-cosecha .sim-msg-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 11.5px;
+}
+
+#hud.tema-cosecha .sim-msg-item b {
+  display: block;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+#hud.tema-cosecha .sim-msg-item p {
+  margin: 0 0 4px 0;
+  color: #475569;
+}
+
+#hud.tema-cosecha .sim-msg-item small {
+  color: #94a3b8;
+}
+
+/* Explicación Productor */
+#hud.tema-cosecha .sim-productor-explicacion {
+  padding-left: 8px;
+}
+
+#hud.tema-cosecha .sim-tag-agtech {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0284c7;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+#hud.tema-cosecha .sim-productor-explicacion h4 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.01em;
+}
+
+#hud.tema-cosecha .sim-productor-explicacion p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0 0 14px 0;
+}
+
+#hud.tema-cosecha .sim-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#hud.tema-cosecha .sim-feature-list li {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #334155;
+  background: #f8fafc;
+  border-left: 3px solid #0284c7;
+  padding: 8px 12px;
+  border-radius: 0 8px 8px 0;
+}
+
+#hud.tema-cosecha .sim-feature-list li b {
+  color: #0f172a;
+}
+
+
+#hud.tema-cosecha .hud-conversion-card {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06) !important;
+}
+
+#hud.tema-cosecha .hud-conversion-card .hcc-tag {
+  color: #15803d !important;
+  font-weight: 800 !important;
+}
+
+#hud.tema-cosecha .hud-conversion-card h3 {
+  color: #111827 !important;
+}
+
+#hud.tema-cosecha .hud-conversion-card p {
+  color: #4b5563 !important;
+}
+
+#hud.tema-cosecha .hud-conversion-card .btn-primario {
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35) !important;
+}
+
+#hud.tema-cosecha .hud-conversion-card .btn-secundario {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+  color: #111827 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+#hud.tema-cosecha .hud-conversion-card .btn-secundario:hover {
+  background: #f9fafb !important;
+  color: #000000 !important;
+  border-color: #9ca3af !important;
+}
+
+/* Overrides de contraste para el panel de eficiencia en tema cosecha */
+#hud.tema-cosecha .bloque-eficiencia {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+#hud.tema-cosecha .bloque-eficiencia .ef-titulos h4 {
+  color: #111827 !important;
+}
+
+#hud.tema-cosecha .bloque-eficiencia .ef-desc {
+  color: #6b7280 !important;
+}
+
+#hud.tema-cosecha .bloque-eficiencia .ef-selector {
+  background: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+#hud.tema-cosecha .bloque-eficiencia .ef-tab {
+  color: #64748b !important;
+}
+
+#hud.tema-cosecha .bloque-eficiencia .ef-tab.activo {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+#hud.tema-cosecha .bloque-eficiencia .kpi-card {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+#hud.tema-cosecha .bloque-eficiencia .kpi-val {
+  color: #0f172a !important;
+}
 
 /* Desenfoque del lienzo 3D cuando el HUD está abierto. */
 #lienzo { transition: filter 0.5s var(--ease-principal); }
-body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
+body.enfoque-hud #lienzo { filter: blur(14px) brightness(0.96); }
+body.tema-oscuro.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
 
 /* ── PANEL DE ÓRBITA (lateral) ─────────────────────────────── */
 #panel-orbita {
@@ -46,6 +2164,70 @@ body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
 #panel-orbita .metricas .m b { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; display: block; line-height: 1; }
 #panel-orbita .metricas .m span { font-size: 11px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; }
 
+#panel-orbita.tema-huerto-orbita {
+  background: rgba(254, 252, 248, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.18), 0 0 30px -10px rgba(34, 197, 94, 0.15);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+}
+
+#panel-orbita.tema-huerto-orbita .eyebrow {
+  color: #15803d;
+  font-weight: 700;
+}
+
+#panel-orbita.tema-huerto-orbita h2 {
+  color: #111827;
+}
+
+#panel-orbita.tema-huerto-orbita .tagline {
+  color: #4b5563;
+}
+
+#panel-orbita.tema-huerto-orbita .chips span {
+  background: #f4f4f5;
+  border-color: #e4e4e7;
+  color: #3f3f46;
+  font-weight: 500;
+}
+
+#panel-orbita.tema-huerto-orbita .metricas .m b {
+  color: #111827;
+}
+
+#panel-orbita.tema-huerto-orbita .metricas .m span {
+  color: #71717a;
+}
+
+#panel-orbita.tema-huerto-orbita .btn-huerto-explorar {
+  background: #111827 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16) !important;
+}
+
+#panel-orbita.tema-huerto-orbita .btn-huerto-explorar:hover {
+  background: #000000 !important;
+  transform: scale(1.04);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25) !important;
+}
+
+#panel-orbita.tema-huerto-orbita .btn-huerto-360 {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: #15803d !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+}
+
+#panel-orbita.tema-huerto-orbita .btn-huerto-360:hover {
+  background: #ffffff !important;
+  border-color: #22c55e !important;
+  color: #14532d !important;
+}
+
 /* Cascada de entrada suave al desplegarse el panel de órbita */
 #panel-orbita .eyebrow,
 #panel-orbita h2,
@@ -64,46 +2246,110 @@ body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
 #panel-orbita.visible .metricas { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
 #panel-orbita.visible .btn     { opacity: 1; transform: translateY(0); transition-delay: 0.29s; }
 
-/* Botones pill */
+/* Botones pill estilo Apple con alto contraste */
 .btn {
   display: inline-flex; align-items: center; gap: 8px;
-  font-size: 14px; font-weight: 600; padding: 11px 20px; border-radius: 999px;
-  cursor: pointer; border: 1px solid transparent; transition: transform 0.2s var(--ease-principal), box-shadow 0.2s, background 0.2s;
+  font-size: 14px; font-weight: 600; padding: 11px 22px; border-radius: 999px;
+  cursor: pointer; border: 1px solid transparent; transition: transform 0.2s var(--ease-principal), box-shadow 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
   user-select: none;
 }
-.btn-primario { background: #fff; color: #000; }
-.btn-primario:hover { transform: scale(1.03); box-shadow: 0 0 30px -6px var(--accent); }
-.btn-secundario { background: rgba(255, 255, 255, 0.06); color: var(--text); border-color: var(--hairline); }
-.btn-secundario:hover { transform: scale(1.03); border-color: rgba(255, 255, 255, 0.28); }
+.btn-primario {
+  background: #ffffff;
+  color: #0b0d14;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+.btn-primario:hover {
+  transform: translateY(-2px);
+  background: #f1f3f9;
+  color: #000000;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+}
+.btn-secundario {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.btn-secundario:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.42);
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* En tema cosecha o fondos claros, mantener legibilidad óptima */
+#hud.tema-cosecha .btn-primario,
+#contenido .btn-primario {
+  background: #111827 !important;
+  color: #ffffff !important;
+  border: 1px solid #000000 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+}
+#hud.tema-cosecha .btn-primario:hover,
+#contenido .btn-primario:hover {
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18) !important;
+}
+#hud.tema-cosecha .btn-secundario,
+#contenido .btn-secundario {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid rgba(0, 0, 0, 0.14) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+#hud.tema-cosecha .btn-secundario:hover,
+#contenido .btn-secundario:hover {
+  background: #f7f7f9 !important;
+  color: #000000 !important;
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  transform: translateY(-2px) !important;
+}
+
 #panel-orbita .btn { margin-top: 24px; }
 
 /* ── HUD DEL CASO DE ESTUDIO (pantalla completa) ───────────── */
 #hud {
-  position: fixed; inset: 0; z-index: 30;
+  position: fixed; inset: 0; z-index: 50;
   overflow-y: auto;
   padding: 96px 24px 120px;
   opacity: 0; visibility: hidden; pointer-events: none;
-  transition: opacity 0.5s var(--ease-principal), visibility 0.5s;
-  /* Velo para legibilidad sobre el lienzo desenfocado. */
-  background: radial-gradient(120% 80% at 50% 0%, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.72));
+  transition: opacity 0.4s var(--ease-principal), visibility 0.4s;
+  /* Fondo opaco de cristal aeroespacial para evitar que el espacio transparente confunda la vista */
+  background: radial-gradient(120% 80% at 50% 0%, rgba(13, 17, 28, 0.96), rgba(6, 8, 14, 0.98));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
-#hud.activo { opacity: 1; visibility: visible; pointer-events: auto; }
+#hud.activo {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
 #hud .hud-wrap {
-  opacity: 0; transform: translateY(26px) scale(0.985);
-  transition: opacity 0.6s var(--ease-principal) 0.12s, transform 0.7s var(--ease-principal) 0.12s;
+  opacity: 0; transform: translateY(22px) scale(0.99);
+  transition: opacity 0.5s var(--ease-principal) 0.08s, transform 0.55s var(--ease-principal) 0.08s;
+  max-width: 920px; margin: 0 auto;
 }
-#hud.activo .hud-wrap { opacity: 1; transform: none; }
-#hud .hud-wrap { max-width: 900px; margin: 0 auto; }
+#hud.activo .hud-wrap {
+  opacity: 1 !important;
+  transform: none !important;
+}
 
 #hud .cerrar {
-  position: fixed; top: 22px; right: 24px; z-index: 32;
+  position: fixed; top: 22px; right: 24px; z-index: 52;
 }
 #hud .eyebrow { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-#hud h1 { font-size: clamp(44px, 8vw, 104px); font-weight: 700; letter-spacing: -0.03em; line-height: 0.98; margin: 14px 0 10px; }
+#hud h1 { font-size: clamp(44px, 8vw, 104px); font-weight: 700; letter-spacing: -0.03em; line-height: 0.98; margin: 14px 0 10px; color: #ffffff; }
 #hud .tagline { font-size: clamp(18px, 2.4vw, 24px); color: var(--text-2); max-width: 60ch; }
 
 #hud .metricas { display: flex; flex-wrap: wrap; gap: 40px; margin: 48px 0; padding: 32px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
-#hud .metricas .m b { font-size: 48px; font-weight: 700; letter-spacing: -0.02em; display: block; line-height: 1; }
+#hud .metricas .m b { font-size: 48px; font-weight: 700; letter-spacing: -0.02em; display: block; line-height: 1; color: #ffffff; }
 #hud .metricas .m span { font-size: 13px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; }
 
 #hud section.bloque { margin: 40px 0; }
@@ -113,9 +2359,219 @@ body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
 #hud section.bloque p { font-size: clamp(17px, 2vw, 21px); line-height: 1.6; max-width: 68ch; color: var(--text); }
 
 #hud .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-#hud .chips span { font-size: 13px; color: var(--text-2); border: 1px solid var(--hairline); border-radius: 999px; padding: 5px 12px; }
+#hud .chips span { font-size: 13px; color: #cbd5e1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 999px; padding: 6px 14px; }
 
 #hud .acciones { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 40px; }
+
+/* ── TARJETAS BENTO DEL CASO DE ESTUDIO ────────────────────── */
+.hud-galeria-card {
+  background: rgba(18, 23, 36, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 26px;
+  margin: 36px 0;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 16px 40px -15px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+.hud-galeria-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.hud-galeria-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.hud-galeria-card-tag {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.hud-galeria-card-sub {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.hud-bento-casos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 36px 0;
+}
+@media (max-width: 860px) {
+  .hud-bento-casos {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hud-card-bento {
+  background: rgba(18, 23, 36, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.hud-card-bento:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 18px 36px -10px rgba(0, 0, 0, 0.65);
+}
+.hud-card-bento::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--card-accent, var(--accent));
+}
+
+.hud-card-bento.bento-reto {
+  --card-accent: #f59e0b;
+}
+.hud-card-bento.bento-solucion {
+  --card-accent: var(--accent);
+}
+.hud-card-bento.bento-resultado {
+  --card-accent: #10b981;
+}
+
+.bento-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+.bento-badge {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--card-accent, var(--accent));
+}
+.bento-icon {
+  font-size: 20px;
+}
+.hud-card-bento h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.hud-card-bento p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0;
+}
+.bento-footer-tag {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Hotspots y Módulos Arquitectónicos */
+.hud-hotspots-section {
+  margin: 44px 0 36px;
+}
+.hud-hotspots-header {
+  margin-bottom: 20px;
+}
+.hud-hotspots-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+.hud-hotspots-header p {
+  font-size: 14px;
+  color: #94a3b8;
+  margin: 0;
+}
+.hud-hotspots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.hud-hotspot-card {
+  background: rgba(18, 23, 36, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.25s ease;
+}
+.hud-hotspot-card:hover {
+  transform: translateY(-2px);
+  background: rgba(24, 30, 48, 0.9);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.hud-hotspot-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.hud-hotspot-cat {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.hud-hotspot-card h4 {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 2px 0 0 0;
+}
+.hud-hotspot-card p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #94a3b8;
+  margin: 0;
+}
+.hud-hotspot-impact {
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #34d399;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 
 /* Marco de dispositivo (placeholder elegante hasta tener capturas) */
 #hud .galeria { display: flex; gap: 24px; flex-wrap: wrap; margin: 44px 0; align-items: flex-end; }
@@ -166,15 +2622,30 @@ body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
 /* ── Scroll reveal en secciones y artículos del HUD ──────── */
 .hud-reveal {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(24px);
   transition:
-    opacity 0.75s var(--ease-principal),
-    transform 0.8s var(--ease-principal);
-  will-change: transform, opacity;
+    opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
+
 .hud-reveal.revelado {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Stagger sutil para elementos contiguos */
+.hud-reveal[data-stagger="0"] { transition-delay: 0.05s; }
+.hud-reveal[data-stagger="1"] { transition-delay: 0.12s; }
+.hud-reveal[data-stagger="2"] { transition-delay: 0.19s; }
+.hud-reveal[data-stagger="3"] { transition-delay: 0.26s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 @media (max-width: 600px) {
@@ -428,4 +2899,318 @@ body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+}
+
+/* ── STORYTELLING DE PROYECTO (Flujo Creativo & Arquitectura) ──────── */
+.hud-story-section {
+  margin: 44px 0;
+  padding-top: 36px;
+  border-top: 1px solid var(--hairline);
+}
+.hud-story-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hud-story-section h2 {
+  font-size: clamp(24px, 3.2vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.hud-story-section .story-subtitulo {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.5;
+  max-width: 68ch;
+  margin-bottom: 24px;
+}
+
+/* Comparativa Idea del Cliente vs Concepto Desarrollado */
+.story-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 24px 0;
+}
+@media (max-width: 720px) {
+  .story-split-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.story-card-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.story-card-box.cliente {
+  border-left: 3px solid #f59e0b;
+}
+.story-card-box.desarrollador {
+  border-left: 3px solid var(--accent);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.06), rgba(255, 255, 255, 0.02));
+}
+.story-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.story-card-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #cbd5e1;
+}
+.story-card-box h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.story-card-box p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* Pilares creativos */
+.story-pilares-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.story-pilar-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.story-pilar-icon {
+  font-size: 24px;
+}
+.story-pilar-card h5 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+.story-pilar-card p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* Diagrama Interactivo de Arquitectura (Admin + Backend + Cloudflare) */
+.hud-diagrama-wrapper {
+  background: rgba(10, 14, 23, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+  margin: 24px 0;
+}
+.hud-diagrama-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.diagrama-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+}
+.diagrama-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 4px;
+}
+.diagrama-tab {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.diagrama-tab.activo {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: var(--accent);
+}
+.diagrama-pipeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.diagrama-nodo {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 14px 18px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+.diagrama-nodo.activo {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent);
+}
+.diagrama-step-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+}
+.diagrama-nodo.activo .diagrama-step-badge {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+.diagrama-nodo-body h6 {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 3px;
+}
+.diagrama-nodo-body p {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+.diagrama-nodo-tech {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(34, 197, 94, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .diagrama-nodo {
+    grid-template-columns: 36px 1fr;
+  }
+  .diagrama-nodo-tech {
+    grid-column: 2 / -1;
+    justify-self: start;
+    margin-top: 4px;
+  }
+}
+
+/* Impacto y hosting $0 */
+.story-hosting-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.story-impacto-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.story-impacto-valor {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  line-height: 1;
+}
+.story-impacto-valor span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-left: 4px;
+}
+.story-impacto-titulo {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 4px;
+}
+.story-impacto-desc {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+.story-comparativa-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 20px;
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 680px) {
+  .story-comparativa-box {
+    grid-template-columns: 1fr;
+  }
+}
+.story-comp-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.story-comp-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.story-comp-item.antes .story-comp-tag { color: #f87171; }
+.story-comp-item.ahora .story-comp-tag { color: var(--accent); }
+.story-comp-item p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text);
 }

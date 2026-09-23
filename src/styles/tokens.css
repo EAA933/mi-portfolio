@@ -1,32 +1,41 @@
 /* ============================================================
    tokens.css — sistema de diseño (variables globales)
-   Un solo lugar para colores, tipografía y ritmos de movimiento.
+   Look sobrio y refinado estilo Apple: fondo beige/blanco cálido,
+   tipografía editorial limpia y cajas con acentos de color vivo.
    ============================================================ */
 :root {
-  /* — Color — */
+  /* — Paleta Espacio Profundo (Look Cósmico Original) — */
   --bg: #000000;
+  --bg-canvas: #000000;
   --bg-elev: #0a0a0f;
+  --bg-card: #121218;
   --text: #f5f5f7;
   --text-2: #86868b;
+  --text-muted: #6e6e73;
   --hairline: rgba(255, 255, 255, 0.10);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 20px 48px -12px rgba(0, 0, 0, 0.7);
 
-  /* Acento por defecto. Cada planeta lo sobreescribe en runtime
-     (--accent) para teñir glow y detalles de UI con moderación. */
+  /* Acento por defecto (dorado cósmico / ámbar) */
   --accent: #d8a94b;
 
-  /* — Vidrio tipo visionOS (paneles y HUD) — */
+  /* — Vidrio estilo visión espacial / visionOS oscuro — */
   --glass-bg: rgba(255, 255, 255, 0.06);
-  --glass-blur: 40px;
-  --glass-radio: 28px;
+  --glass-blur: 24px;
+  --glass-radio: 24px;
 
-  /* — Tipografía — */
-  /* No incrustamos SF Pro (su licencia no lo permite en web); usamos la
-     fuente de sistema de Apple con Inter como respaldo. */
+  /* — Tipografía y espaciado — */
   --font: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue",
     Helvetica, Arial, sans-serif;
+  --line-height-base: 1.65;
+  --line-height-relaxed: 1.75;
+  --card-radius: 24px;
+  --card-shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
   /* — Movimiento — */
-  --ease-principal: cubic-bezier(0.16, 1, 0.3, 1); /* "expo.out" */
+  --ease-principal: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
   --dur: 800ms;
 }
+

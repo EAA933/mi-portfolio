@@ -103,6 +103,7 @@ export function crearInspector360(escena, camara, projects, planetas, onSalir) {
   // Referencias a elementos internos
   const elHeaderNombre = cont.querySelector(".i360-nombre");
   const elHeaderTipo = cont.querySelector(".i360-tipo");
+  const elBadgeTxt = cont.querySelector(".i360-badge-txt");
   const elBtnCerrar = cont.querySelector(".i360-btn-cerrar");
   const elHotspotsLayer = cont.querySelector("#i360-hotspots-layer");
   const elCardHotspot = cont.querySelector("#i360-card-hotspot");
@@ -115,6 +116,7 @@ export function crearInspector360(escena, camara, projects, planetas, onSalir) {
   const elBtnAutoRotar = cont.querySelector(".i360-btn-autorotar");
   const elBtnHotspots = cont.querySelector(".i360-btn-hotspots");
   const elBtnReset = cont.querySelector(".i360-btn-reset");
+  const elHint = cont.querySelector(".i360-hint");
 
   // Elementos HTML de los hotspots del planeta activo
   let hotspotElements = [];
@@ -313,7 +315,15 @@ export function crearInspector360(escena, camara, projects, planetas, onSalir) {
 
     // Llenar datos de cabecera
     elHeaderNombre.textContent = proyecto.nombre;
+    const esHuerto = proyecto.planeta?.tipo === "huerto";
+    if (elBadgeTxt) {
+      elBadgeTxt.textContent = esHuerto
+        ? "🌿 RECORRIDO BOTÁNICO 360° // HUERTO Y PARCELAS"
+        : "MODO INSPECCIÓN 360° // ÓRBITA LIBRE";
+    }
+
     const tipos = {
+      huerto: "PRODUCCIÓN AGRÍCOLA • HUERTO ORGÁNICO & CULTIVOS DE HIDALGO",
       terrestre: "MUNDO FÉRTIL • BIOMAS & LUCES NOCTURNAS",
       gaseoso: "GIGANTE GASEOSO • ANILLOS DE HIELO & AURORAS",
       hielo: "MUNDO CRIOGÉNICO • GLACIARES DE METANO",
@@ -321,6 +331,13 @@ export function crearInspector360(escena, camara, projects, planetas, onSalir) {
     };
     elHeaderTipo.textContent = tipos[proyecto.planeta?.tipo] || "CUERPO CELESTE";
     cont.style.setProperty("--i360-acc", acento);
+    cont.classList.toggle("tema-huerto", esHuerto);
+
+    if (elHint) {
+      elHint.innerHTML = esHuerto
+        ? `<span class="i360-hint-icon">🌿</span><span>Gira para recorrer el huerto • Rueda para acercarte a los sembradíos</span>`
+        : `<span class="i360-hint-icon">🖱️</span><span>Arrastra para rotar en 360° • Rueda o pellizca para zoom</span>`;
+    }
 
     // Montar hotspots
     montarHotspotsProyecto(proyecto);
@@ -424,6 +441,7 @@ export function crearInspector360(escena, camara, projects, planetas, onSalir) {
     cerrar,
     actualizar,
     estaActivo: () => estado.activo,
+    getIndice: () => estado.indice,
   };
 }
 

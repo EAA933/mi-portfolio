@@ -16,7 +16,8 @@ export function crearGrid(projects, site, onAbrirCaso) {
       const cat = p.categoria === "automatizacion" ? "Automatización" : "Web";
       const chips = (p.stack || []).slice(0, 4).map((s) => `<span>${s}</span>`).join("");
       const links = [];
-      links.push(`<button type="button" class="btn-vr-caso" data-indice="${i}" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#fff;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;">📊 Ver caso y métricas ↗</button>`);
+      const btnTexto = p.storytelling ? "🌱 Ver caso & storytelling ↗" : "📊 Ver caso y métricas ↗";
+      links.push(`<button type="button" class="btn-vr-caso" data-indice="${i}" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#fff;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;">${btnTexto}</button>`);
       if (p.links?.sitio) links.push(`<a href="${p.links.sitio}" target="_blank" rel="noopener">Ver sitio ↗</a>`);
       if (p.links?.codigo) links.push(`<a href="${p.links.codigo}" target="_blank" rel="noopener">Código ↗</a>`);
       const cap = p.capturas?.[0];
@@ -33,6 +34,13 @@ export function crearGrid(projects, site, onAbrirCaso) {
                 <span style="color:#fff;font-weight:600;">${p.eficiencia.resumen.porcentaje}</span>
                 <span>•</span>
                 <span style="color:#34d399;">${p.eficiencia.resumen.impacto}</span>
+              </div>
+            ` : p.storytelling ? `
+              <div class="vr-eficiencia" style="display:flex;align-items:center;gap:6px;margin:8px 0;font-size:11.5px;color:#94a3b8;background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);">
+                <span style="color:var(--acc);font-weight:700;">🌱 Impacto:</span>
+                <span style="color:#fff;font-weight:600;">+1,000 visitas/mes</span>
+                <span>•</span>
+                <span style="color:#22c55e;">#1 en Google</span>
               </div>
             ` : ""}
             <div class="chips">${chips}</div>

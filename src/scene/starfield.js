@@ -36,6 +36,7 @@ const FRAG = /* glsl */ `
   precision mediump float;
   uniform vec3 uColor;
   uniform vec3 uColorWarp;
+  uniform float uOpacidad;
   varying float vBrillo;
   varying float vWarp;
 
@@ -54,7 +55,7 @@ const FRAG = /* glsl */ `
 
     // Cambio hacia tonalidad violeta/blanco en sobrecarga warp
     vec3 colFinal = mix(uColor, uColorWarp, clamp(vWarp * 0.8, 0.0, 1.0));
-    gl_FragColor = vec4(colFinal * (vBrillo + vWarp * 0.4), alfa * vBrillo);
+    gl_FragColor = vec4(colFinal * (vBrillo + vWarp * 0.4), alfa * vBrillo * uOpacidad);
   }
 `;
 
@@ -87,6 +88,7 @@ function crearCapa({ cantidad, radio, tamMin, tamMax, brilloMin, brilloMax, colo
       uParallax: { value: parallax },
       uColor: { value: new THREE.Color(color) },
       uColorWarp: { value: new THREE.Color(0xd8b4fe) },
+      uOpacidad: { value: 1.0 },
     },
     vertexShader: VERT,
     fragmentShader: FRAG,
@@ -288,5 +290,39 @@ export class Starfield {
 
     // Deriva ambiental muy lenta para que el cielo nunca esté 100% muerto.
     this.grupo.rotation.y += dt * 0.005;
+  }
+
+  /**
+   * Transiciona el cielo estrellado hacia un ambiente natural de huerto y campo:
+   * las estrellas espaciales se desvanecen gradualmente para dar paso a la luz natural del día,
+   * eliminando cualquier punto alienígena o estelar del fondo.
+   * @param {number} factor 0 (espacio profundo) a 1 (huerto/campo campirano)
+   */
+  setModoCampo(factor) {
+    const f = THREE.MathUtils.clamp(factor, 0, 1);
+    // En el campo a la luz de la mañana no se ven estrellas espaciales: se desvanecen suavemente
+    const opacidad = Math.max(0, 1.0 - f * 1.15);
+
+    for (const capa of [this.capaLejana, this.capaMedia, this.capaCercana]) {
+      if (capa?.material?.uniforms?.uOpacidad) {
+        capa.material.uniforms.uOpacidad.value = opacidad;
+      }
+      capa.visible = opacidad > 0.005;
+    }
+
+    if (this.tunelWarp) {
+      this.tunelWarp.streaks.visible = opacidad > 0.005;
+    }
+  }
+
+  /**
+   * Asegura que el cielo estrellado mantenga siempre su brillo cósmico
+   */
+  setModoClaro(_esClaro) {
+    for (const capa of [this.capaLejana, this.capaMedia, this.capaCercana]) {
+      if (capa?.material?.uniforms?.uOpacidad) {
+        capa.material.uniforms.uOpacidad.value = 1.0;
+      }
+    }
   }
 }
