@@ -370,9 +370,11 @@ export const projects = [
 
     stack: ["React", "Node.js", "Express", "Supabase", "PWA"],
     links: {
-      sitio: null,
+      sitio: "https://medscan-gamma.vercel.app",
       codigo: null, // https://github.com/EAA933/medscan — agregar cuando el repo sea público
     },
+    // Tema visual del caso de estudio (hud.js): clínico en vez de espacial.
+    tema: "hospital",
     capturas: [
       import.meta.env.BASE_URL + "captures/medscan-home.png",
       import.meta.env.BASE_URL + "captures/medscan-movil.png"

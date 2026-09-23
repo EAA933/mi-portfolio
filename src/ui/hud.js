@@ -60,6 +60,8 @@ export function crearHUD() {
 
     const eyebrowTxt = esHuerto
       ? "🌿 PROYECTO AGRÍCOLA • HUERTO DE HORTALIZAS"
+      : proyecto.tema === "hospital"
+      ? "🩺 Salud digital · Web"
       : proyecto.categoria === "automatizacion"
       ? "Automatización"
       : "Web";
@@ -312,14 +314,42 @@ export function crearHUD() {
     return `<div class="story-fallback"><p>Caso de estudio en preparación.</p></div>`;
   }
 
+  // Textos del caso estándar; el tema "hospital" (MedScan) usa lenguaje clínico.
+  function textosCaso(proyecto) {
+    if (proyecto.tema === "hospital") {
+      const host = proyecto.links?.sitio ? proyecto.links.sitio.replace(/^https?:\/\//, "") : "";
+      return {
+        galeriaTag: "🩺 Interfaz en producción",
+        galeriaSub: host ? `Web + móvil · en vivo en ${host}` : "Web + móvil",
+        retoBadge: "01. Diagnóstico", retoIcon: "🩺", retoTitulo: "El problema", retoPie: "Comparar a mano, sitio por sitio",
+        solBadge: "02. Tratamiento", solIcon: "💊", solTitulo: "La solución",
+        resBadge: "03. Resultado", resIcon: "📋", resTitulo: "El impacto",
+        modEyebrow: "Cómo funciona", modTitulo: "Arquitectura del sistema",
+        modDesc: "Las piezas que hacen posible comparar precios de medicamentos en segundos.",
+        modImpactoIcon: "✓",
+      };
+    }
+    return {
+      galeriaTag: "💻 Interfaz &amp; Producto en Producción",
+      galeriaSub: "Visualización multiplataforma Web + Mobile con telemetría en vivo",
+      retoBadge: "01. El Reto", retoIcon: "⚠️", retoTitulo: "Problemática Operativa", retoPie: "🛑 Fricción antes de la automatización",
+      solBadge: "02. La Solución", solIcon: "⚡", solTitulo: "Ingeniería &amp; Software",
+      resBadge: "03. Resultado", resIcon: "📈", resTitulo: "Impacto en Negocio",
+      modEyebrow: "Módulos del Sistema", modTitulo: "Arquitectura &amp; Capacidades Clave",
+      modDesc: "Componentes críticos desarrollados para garantizar fiabilidad, velocidad y mínima carga cognitiva.",
+      modImpactoIcon: "🎯",
+    };
+  }
+
   function renderCasoEstandarHTML(proyecto, cap0, cap1) {
+    const tx = textosCaso(proyecto);
     const hotspotsHTML = (proyecto.hotspots && proyecto.hotspots.length)
       ? `
         <section class="hud-hotspots-section hud-reveal">
           <div class="hud-hotspots-header">
-            <div class="eyebrow" style="margin-bottom:6px;">Módulos del Sistema</div>
-            <h3>Arquitectura &amp; Capacidades Clave</h3>
-            <p>Componentes críticos desarrollados para garantizar fiabilidad, velocidad y mínima carga cognitiva.</p>
+            <div class="eyebrow" style="margin-bottom:6px;">${tx.modEyebrow}</div>
+            <h3>${tx.modTitulo}</h3>
+            <p>${tx.modDesc}</p>
           </div>
           <div class="hud-hotspots-grid">
             ${proyecto.hotspots.map((h, idx) => `
@@ -331,7 +361,7 @@ export function crearHUD() {
                 <h4>${h.titulo}</h4>
                 <p>${h.descripcion}</p>
                 <div class="hud-hotspot-impact">
-                  <span>🎯</span> ${h.impacto || "Alta disponibilidad"}
+                  <span>${tx.modImpactoIcon}</span> ${h.impacto || "Alta disponibilidad"}
                 </div>
               </div>
             `).join("")}
@@ -345,10 +375,10 @@ export function crearHUD() {
       <div class="hud-galeria-card hud-reveal">
         <div class="hud-galeria-card-top">
           <div class="hud-galeria-card-tag">
-            <span>💻</span> Interfaz &amp; Producto en Producción
+            ${tx.galeriaTag}
           </div>
           <div class="hud-galeria-card-sub">
-            Visualización multiplataforma Web + Mobile con telemetría en vivo
+            ${tx.galeriaSub}
           </div>
         </div>
         <div class="galeria">
@@ -370,22 +400,22 @@ export function crearHUD() {
       <div class="hud-bento-casos hud-reveal">
         <div class="hud-card-bento bento-reto" data-stagger="0">
           <div class="bento-header">
-            <span class="bento-badge">01. El Reto</span>
-            <span class="bento-icon">⚠️</span>
+            <span class="bento-badge">${tx.retoBadge}</span>
+            <span class="bento-icon">${tx.retoIcon}</span>
           </div>
-          <h3>Problemática Operativa</h3>
+          <h3>${tx.retoTitulo}</h3>
           <p>${proyecto.reto || ""}</p>
           <div class="bento-footer-tag">
-            <span>🛑</span> Fricción antes de la automatización
+            ${tx.retoPie}
           </div>
         </div>
 
         <div class="hud-card-bento bento-solucion" data-stagger="1">
           <div class="bento-header">
-            <span class="bento-badge">02. La Solución</span>
-            <span class="bento-icon">⚡</span>
+            <span class="bento-badge">${tx.solBadge}</span>
+            <span class="bento-icon">${tx.solIcon}</span>
           </div>
-          <h3>Ingeniería &amp; Software</h3>
+          <h3>${tx.solTitulo}</h3>
           <p>${proyecto.solucion || ""}</p>
           <div class="bento-footer-tag">
             <span>🛠️</span> ${(proyecto.stack || []).slice(0, 3).join(" • ")}
@@ -394,10 +424,10 @@ export function crearHUD() {
 
         <div class="hud-card-bento bento-resultado" data-stagger="2">
           <div class="bento-header">
-            <span class="bento-badge">03. Resultado</span>
-            <span class="bento-icon">📈</span>
+            <span class="bento-badge">${tx.resBadge}</span>
+            <span class="bento-icon">${tx.resIcon}</span>
           </div>
-          <h3>Impacto en Negocio</h3>
+          <h3>${tx.resTitulo}</h3>
           <p>${proyecto.resultado || ""}</p>
           <div class="bento-footer-tag">
             <span style="color:#10b981;">✓</span> ${proyecto.eficiencia?.resumen?.porcentaje || proyecto.resultadoTag || "Operación optimizada"}
@@ -422,6 +452,8 @@ export function crearHUD() {
     onCerrarActual = onCerrar || null;
 
     const esHuerto = proyecto.planeta?.tipo === "huerto";
+    const esHospital = proyecto.tema === "hospital";
+    hud.classList.toggle("tema-hospital", esHospital);
     if (esHuerto) {
       hud.classList.add("tema-cosecha");
       document.body.classList.add("tema-cosecha-activo");
@@ -447,7 +479,7 @@ export function crearHUD() {
     } else {
       hud.classList.remove("tema-cosecha");
       document.body.classList.remove("tema-cosecha-activo");
-      cerrarBtn.innerHTML = "← Volver a órbita";
+      cerrarBtn.innerHTML = esHospital ? "← Volver al portafolio" : "← Volver a órbita";
       hud.querySelector(".hud-cosecha-particulas")?.remove();
     }
 
@@ -477,7 +509,9 @@ export function crearHUD() {
     if (proyecto.links?.codigo)
       acciones.push(`<a class="btn btn-secundario" href="${proyecto.links.codigo}" target="_blank" rel="noopener">Ver código ↗</a>`);
 
-    const botonPlaneta = esHuerto
+    const botonPlaneta = esHospital
+      ? `<button type="button" class="btn btn-hosp-360 btn-abrir-inspeccion-360">Ver su planeta en 3D ↗</button>`
+      : esHuerto
       ? `<button type="button" class="btn btn-cosecha-recorrido btn-abrir-inspeccion-360">
           <span style="font-size:16px">🌿</span> Recorrer Huerto &amp; Cultivos 360°
         </button>`
@@ -485,7 +519,9 @@ export function crearHUD() {
           <span style="font-size:16px">🪐</span> Inspeccionar Planeta 360°
         </button>`;
 
-    const eyebrowTxt = esHuerto
+    const eyebrowTxt = esHospital
+      ? `<span class="hosp-cruz" aria-hidden="true"></span> Salud digital · Comparador de precios`
+      : esHuerto
       ? `<span class="eyebrow-dot"></span> PROYECTO AGRÍCOLA • HUERTO DE HORTALIZAS &amp; MERCADO DIGITAL`
       : (proyecto.categoria === "automatizacion" ? "Automatización" : "Sitio web");
 
@@ -511,6 +547,7 @@ export function crearHUD() {
           </div>
           ${botonPlaneta}
         </div>
+        ${esHospital ? `<svg class="hosp-ekg" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 H210 L225 30 L235 12 L247 48 L259 4 L271 56 L283 30 H330 L342 22 L354 30 H600" /></svg>` : ""}
       </header>
       <div class="metricas hud-reveal">${metricas}</div>
 
@@ -684,7 +721,7 @@ export function crearHUD() {
       reactRootActual = null;
     }
     hud.classList.remove("activo");
-    hud.classList.remove("tema-cosecha");
+    hud.classList.remove("tema-cosecha", "tema-hospital");
     document.body.classList.remove("tema-cosecha-activo");
     cerrarBtn.innerHTML = "← Volver a órbita";
     hud.querySelector(".hud-cosecha-particulas")?.remove();

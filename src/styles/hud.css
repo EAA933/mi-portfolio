@@ -2242,3 +2242,153 @@ body.tema-oscuro #hud.tema-cosecha {
   display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.05em; color: #c67139; margin-bottom: 6px;
 }
+
+/* ============================================================
+   TEMA HOSPITAL — caso de estudio de MedScan (/#medscan)
+   Lienzo blanco clínico con cruces médicas tenues, tarjetas tipo
+   expediente, índigo de la marca MedScan y verde "salud" para
+   resultados. Sustituye la estética espacial solo en este caso.
+   ============================================================ */
+#hud.tema-hospital {
+  --hosp-tinta: #0f172a;
+  --hosp-texto: #334155;
+  --hosp-suave: #64748b;
+  --hosp-borde: #e2e8f0;
+  --hosp-primario: #4f46e5;
+  --hosp-salud: #0f9f6e;
+  --accent: var(--hosp-primario);
+  font-family: "Figtree", system-ui, -apple-system, sans-serif;
+  color: var(--hosp-texto);
+  background-color: #f4f7fb;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M25 20h6v5h5v6h-5v5h-6v-5h-5v-6h5z' fill='%234f46e5' fill-opacity='0.045'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #eef2ff 0%, #f4f7fb 340px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+#hud.tema-hospital .cerrar {
+  background: #ffffff !important;
+  color: var(--hosp-tinta) !important;
+  border: 1px solid var(--hosp-borde) !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+#hud.tema-hospital .cerrar:hover { border-color: var(--hosp-primario) !important; color: var(--hosp-primario) !important; }
+
+/* Cabecera */
+#hud.tema-hospital .eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--hosp-primario); font-weight: 700; letter-spacing: 0.06em;
+}
+#hud.tema-hospital .hosp-cruz {
+  width: 18px; height: 18px; border-radius: 5px; background: var(--hosp-primario); position: relative; flex-shrink: 0;
+}
+#hud.tema-hospital .hosp-cruz::before,
+#hud.tema-hospital .hosp-cruz::after {
+  content: ""; position: absolute; background: #fff; border-radius: 1px;
+  left: 50%; top: 50%; transform: translate(-50%, -50%);
+}
+#hud.tema-hospital .hosp-cruz::before { width: 10px; height: 3px; }
+#hud.tema-hospital .hosp-cruz::after { width: 3px; height: 10px; }
+#hud.tema-hospital h1 { color: var(--hosp-tinta); }
+#hud.tema-hospital .tagline { color: var(--hosp-texto); }
+
+/* Electrocardiograma animado bajo el título */
+#hud.tema-hospital .hosp-ekg {
+  display: block; width: 100%; height: 48px; margin-top: 22px;
+}
+#hud.tema-hospital .hosp-ekg path {
+  fill: none; stroke: var(--hosp-salud); stroke-width: 2.2;
+  stroke-linejoin: round; stroke-linecap: round;
+  stroke-dasharray: 900; stroke-dashoffset: 900;
+  animation: hospLatido 3.2s ease-in-out infinite;
+}
+@keyframes hospLatido {
+  0% { stroke-dashoffset: 900; opacity: 1; }
+  60% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #hud.tema-hospital .hosp-ekg path { animation: none; stroke-dashoffset: 0; }
+}
+
+#hud.tema-hospital .btn-hosp-360 {
+  background: #ffffff !important; color: var(--hosp-primario) !important;
+  border: 1px solid #c7d2fe !important; border-radius: 999px;
+  padding: 10px 18px; font-weight: 700; font-size: 14px;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.12);
+}
+#hud.tema-hospital .btn-hosp-360:hover { background: #eef2ff !important; }
+
+/* Métricas como signos vitales */
+#hud.tema-hospital .metricas {
+  background: #ffffff; border: 1px solid var(--hosp-borde); border-radius: 20px;
+  padding: 26px 30px; gap: 48px;
+  box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
+}
+#hud.tema-hospital .metricas .m b { color: var(--hosp-tinta); }
+#hud.tema-hospital .metricas .m span { color: var(--hosp-suave); }
+
+/* Galería (dispositivos claros) */
+#hud.tema-hospital .hud-galeria-card,
+#hud.tema-hospital .hud-card-bento,
+#hud.tema-hospital .hud-hotspot-card {
+  background: #ffffff;
+  border: 1px solid var(--hosp-borde);
+  box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+#hud.tema-hospital .hud-galeria-card::before { background: linear-gradient(90deg, var(--hosp-primario), var(--hosp-salud)); }
+#hud.tema-hospital .hud-galeria-card-top { border-bottom-color: var(--hosp-borde); }
+#hud.tema-hospital .hud-galeria-card-tag { color: var(--hosp-primario); }
+#hud.tema-hospital .hud-galeria-card-sub { color: var(--hosp-suave); }
+#hud.tema-hospital .dispositivo {
+  background: #e2e8f0; border-color: #cbd5e1;
+  box-shadow: 0 20px 40px -20px rgba(15, 23, 42, 0.35);
+}
+#hud.tema-hospital .dispositivo.mac .barra { background: #f1f5f9; border-bottom-color: #e2e8f0; }
+
+/* Tarjetas tipo expediente */
+#hud.tema-hospital .hud-card-bento:hover,
+#hud.tema-hospital .hud-hotspot-card:hover {
+  background: #ffffff; border-color: #c7d2fe;
+  box-shadow: 0 16px 34px -18px rgba(79, 70, 229, 0.35);
+}
+#hud.tema-hospital .hud-card-bento.bento-reto { --card-accent: #e11d48; }
+#hud.tema-hospital .hud-card-bento.bento-solucion { --card-accent: var(--hosp-primario); }
+#hud.tema-hospital .hud-card-bento.bento-resultado { --card-accent: var(--hosp-salud); }
+#hud.tema-hospital .hud-card-bento h3,
+#hud.tema-hospital .hud-hotspots-header h3,
+#hud.tema-hospital .hud-hotspot-card h4 { color: var(--hosp-tinta); }
+#hud.tema-hospital .hud-card-bento p,
+#hud.tema-hospital .hud-hotspot-card p { color: var(--hosp-texto); }
+#hud.tema-hospital .bento-footer-tag { color: var(--hosp-suave); border-top-color: var(--hosp-borde); }
+#hud.tema-hospital .hud-hotspots-header p { color: var(--hosp-suave); }
+#hud.tema-hospital .hud-hotspot-cat {
+  color: var(--hosp-primario); background: #eef2ff; border-color: #c7d2fe;
+}
+#hud.tema-hospital .hud-hotspot-impact { color: var(--hosp-salud); }
+
+/* Chips, acciones y tarjeta de contacto */
+#hud.tema-hospital .chips span {
+  color: var(--hosp-texto); background: #ffffff; border-color: var(--hosp-borde);
+}
+#hud.tema-hospital .acciones .btn-primario {
+  background: var(--hosp-primario) !important; color: #ffffff !important; border-color: var(--hosp-primario) !important;
+}
+#hud.tema-hospital .acciones .btn-secundario {
+  background: #ffffff !important; color: var(--hosp-tinta) !important; border-color: var(--hosp-borde) !important;
+}
+#hud.tema-hospital .hud-conversion-card {
+  background: #ffffff; border: 1px solid var(--hosp-borde);
+  box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
+}
+#hud.tema-hospital .hud-conversion-card .hcc-tag { color: var(--hosp-primario); }
+#hud.tema-hospital .hud-conversion-card h3 { color: var(--hosp-tinta); }
+#hud.tema-hospital .hud-conversion-card p { color: var(--hosp-texto); }
+#hud.tema-hospital .hud-conversion-card .btn-primario {
+  background: var(--hosp-primario) !important; color: #ffffff !important; border-color: var(--hosp-primario) !important;
+}
+#hud.tema-hospital .hud-conversion-card .btn-secundario {
+  background: #ffffff !important; color: var(--hosp-tinta) !important; border-color: var(--hosp-borde) !important;
+}
