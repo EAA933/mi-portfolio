@@ -46,6 +46,24 @@ body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
 #panel-orbita .metricas .m b { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; display: block; line-height: 1; }
 #panel-orbita .metricas .m span { font-size: 11px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; }
 
+/* Cascada de entrada suave al desplegarse el panel de órbita */
+#panel-orbita .eyebrow,
+#panel-orbita h2,
+#panel-orbita .tagline,
+#panel-orbita .chips,
+#panel-orbita .metricas,
+#panel-orbita .btn {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.45s var(--ease-principal), transform 0.5s var(--ease-principal);
+}
+#panel-orbita.visible .eyebrow { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
+#panel-orbita.visible h2      { opacity: 1; transform: translateY(0); transition-delay: 0.13s; }
+#panel-orbita.visible .tagline { opacity: 1; transform: translateY(0); transition-delay: 0.17s; }
+#panel-orbita.visible .chips   { opacity: 1; transform: translateY(0); transition-delay: 0.21s; }
+#panel-orbita.visible .metricas { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
+#panel-orbita.visible .btn     { opacity: 1; transform: translateY(0); transition-delay: 0.29s; }
+
 /* Botones pill */
 .btn {
   display: inline-flex; align-items: center; gap: 8px;
@@ -130,6 +148,9 @@ body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
   position: fixed; left: 0; right: 0; bottom: 6vh; z-index: 18;
   display: flex; flex-direction: column; align-items: center; gap: 20px;
   text-align: center; padding: 0 24px; pointer-events: none; opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.65s var(--ease-principal), transform 0.75s var(--ease-principal);
+  will-change: transform, opacity;
 }
 #cta-final h2 { font-family: var(--font); font-size: clamp(28px, 5vw, 52px); font-weight: 700; letter-spacing: -0.02em; }
 #cta-final .filtros { display: flex; gap: 8px; }
@@ -141,6 +162,20 @@ body.enfoque-hud #lienzo { filter: blur(12px) brightness(0.32); }
 #cta-final .filtros button:hover { color: var(--text); }
 #cta-final .filtros button.activo { background: #fff; color: #000; border-color: #fff; }
 #cta-final .cta-links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+/* ── Scroll reveal en secciones y artículos del HUD ──────── */
+.hud-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.75s var(--ease-principal),
+    transform 0.8s var(--ease-principal);
+  will-change: transform, opacity;
+}
+.hud-reveal.revelado {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 @media (max-width: 600px) {
   #panel-orbita.lado-izq, #panel-orbita.lado-der { left: 50% !important; right: auto !important; transform: translate(-50%, 0) !important; top: auto; bottom: 24px; width: calc(100vw - 32px); }

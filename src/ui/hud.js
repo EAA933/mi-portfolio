@@ -100,23 +100,25 @@ export function crearHUD() {
       acciones.push(`<a class="btn btn-secundario" href="${proyecto.links.codigo}" target="_blank" rel="noopener">Ver código ↗</a>`);
 
     wrap.innerHTML = `
-      <div class="eyebrow">${proyecto.categoria === "automatizacion" ? "Automatización" : "Sitio web"}</div>
-      <h1>${proyecto.nombre}</h1>
-      <p class="tagline">${proyecto.tagline || ""}</p>
-      <div class="metricas">${metricas}</div>
-      <div class="galeria">
+      <header class="hud-header hud-reveal">
+        <div class="eyebrow">${proyecto.categoria === "automatizacion" ? "Automatización" : "Sitio web"}</div>
+        <h1>${proyecto.nombre}</h1>
+        <p class="tagline">${proyecto.tagline || ""}</p>
+      </header>
+      <div class="metricas hud-reveal">${metricas}</div>
+      <div class="galeria hud-reveal">
         <div class="dispositivo mac"><div class="barra"><i></i><i></i><i></i></div>
           <div class="pantalla"${cap0 ? ` style="background-image:url('${cap0}')"` : ""}>${cap0 ? "" : proyecto.nombre}</div></div>
         <div class="dispositivo phone">
           <div class="pantalla"${cap1 ? ` style="background-image:url('${cap1}')"` : ""}>${cap1 ? "" : proyecto.nombre}</div></div>
       </div>
-      <section class="bloque"><h3>Reto</h3><p>${proyecto.reto || ""}</p></section>
-      <section class="bloque"><h3>Solución</h3><p>${proyecto.solucion || ""}</p></section>
-      <section class="bloque"><h3>Resultado</h3><p>${proyecto.resultado || ""}</p></section>
-      <div class="chips">${(proyecto.stack || []).map((s) => `<span>${s}</span>`).join("")}</div>
-      ${acciones.length ? `<div class="acciones">${acciones.join("")}</div>` : ""}
+      <section class="bloque hud-reveal"><h3>Reto</h3><p>${proyecto.reto || ""}</p></section>
+      <section class="bloque hud-reveal"><h3>Solución</h3><p>${proyecto.solucion || ""}</p></section>
+      <section class="bloque hud-reveal"><h3>Resultado</h3><p>${proyecto.resultado || ""}</p></section>
+      <div class="chips hud-reveal">${(proyecto.stack || []).map((s) => `<span>${s}</span>`).join("")}</div>
+      ${acciones.length ? `<div class="acciones hud-reveal">${acciones.join("")}</div>` : ""}
 
-      <div class="hud-conversion-card">
+      <div class="hud-conversion-card hud-reveal">
         <span class="hcc-tag">💼 Consultoría &amp; Desarrollo Freelance</span>
         <h3>¿Tienes un reto similar en tu negocio?</h3>
         <p>Desarrollo soluciones a la medida con arquitectura robusta: desde plataformas web modernas con costo de operación nulo hasta automatizaciones con IA que reducen días de carga manual a solo minutos.</p>
@@ -126,6 +128,26 @@ export function crearHUD() {
         </div>
       </div>
     `;
+
+    // Animación suave de entrada (fade-in / slide-up) para cada bloque al hacer scroll
+    const hudObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revelado");
+          }
+        });
+      },
+      {
+        root: hud,
+        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.1,
+      }
+    );
+
+    wrap.querySelectorAll(".hud-reveal").forEach((elem) => {
+      hudObserver.observe(elem);
+    });
 
     // La aparición del contenedor y el contenido se hace por CSS
     // (.activo), robusto ante el throttle del requestAnimationFrame.

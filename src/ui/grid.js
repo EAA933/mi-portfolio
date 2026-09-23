@@ -12,7 +12,7 @@ export function crearGrid(projects, site) {
   cont.setAttribute("data-lenis-prevent", ""); // scroll nativo del overlay (Lenis lo ignora)
 
   const tarjetas = projects
-    .map((p) => {
+    .map((p, i) => {
       const cat = p.categoria === "automatizacion" ? "Automatización" : "Web";
       const chips = (p.stack || []).slice(0, 4).map((s) => `<span>${s}</span>`).join("");
       const links = [];
@@ -23,7 +23,7 @@ export function crearGrid(projects, site) {
       }
       const cap = p.capturas?.[0];
       return `
-        <article class="vr-card" style="--acc:${p.planeta?.acento || "#8899aa"}">
+        <article class="vr-card" data-stagger="${i % 3}" style="--acc:${p.planeta?.acento || "#8899aa"}">
           <div class="shot"${cap ? ` style="background-image:url('${cap}');background-size:cover;background-position:top center"` : ""}>${cap ? "" : p.nombre}</div>
           <div class="cuerpo">
             <div class="cat">${cat}</div>
@@ -38,13 +38,13 @@ export function crearGrid(projects, site) {
 
   cont.innerHTML = `
     <div class="vr-wrap">
-      <div class="vr-head">
+      <header class="vr-head">
         <h1>Proyectos</h1>
         <p>${site.meta.descripcion}</p>
-      </div>
+      </header>
       <div class="vr-grid">${tarjetas}</div>
 
-      <div class="vr-about">
+      <section class="vr-about">
         <div class="foto">${site.autor.iniciales}</div>
         <div>
           <h2>${site.autor.nombre}</h2>
@@ -57,12 +57,44 @@ export function crearGrid(projects, site) {
             <a class="btn btn-secundario" href="${import.meta.env.BASE_URL}cv.pdf" download>Descargar CV</a>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   `;
   document.body.appendChild(cont);
 
-  return { el: cont };
+  // Animaciones suaves de entrada (fade-in / slide-up) al hacer scroll
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revelado");
+        }
+      });
+    },
+    {
+      root: cont,
+      rootMargin: "0px 0px -40px 0px",
+      threshold: 0.1,
+    }
+  );
+
+  const elementosAnimables = cont.querySelectorAll(".vr-head, .vr-card, .vr-about");
+  elementosAnimables.forEach((el) => observer.observe(el));
+
+  return {
+    el: cont,
+    activar: () => {
+      // Dispara la revelación de los elementos en el viewport inicial
+      requestAnimationFrame(() => {
+        elementosAnimables.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add("revelado");
+          }
+        });
+      });
+    },
+  };
 }
 
 export default crearGrid;

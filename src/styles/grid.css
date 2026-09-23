@@ -29,6 +29,15 @@
 body.modo-rapida #vista-rapida { opacity: 1; visibility: visible; }
 
 .vr-wrap { max-width: 1160px; margin: 0 auto; padding: 120px 24px 100px; }
+
+/* Entrada suave para la cabecera */
+.vr-head {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.75s var(--ease-principal), transform 0.75s var(--ease-principal);
+  will-change: transform, opacity;
+}
+.vr-head.revelado { opacity: 1; transform: translateY(0); }
 .vr-head h1 { font-size: clamp(40px, 7vw, 80px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
 .vr-head p { color: var(--text-2); font-size: clamp(17px, 2vw, 21px); max-width: 62ch; margin-top: 16px; }
 
@@ -36,12 +45,34 @@ body.modo-rapida #vista-rapida { opacity: 1; visibility: visible; }
   display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 24px; margin-top: 56px;
 }
+
+/* Tarjetas con fade-in y slide-up al hacer scroll */
 .vr-card {
   background: var(--bg-elev); border: 1px solid var(--hairline);
   border-radius: 20px; overflow: hidden; display: flex; flex-direction: column;
-  transition: transform 0.3s var(--ease-principal), border-color 0.3s;
+  opacity: 0;
+  transform: translateY(36px);
+  transition:
+    opacity 0.8s var(--ease-principal),
+    transform 0.85s var(--ease-principal),
+    border-color 0.3s,
+    box-shadow 0.3s;
+  will-change: transform, opacity;
 }
-.vr-card:hover { transform: translateY(-4px); border-color: rgba(255, 255, 255, 0.22); }
+.vr-card.revelado {
+  opacity: 1;
+  transform: translateY(0);
+}
+.vr-card.revelado:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.65);
+}
+
+/* Stagger sutil en columnas */
+.vr-card[data-stagger="0"] { transition-delay: 0.05s; }
+.vr-card[data-stagger="1"] { transition-delay: 0.14s; }
+.vr-card[data-stagger="2"] { transition-delay: 0.22s; }
 .vr-card .shot {
   aspect-ratio: 16 / 10;
   background: linear-gradient(135deg, color-mix(in srgb, var(--acc) 45%, #0a0a0f), #0a0a0f);
@@ -57,9 +88,18 @@ body.modo-rapida #vista-rapida { opacity: 1; visibility: visible; }
 .vr-card .links a { font-size: 13px; font-weight: 600; color: var(--text); }
 .vr-card .links a:hover { color: var(--acc); }
 
+/* Sección sobre mí con fade-in y slide-up */
 .vr-about {
   margin-top: 88px; padding-top: 56px; border-top: 1px solid var(--hairline);
   display: grid; grid-template-columns: 180px 1fr; gap: 44px; align-items: start;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s var(--ease-principal), transform 0.85s var(--ease-principal);
+  will-change: transform, opacity;
+}
+.vr-about.revelado {
+  opacity: 1;
+  transform: translateY(0);
 }
 .vr-about .foto {
   width: 180px; height: 180px; border-radius: 24px;

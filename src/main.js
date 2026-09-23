@@ -352,15 +352,19 @@ function iniciar3D() {
   });
 
   // — Vista rápida (cuadrícula) + switch persistente —
-  crearGrid(projects, site);
+  const gridInstance = crearGrid(projects, site);
   function setVista(v, persistir = true) {
     modo.vistaRapida = v === "rapida";
     document.body.classList.toggle("modo-rapida", modo.vistaRapida);
     document.querySelectorAll("#switch-vista button").forEach((b) =>
       b.classList.toggle("activo", b.dataset.vista === v)
     );
-    if (modo.vistaRapida) scroll.lenis.stop();
-    else scroll.lenis.start();
+    if (modo.vistaRapida) {
+      scroll.lenis.stop();
+      gridInstance.activar?.();
+    } else {
+      scroll.lenis.start();
+    }
     if (persistir) { try { localStorage.setItem("ea-vista", v); } catch (e) {} }
   }
   document.querySelectorAll("#switch-vista button").forEach((b) =>
@@ -437,6 +441,7 @@ function iniciar3D() {
     // CTA final.
     const cVis = suave(0.95, 0.99, scroll.progreso) * (modo.enHUD ? 0 : 1);
     cta.style.opacity = String(cVis);
+    cta.style.transform = `translateY(${Math.max(0, (1 - cVis) * 32)}px)`;
     cta.style.pointerEvents = cVis > 0.5 ? "auto" : "none";
 
     // Hero: se desvanece en el primer 5% del scroll (y se oculta en HUD).
