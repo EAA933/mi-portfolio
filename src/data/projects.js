@@ -401,8 +401,8 @@ export const projects = [
       "carrito con Zustand que se guarda entre visitas. Modo claro y oscuro.",
     resultado:
       "Tienda publicada en Vercel con el recorrido completo: explorar, " +
-      "ver el modelo y agregarlo al carrito. El pago con Stripe está en " +
-      "integración (modo prueba).",
+      "ver el modelo y agregarlo al carrito. Sin base de datos: catálogo " +
+      "en código y carrito guardado en el navegador.",
     resultadoTag: "Publicada en Vercel",
     metricas: [
       { valor: 6, etiqueta: "Modelos en catálogo" },
