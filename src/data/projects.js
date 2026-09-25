@@ -384,8 +384,8 @@ export const projects = [
   },
 
   {
-    slug: "luna",
-    nombre: "LUNA",
+    slug: "mirar",
+    nombre: "MIRAR",
     categoria: "web",
     tagline: "Tienda en línea de lentes de sol con catálogo, fichas de producto y carrito.",
     descripcion:
@@ -398,7 +398,8 @@ export const projects = [
     solucion:
       "Storefront en Next.js 14 (App Router) con páginas prerenderizadas, " +
       "catálogo filtrable, fichas de producto con especificaciones y un " +
-      "carrito con Zustand que se guarda entre visitas. Modo claro y oscuro.",
+      "carrito con Zustand que se guarda entre visitas. Diseño editorial " +
+      "con animaciones (Framer Motion).",
     resultado:
       "Tienda publicada en Vercel con el recorrido completo: explorar, " +
       "ver el modelo y agregarlo al carrito. Sin base de datos: catálogo " +
@@ -440,11 +441,11 @@ export const projects = [
       },
       {
         id: "lu-diseno",
-        titulo: "Diseño Editorial Claro/Oscuro",
+        titulo: "Diseño Editorial Animado",
         categoria: "Marca",
-        icono: "🌓",
+        icono: "✨",
         pos: [-0.4, -0.48, -0.78],
-        descripcion: "Tipografía serif (Fraunces) con Plus Jakarta Sans, tokens de color por tema y carrusel de más vendidos con movimiento reducido respetado.",
+        descripcion: "Tipografía serif (Fraunces) con Plus Jakarta Sans, títulos que se revelan línea por línea, parallax y transiciones con Framer Motion; respeta el modo de movimiento reducido.",
         impacto: "Se siente premium en cualquier pantalla"
       }
     ],
@@ -453,12 +454,12 @@ export const projects = [
 
     stack: ["Next.js", "TypeScript", "Tailwind", "Zustand", "Vercel"],
     links: {
-      sitio: "https://luna-store-wheat.vercel.app",
+      sitio: "https://mirar-lentes.vercel.app",
       codigo: "https://github.com/EAA933/Luna_Store",
     },
     capturas: [
-      import.meta.env.BASE_URL + "captures/luna-home.png",
-      import.meta.env.BASE_URL + "captures/luna-movil.png"
+      import.meta.env.BASE_URL + "captures/mirar-home.png",
+      import.meta.env.BASE_URL + "captures/mirar-movil.png"
     ],
     video: null,
     planeta: { tipo: "luna", acento: "#f4b860", tamaño: 0.98, velocidadRotacion: 0.01 }
