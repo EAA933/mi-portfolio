@@ -329,7 +329,7 @@ export function crearInspector360(escena, camara, projects, planetas, onSalir) {
       hielo: "MUNDO CRIOGÉNICO • GLACIARES DE METANO",
       cristal: "PLANETA DE CRISTAL • RED GEOMÉTRICA DE DATOS",
       medico: "MUNDO CLÍNICO • ESCÁNER DE PRECIOS & ANILLO DE CÁPSULAS",
-      luna: "SATÉLITE PLATEADO • CRÁTERES & LENTES EN ÓRBITA",
+      atardecer: "MUNDO DE HORA DORADA • DUNAS, MARES & MICAS EN ÓRBITA",
       centinela: "MUNDO CENTINELA • BALIZAS DE ALERTA & RADAR DE RIESGO",
     };
     elHeaderTipo.textContent = tipos[proyecto.planeta?.tipo] || "CUERPO CELESTE";
