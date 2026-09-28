@@ -455,7 +455,7 @@ export const projects = [
     stack: ["Next.js", "TypeScript", "Tailwind", "Zustand", "Vercel"],
     links: {
       sitio: "https://mirar-lentes.vercel.app",
-      codigo: "https://github.com/EAA933/Luna_Store",
+      codigo: "https://github.com/EAA933/mirar",
     },
     capturas: [
       import.meta.env.BASE_URL + "captures/mirar-home.png",
