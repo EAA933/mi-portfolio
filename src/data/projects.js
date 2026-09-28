@@ -387,72 +387,73 @@ export const projects = [
     slug: "mirar",
     nombre: "MIRAR",
     categoria: "web",
-    tagline: "Tienda en línea de lentes de sol con catálogo, fichas de producto y carrito.",
+    tagline: "Tienda de lentes de sol con simulador de micas y guía de calce.",
     descripcion:
-      "E-commerce de lentes de sol para México: landing editorial, catálogo " +
-      "con filtros, página por modelo y carrito persistente, hecho en Next.js.",
+      "E-commerce de lentes de sol para México: hero interactivo por modelo, " +
+      "simulador de tintes de mica, guía de calce por rostro, catálogo con " +
+      "búsqueda predictiva y carrito persistente, hecho en Next.js.",
     reto:
-      "Una marca de lentes necesitaba una tienda que se sintiera premium sin " +
-      "ser pesada: que se vea bien en móvil, cargue rápido y deje comparar " +
-      "modelos por forma, mica y material.",
+      "Comprar lentes de sol en línea genera dudas que en tienda se resuelven " +
+      "probándolos: cómo se ve la luz con cada mica, si el armazón le queda a " +
+      "tu rostro y cuál modelo elegir entre varios parecidos.",
     solucion:
-      "Storefront en Next.js 14 (App Router) con páginas prerenderizadas, " +
-      "catálogo filtrable, fichas de producto con especificaciones y un " +
-      "carrito con Zustand que se guarda entre visitas. Diseño editorial " +
-      "con animaciones (Framer Motion).",
+      "Storefront en Next.js 14 con un hero que cambia de escena por modelo, " +
+      "un simulador que aplica el tinte de cada mica sobre una escena al " +
+      "atardecer, una guía de calibre según el ancho del rostro y un catálogo " +
+      "con búsqueda predictiva navegable con teclado.",
     resultado:
-      "Tienda publicada en Vercel con el recorrido completo: explorar, " +
-      "ver el modelo y agregarlo al carrito. Sin base de datos: catálogo " +
-      "en código y carrito guardado en el navegador.",
+      "Una tienda publicada en Vercel donde el cliente explora, compara micas " +
+      "y calce, y agrega al carrito sin salir del flujo; con modo claro y " +
+      "oscuro e historial de modelos vistos.",
     resultadoTag: "Publicada en Vercel",
     metricas: [
-      { valor: 6, etiqueta: "Modelos en catálogo" },
-      { valor: "SSG", etiqueta: "Páginas prerenderizadas" },
+      { valor: 8, etiqueta: "Modelos en catálogo" },
+      { valor: 4, etiqueta: "Escenas en el hero" },
     ],
 
     // Puntos de interés arquitectónicos para el Modo Inspección 360°
     hotspots: [
       {
-        id: "lu-catalogo",
-        titulo: "Catálogo con Filtros",
+        id: "mi-hero",
+        titulo: "Hero Interactivo por Modelo",
         categoria: "Experiencia de Compra",
         icono: "🕶️",
         pos: [0.72, 0.56, 0.4],
-        descripcion: "Filtra por segmento, forma, color de mica, material y precio máximo, con búsqueda por nombre y segmento sincronizado con la URL.",
-        impacto: "Encuentra el modelo en segundos"
+        descripcion: "Selector de Brisa, Duna, Marea y Ocaso: cada uno cambia escena, especificaciones y precio con transiciones de Framer Motion, y se compra desde ahí.",
+        impacto: "Del vistazo a la compra en un clic"
       },
       {
-        id: "lu-carrito",
-        titulo: "Carrito Persistente",
-        categoria: "Estado del Cliente",
-        icono: "🛒",
+        id: "mi-lightlab",
+        titulo: "LightLab: Simulador de Micas",
+        categoria: "Interactividad",
+        icono: "🌅",
         pos: [-0.78, 0.38, 0.5],
-        descripcion: "Store de Zustand con persistencia local y panel lateral: agregar, cambiar cantidades y quitar sin recargar la página.",
-        impacto: "El carrito sobrevive a la visita"
+        descripcion: "Aplica el tinte, el porcentaje de luz visible (VLT) y la polarización de cada mica sobre una escena al atardecer para comparar cómo se ve.",
+        impacto: "Probar la mica sin tenerla"
       },
       {
-        id: "lu-ssg",
-        titulo: "Páginas Prerenderizadas + SEO",
-        categoria: "Rendimiento",
-        icono: "⚡",
+        id: "mi-busqueda",
+        titulo: "Búsqueda Predictiva",
+        categoria: "Catálogo",
+        icono: "🔎",
         pos: [0.22, -0.8, 0.56],
-        descripcion: "Cada modelo se genera estáticamente con su propio título y descripción; incluye sitemap.xml y robots.txt.",
-        impacto: "Carga inmediata desde el CDN"
+        descripcion: "Sugerencias de modelos y filtros mientras escribes, navegables con flechas y Enter, sobre un catálogo filtrable por forma y mica.",
+        impacto: "Encuentra el modelo al teclear"
       },
       {
-        id: "lu-diseno",
-        titulo: "Diseño Editorial Animado",
-        categoria: "Marca",
-        icono: "✨",
+        id: "mi-calce",
+        titulo: "Guía de Calce y Vistos Recientes",
+        categoria: "Personalización",
+        icono: "📏",
         pos: [-0.4, -0.48, -0.78],
-        descripcion: "Tipografía serif (Fraunces) con Plus Jakarta Sans, títulos que se revelan línea por línea, parallax y transiciones con Framer Motion; respeta el modo de movimiento reducido.",
-        impacto: "Se siente premium en cualquier pantalla"
+        descripcion: "Recomienda calibre según el ancho del rostro y recuerda los modelos que viste (localStorage) para retomarlos después.",
+        impacto: "Menos dudas antes de comprar"
       }
     ],
 
     eficiencia: null,
 
-    stack: ["Next.js", "TypeScript", "Tailwind", "Zustand", "Vercel"],
+    stack: ["Next.js", "TypeScript", "Tailwind", "Framer Motion", "Zustand"],
     links: {
       sitio: "https://mirar-lentes.vercel.app",
       codigo: "https://github.com/EAA933/mirar",
