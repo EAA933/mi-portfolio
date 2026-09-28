@@ -453,6 +453,16 @@ export const projects = [
 
     eficiencia: null,
 
+    // Tema visual del caso de estudio (hud.js): maquetado de revista editorial.
+    tema: "revista",
+    revista: {
+      numero: "03",
+      seccion: "Diseño de producto · E-commerce",
+      titular: ["Ver la luz", "antes de", "comprarla."],
+      cita: "Probar la mica sin tenerla.",
+      rol: "Diseño y desarrollo",
+    },
+
     stack: ["Next.js", "TypeScript", "Tailwind", "Framer Motion", "Zustand"],
     links: {
       sitio: "https://mirar-lentes.vercel.app",

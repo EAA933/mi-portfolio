@@ -446,6 +446,105 @@ export function crearHUD() {
     `;
   }
 
+  // ── Caso con maquetado de revista (tema "revista") ────────────
+  function renderRevistaHTML(proyecto, cap0, cap1) {
+    const rv = proyecto.revista || {};
+    const titular = (rv.titular || [proyecto.nombre])
+      .map((l, i) => `<span class="rev-linea"><span style="--i:${i}">${l}</span></span>`)
+      .join("");
+    const cifras = (proyecto.metricas || [])
+      .map((m) => `<div class="rev-cifra"><b>${m.valor}</b><span>${m.etiqueta}</span></div>`)
+      .join("");
+    const indice = (proyecto.hotspots || [])
+      .map((h, i) => `
+        <li>
+          <span class="rev-idx">${String(i + 1).padStart(2, "0")}</span>
+          <div>
+            <h3>${h.titulo}</h3>
+            <p>${h.descripcion}</p>
+            <em>${h.impacto || ""}</em>
+          </div>
+        </li>`)
+      .join("");
+    const host = (u) => (u || "").replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+    return `
+      <div class="rev">
+        <div class="rev-masthead hud-reveal">
+          <span class="rev-mast-marca">${proyecto.nombre}</span>
+          <span class="rev-mast-centro">Caso de estudio · Nº ${rv.numero || "01"}</span>
+          <span class="rev-mast-der">${proyecto.categoria === "automatizacion" ? "Automatización" : "Web"}</span>
+        </div>
+
+        <section class="rev-portada hud-reveal">
+          <div class="rev-portada-texto">
+            <p class="rev-kicker">${rv.seccion || ""}</p>
+            <h1 class="rev-titular">${titular}</h1>
+            <p class="rev-deck">${proyecto.tagline || ""}</p>
+            <p class="rev-firma">Por <b>Eduardo Aranda</b> · ${rv.rol || "Diseño y desarrollo"}</p>
+            <button type="button" class="rev-enlace btn-abrir-inspeccion-360">Ver su planeta en 3D →</button>
+          </div>
+          <figure class="rev-fig rev-fig-portada">
+            ${cap0 ? `<img src="${cap0}" alt="Portada de ${proyecto.nombre} en escritorio" />` : ""}
+            <figcaption><b>Fig. 1</b> — La tienda en escritorio.</figcaption>
+          </figure>
+        </section>
+
+        <section class="rev-cifras hud-reveal">
+          <p class="rev-kicker">En cifras</p>
+          <div class="rev-cifras-fila">
+            ${cifras}
+            <div class="rev-cifra rev-cifra-stack"><span>Hecho con</span><p>${(proyecto.stack || []).join(" · ")}</p></div>
+          </div>
+        </section>
+
+        <article class="rev-cuerpo hud-reveal">
+          <div class="rev-col">
+            <h2><span class="rev-num">I.</span> El problema</h2>
+            <p class="rev-capitular">${proyecto.reto || ""}</p>
+          </div>
+          <div class="rev-col">
+            <h2><span class="rev-num">II.</span> La solución</h2>
+            <p>${proyecto.solucion || ""}</p>
+          </div>
+          <div class="rev-col">
+            <h2><span class="rev-num">III.</span> El resultado</h2>
+            <p>${proyecto.resultado || ""}</p>
+          </div>
+        </article>
+
+        ${rv.cita ? `
+        <blockquote class="rev-cita hud-reveal">
+          <p>“${rv.cita}”</p>
+          <cite>La idea que guió el diseño</cite>
+        </blockquote>` : ""}
+
+        <section class="rev-indice hud-reveal">
+          <figure class="rev-fig rev-fig-movil">
+            ${cap1 ? `<img src="${cap1}" alt="${proyecto.nombre} en móvil" />` : ""}
+            <figcaption><b>Fig. 2</b> — La misma experiencia en el celular.</figcaption>
+          </figure>
+          <div>
+            <p class="rev-kicker">En este número</p>
+            <h2 class="rev-h2">Índice de funciones</h2>
+            <ol class="rev-lista">${indice}</ol>
+          </div>
+        </section>
+
+        <section class="rev-ficha hud-reveal">
+          <h2 class="rev-h2">Ficha técnica</h2>
+          <dl>
+            <dt>Proyecto</dt><dd>${proyecto.nombre}</dd>
+            <dt>Rol</dt><dd>${rv.rol || "Diseño y desarrollo"}</dd>
+            <dt>Tecnología</dt><dd>${(proyecto.stack || []).join(", ")}</dd>
+            ${proyecto.links?.sitio ? `<dt>En línea</dt><dd><a href="${proyecto.links.sitio}" target="_blank" rel="noopener">${host(proyecto.links.sitio)} ↗</a></dd>` : ""}
+            ${proyecto.links?.codigo ? `<dt>Código</dt><dd><a href="${proyecto.links.codigo}" target="_blank" rel="noopener">${host(proyecto.links.codigo)} ↗</a></dd>` : ""}
+          </dl>
+        </section>
+      </div>
+    `;
+  }
+
   // ── HUD del caso de estudio ───────────────────────────────────
   function abrirCaso(proyecto, onCerrar) {
     aplicarAcento(proyecto);
@@ -453,7 +552,9 @@ export function crearHUD() {
 
     const esHuerto = proyecto.planeta?.tipo === "huerto";
     const esHospital = proyecto.tema === "hospital";
+    const esRevista = proyecto.tema === "revista";
     hud.classList.toggle("tema-hospital", esHospital);
+    hud.classList.toggle("tema-revista", esRevista);
     if (esHuerto) {
       hud.classList.add("tema-cosecha");
       document.body.classList.add("tema-cosecha-activo");
@@ -479,7 +580,7 @@ export function crearHUD() {
     } else {
       hud.classList.remove("tema-cosecha");
       document.body.classList.remove("tema-cosecha-activo");
-      cerrarBtn.innerHTML = esHospital ? "← Volver al portafolio" : "← Volver a órbita";
+      cerrarBtn.innerHTML = esHospital || esRevista ? "← Volver al portafolio" : "← Volver a órbita";
       hud.querySelector(".hud-cosecha-particulas")?.remove();
     }
 
@@ -537,7 +638,22 @@ export function crearHUD() {
       ? renderStorytellingHTML(proyecto, cap0, cap1)
       : renderCasoEstandarHTML(proyecto, cap0, cap1);
 
-    wrap.innerHTML = `
+    const tarjetaContacto = `
+      <div class="hud-conversion-card hud-reveal">
+        <span class="hcc-tag">💼 Consultoría &amp; Desarrollo Freelance</span>
+        <h3>¿Tienes un reto similar en tu negocio?</h3>
+        <p>Desarrollo soluciones a la medida con arquitectura robusta: desde plataformas web modernas con costo de operación nulo hasta flujos de automatización que reducen días de carga manual a solo minutos.</p>
+        <div class="hcc-actions">
+          <button type="button" class="btn btn-primario btn-trigger-contacto" data-tipo="${proyecto.categoria === 'automatizacion' ? 'Automatización con IA' : 'Plataforma Web / Edge'}" data-mensaje="Hola Eduardo, estuve viendo el caso de estudio de &quot;${proyecto.nombre}&quot; y me interesa desarrollar una solución con requerimientos similares.">Cotizar solución similar →</button>
+          <a class="btn btn-secundario" href="https://www.linkedin.com/in/eduardoaranda-risk/" target="_blank" rel="noopener">Conectar en LinkedIn ↗</a>
+        </div>
+      </div>
+    `;
+
+    if (esRevista) {
+      wrap.innerHTML = renderRevistaHTML(proyecto, cap0, cap1) + tarjetaContacto;
+    } else {
+      wrap.innerHTML = `
       <header class="hud-header hud-reveal">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;">
           <div>
@@ -556,16 +672,9 @@ export function crearHUD() {
       <div class="chips hud-reveal">${(proyecto.stack || []).map((s) => `<span>${s}</span>`).join("")}</div>
       ${acciones.length ? `<div class="acciones hud-reveal">${acciones.join("")}</div>` : ""}
 
-      <div class="hud-conversion-card hud-reveal">
-        <span class="hcc-tag">💼 Consultoría &amp; Desarrollo Freelance</span>
-        <h3>¿Tienes un reto similar en tu negocio?</h3>
-        <p>Desarrollo soluciones a la medida con arquitectura robusta: desde plataformas web modernas con costo de operación nulo hasta flujos de automatización que reducen días de carga manual a solo minutos.</p>
-        <div class="hcc-actions">
-          <button type="button" class="btn btn-primario btn-trigger-contacto" data-tipo="${proyecto.categoria === 'automatizacion' ? 'Automatización con IA' : 'Plataforma Web / Edge'}" data-mensaje="Hola Eduardo, estuve viendo el caso de estudio de &quot;${proyecto.nombre}&quot; y me interesa desarrollar una solución con requerimientos similares.">Cotizar solución similar →</button>
-          <a class="btn btn-secundario" href="https://www.linkedin.com/in/eduardoaranda-risk/" target="_blank" rel="noopener">Conectar en LinkedIn ↗</a>
-        </div>
-      </div>
+      ${tarjetaContacto}
     `;
+    }
 
     // Interacción de pestañas en el diagrama de flujos (Cosecha Hidalguense)
     if (proyecto.storytelling?.flujos?.diagramas) {
@@ -721,7 +830,7 @@ export function crearHUD() {
       reactRootActual = null;
     }
     hud.classList.remove("activo");
-    hud.classList.remove("tema-cosecha", "tema-hospital");
+    hud.classList.remove("tema-cosecha", "tema-hospital", "tema-revista");
     document.body.classList.remove("tema-cosecha-activo");
     cerrarBtn.innerHTML = "← Volver a órbita";
     hud.querySelector(".hud-cosecha-particulas")?.remove();

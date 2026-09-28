@@ -18,6 +18,7 @@ import "./styles/grid.css";
 import "./styles/radar.css";
 import "./styles/contact.css";
 import "./styles/inspector360.css";
+import "./styles/revista.css";
 
 import projects from "./data/projects.js";
 import site from "./data/site.js";
